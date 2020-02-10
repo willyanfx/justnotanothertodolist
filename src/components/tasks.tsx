@@ -12,7 +12,7 @@ const initial = Array.from({ length: 10 }, (v, k) => k).map(k => {
     return custom;
 });
 
-const grid = 8;
+const GRID = 8;
 
 function ListItem({ item, index }: any) {
     return (
@@ -123,7 +123,7 @@ const TodoItems = styled.div`
     display: flex;
     width: 100%;
     border: 1px solid grey;
-    margin-bottom: ${grid}px;
+    margin-bottom: ${GRID}px;
     background-color: #fff;
-    padding: ${grid}px;
+    padding: ${GRID}px;
 `;
