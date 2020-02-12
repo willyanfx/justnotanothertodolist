@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { Checkbox } from './Checkbox';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -18,13 +19,14 @@ function ListItem({ item, index }: any) {
     return (
         <Draggable draggableId={item.id} index={index}>
             {provided => (
-                <TodoItems
+                <div
+                    css={styleItems}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}>
                     <Checkbox />
                     <span>{item.content}</span>
-                </TodoItems>
+                </div>
             )}
         </Draggable>
     );
@@ -71,25 +73,26 @@ export const Tasks = () => {
     };
 
     return (
-        <TaskDisplay>
+        <div css={styleDisplay}>
             <h2>Project name</h2>
             <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId='list'>
                     {provided => (
-                        <TaskList
+                        <div
+                            css={styleList}
                             ref={provided.innerRef}
                             {...provided.droppableProps}>
                             <TasksList items={tasks} />
                             {provided.placeholder}
-                        </TaskList>
+                        </div>
                     )}
                 </Droppable>
             </DragDropContext>
-        </TaskDisplay>
+        </div>
     );
 };
 
-const TaskDisplay = styled.div`
+const styleDisplay = css`
     width: 656px;
     background-color: white;
     margin-left: 266px;
@@ -107,7 +110,7 @@ const TaskDisplay = styled.div`
     }
 `;
 
-const TaskList = styled.div`
+const styleList = css`
     display: flex;
     flex-direction: column;
     line-height: 18px;
@@ -119,7 +122,7 @@ const TaskList = styled.div`
     border-bottom: 1px solid #f0f0f0;
 `;
 
-const TodoItems = styled.div`
+const styleItems = css`
     display: flex;
     width: 100%;
     border: 1px solid grey;

@@ -1,32 +1,39 @@
 import React from 'react';
-import styled from 'styled-components';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 
 export const Navbar = () => {
     return (
-        <Header>
-            <Nav>
+        <header css={styleHeader}>
+            <nav css={styleNav}>
                 <div>
                     <img src='' alt='logo' />
                 </div>
-                <SearchBar>
+                <div css={styleSearchBar}>
                     <input type='text' placeholder='search' />
-                </SearchBar>
-                <div>
-                    <UlSettings>
-                        <li>
-                            <Add>+</Add>
-                        </li>
-                        <li>
-                            <DarkmodeButton>darkmode</DarkmodeButton>
-                        </li>
-                    </UlSettings>
                 </div>
-            </Nav>
-        </Header>
+                <div>
+                    <ul css={styleUl}>
+                        <li>
+                            <button
+                                css={theme => ({
+                                    color: theme.color,
+                                    styleAddButton
+                                })}>
+                                +
+                            </button>
+                        </li>
+                        <li>
+                            <button css={styleDarkmodeButton}>darkmode</button>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
     );
 };
 
-const Header = styled.header`
+const styleHeader = css`
     border-bottom: solid 1px #ca2100;
     background: #cacaca;
     transition: height 200ms ease-in;
@@ -39,7 +46,7 @@ const Header = styled.header`
     width: 100%;
 `;
 
-const Nav = styled.nav`
+const styleNav = css`
     display: grid;
     align-items: center;
     grid-template-columns: 1fr 1fr 1fr;
@@ -51,7 +58,7 @@ const Nav = styled.nav`
     height: 44px;
 `;
 
-const UlSettings = styled.ul`
+const styleUl = css`
     display: flex;
     position: relative;
     list-style: none;
@@ -64,15 +71,23 @@ const UlSettings = styled.ul`
         text-align: center;
     }
 `;
-const Add = styled.button`
+const styleAddButton = css`
     margin-right: 15px;
-    font-size: 30px;
+    font-size: 22px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    border-radius: 50%;
 `;
-const DarkmodeButton = styled.button``;
+const styleDarkmodeButton = css`
+    margin: 0;
+`;
 
-const SearchBar = styled.div`
+const styleSearchBar = css`
     width: 100%;
     input {
         width: 100%;
+        height: 40px;
+        font-size: 16px;
     }
 `;

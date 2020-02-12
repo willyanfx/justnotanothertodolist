@@ -1,15 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 
 export const Checkbox = () => {
     return (
         <div>
-            <Check />
+            <span css={styleCheckbox} />
         </div>
     );
 };
 
-const Check = styled.span`
+const styleCheckbox = css`
     cursor: pointer;
     border-color: gray;
     color: #343434;

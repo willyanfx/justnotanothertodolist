@@ -1,10 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 
 export const Sidebar = () => {
     return (
-        <SidebarElement>
-            <SidebarUl>
+        <div css={styleSidebar}>
+            <ul>
                 <li>
                     <div>
                         <i>📥</i>
@@ -23,20 +24,20 @@ export const Sidebar = () => {
                         <span>Next 7 days</span>
                     </div>
                 </li>
-                <SidebarProjects>
+                <div>
                     <span>
                         <h2>Projects</h2>
                     </span>
                     <span>▾</span>
 
                     <ul></ul>
-                </SidebarProjects>
-            </SidebarUl>
-        </SidebarElement>
+                </div>
+            </ul>
+        </div>
     );
 };
 
-const SidebarElement = styled.div`
+const styleSidebar = css`
     width: 266px;
     height: calc(100vh);
     padding-top: 74px;
@@ -46,5 +47,5 @@ const SidebarElement = styled.div`
     border-right: 3px;
     background-color: #fafafa;
 `;
-const SidebarUl = styled.ul``;
-const SidebarProjects = styled.div``;
+const styleUl = css``;
+const styleProjects = css``;
