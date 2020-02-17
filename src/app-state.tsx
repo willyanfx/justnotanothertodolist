@@ -1,8 +1,8 @@
 import React, { createContext, useReducer, useContext } from "react"
 
-import { ActionType, StateType } from './appReducer'
 
-const Context = createContext({})
+
+const Context = createContext<any>([]);
 
 
 type AppStateProviderProps = {
@@ -13,7 +13,6 @@ type AppStateProviderProps = {
 
 export function AppStateProvider({ reducer, initialState = {}, children }: AppStateProviderProps) {
     const value = useReducer(reducer, initialState);
-    console.log(value)
     return <Context.Provider value={value} children={children} />
 }
 
