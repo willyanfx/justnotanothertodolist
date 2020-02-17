@@ -4,13 +4,16 @@ import { css, jsx } from '@emotion/core';
 import { ThemeProvider } from 'emotion-theming';
 import { AppStateProvider } from "./app-state"
 import appReducer, { initialState } from "./appReducer";
+import useAuth from './useAuth';
 
 const theme = {
     color: 'tomato'
 };
 
 function Log() {
-
+    const { authAttempted, auth } = useAuth();
+    if (!authAttempted) return null
+    return <div>{authAttempted ? <span>Dentro</span> : <span>Fora</span>}</div>
 }
 
 
@@ -19,8 +22,8 @@ export const App: React.FC = () => {
     return (
         <ThemeProvider theme={theme}>
             <AppStateProvider reducer={appReducer} initialState={initialState}>
-                test
-                </AppStateProvider>
+                <Log />
+            </AppStateProvider>
         </ThemeProvider>
     )
 }
