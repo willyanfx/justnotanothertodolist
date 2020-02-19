@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback, useContext } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { ThemeProvider } from 'emotion-theming';
-import { AppStateProvider } from "./app-state"
-import appReducer, { initialState } from "./appReducer";
+import { AppStateProvider } from './app-state';
+import appReducer, { initialState } from './appReducer';
 import useAuth from './useAuth';
+import LoggedOut from './components/LoggedOut';
 
 const theme = {
     color: 'tomato'
@@ -12,23 +13,19 @@ const theme = {
 
 function Log() {
     const { authAttempted, auth } = useAuth();
-    if (!authAttempted) return null
-    return <div>{authAttempted ? <span>Dentro</span> : <span>Fora</span>}</div>
+    if (!authAttempted) return null;
+    return <div>{auth ? <span>Dentro</span> : <LoggedOut />}</div>;
 }
 
-
 export const App: React.FC = () => {
-
     return (
         <ThemeProvider theme={theme}>
             <AppStateProvider reducer={appReducer} initialState={initialState}>
                 <Log />
             </AppStateProvider>
         </ThemeProvider>
-    )
-}
-
-
+    );
+};
 
 const styles = css`
     display: flex;
