@@ -14,7 +14,7 @@ export type ActionType = {
 }
 export type StateType = {
     authAttempted: boolean,
-    user: String
+    user: string
 }
 
 const appStateReducer = (state: StateType, action: ActionType) => {

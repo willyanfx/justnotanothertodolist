@@ -1,6 +1,7 @@
 import React, { useState, createContext, useContext, Children } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import LoginForm from './LoginForm';
 
 const TabsContext = createContext({});
 
@@ -69,7 +70,7 @@ export default function LoggedOut() {
     const tabData = [
         {
             label: 'Login',
-            content: <div>Login form</div>
+            content: <LoginForm />
         },
         {
             label: 'Signup',

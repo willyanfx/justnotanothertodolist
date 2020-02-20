@@ -7,7 +7,7 @@ const Context = createContext<any>([]);
 
 type AppStateProviderProps = {
     reducer: any,
-    initialState: Object,
+    initialState: object,
     children: React.ReactNode
 }
 

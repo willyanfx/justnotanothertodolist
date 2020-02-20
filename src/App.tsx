@@ -6,6 +6,7 @@ import { AppStateProvider } from './app-state';
 import appReducer, { initialState } from './appReducer';
 import useAuth from './useAuth';
 import LoggedOut from './components/LoggedOut';
+import { logout } from './helpers';
 
 const theme = {
     color: 'tomato'
@@ -14,7 +15,17 @@ const theme = {
 function Log() {
     const { authAttempted, auth } = useAuth();
     if (!authAttempted) return null;
-    return <div>{auth ? <span>Dentro</span> : <LoggedOut />}</div>;
+    return (
+        <div>
+            {auth ? (
+                <span>
+                    Dentro <button onClick={() => logout()}>logout</button>
+                </span>
+            ) : (
+                <LoggedOut />
+            )}
+        </div>
+    );
 }
 
 export const App: React.FC = () => {
