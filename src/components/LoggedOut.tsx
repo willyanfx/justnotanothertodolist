@@ -49,7 +49,6 @@ function TabPanel({ children }: any) {
 }
 
 function DataTabs({ data }: any) {
-    console.log(data);
     return (
         <Tabs>
             <TabList>
