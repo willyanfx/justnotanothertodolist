@@ -2,6 +2,7 @@ import React, { useState, createContext, useContext, Children } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
 
 const TabsContext = createContext({});
 
@@ -68,12 +69,12 @@ function DataTabs({ data }: any) {
 export default function LoggedOut() {
     const tabData = [
         {
-            label: 'Login',
-            content: <LoginForm />
+            label: 'Signup',
+            content: <SignupForm />
         },
         {
-            label: 'Signup',
-            content: <div>Signup form</div>
+            label: 'Login',
+            content: <LoginForm />
         }
     ];
     return (
