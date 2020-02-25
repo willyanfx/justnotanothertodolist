@@ -6,37 +6,25 @@ import { AppStateProvider } from './app-state';
 import appReducer, { initialState } from './appReducer';
 import useAuth from './useAuth';
 import LoggedOut from './components/LoggedOut';
-import { logout } from './helpers';
+import LoggedIn from './components/LoggedIn';
 
 const theme = {
     color: 'tomato'
 };
 
-function Log() {
+function App() {
     const { authAttempted, auth } = useAuth();
     if (!authAttempted) return null;
-    return (
-        <div>
-            {auth ? (
-                <span>
-                    Dentro <button onClick={() => logout()}>logout</button>
-                </span>
-            ) : (
-                <LoggedOut />
-            )}
-        </div>
-    );
+    return <div>{auth ? <LoggedIn /> : <LoggedOut />}</div>;
 }
 
-export const App: React.FC = () => {
-    return (
-        <ThemeProvider theme={theme}>
-            <AppStateProvider reducer={appReducer} initialState={initialState}>
-                <Log />
-            </AppStateProvider>
-        </ThemeProvider>
-    );
-};
+export default () => (
+    <ThemeProvider theme={theme}>
+        <AppStateProvider reducer={appReducer} initialState={initialState}>
+            <App />
+        </AppStateProvider>
+    </ThemeProvider>
+);
 
 const styles = css`
     display: flex;

@@ -3,7 +3,7 @@ import VisuallyHidden from './VisuallyHidden';
 import { login } from '../helpers';
 
 export default function LoginForm() {
-    const [error, setError] = useState<any>(null);
+    const [error, setError] = useState<Error | null>(null);
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const emailRef = useRef<HTMLInputElement>(null);

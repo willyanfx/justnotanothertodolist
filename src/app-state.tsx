@@ -1,19 +1,19 @@
-import React, { createContext, useReducer, useContext } from "react"
-
-
-
-const Context = createContext<any>([]);
-
+import React, { createContext, useReducer, useContext } from 'react';
+const Context = createContext<any>(null);
 
 type AppStateProviderProps = {
-    reducer: any,
-    initialState: object,
-    children: React.ReactNode
-}
+    reducer: any;
+    initialState: object;
+    children: React.ReactNode;
+};
 
-export function AppStateProvider({ reducer, initialState = {}, children }: AppStateProviderProps) {
+export function AppStateProvider({
+    reducer,
+    initialState = {},
+    children
+}: AppStateProviderProps) {
     const value = useReducer(reducer, initialState);
-    return <Context.Provider value={value} children={children} />
+    return <Context.Provider value={value} children={children} />;
 }
 
 export function useAppState() {

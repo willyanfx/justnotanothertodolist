@@ -1,37 +1,39 @@
 import React from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { logout } from '../../helpers';
+import { useAppState } from '../../app-state';
 
 export const Navbar = () => {
     return (
         <header css={styleHeader}>
             <nav css={styleNav}>
-                <div>
-                    <img src='' alt='logo' />
-                </div>
-                <div css={styleSearchBar}>
-                    <input type='text' placeholder='search' />
-                </div>
-                <div>
-                    <ul css={styleUl}>
-                        <li>
-                            <button
-                                css={theme => ({
-                                    color: theme.color,
-                                    styleAddButton
-                                })}>
-                                +
-                            </button>
-                        </li>
-                        <li>
-                            <button css={styleDarkmodeButton}>darkmode</button>
-                        </li>
-                    </ul>
-                </div>
+                <Logo />
+                <Account />
             </nav>
         </header>
     );
 };
+
+const Logo = () => (
+    <div>
+        <img src='' alt='logo' />
+    </div>
+);
+function Account() {
+    const [{ user }] = useAppState();
+    return user ? (
+        <div>
+            <div>
+                <div>Avatar</div>
+            </div>
+            <button onClick={() => logout()}>Log out</button>
+            <div>Darkmode</div>
+        </div>
+    ) : (
+        <div>Loading user</div>
+    );
+}
 
 const styleHeader = css`
     border-bottom: solid 1px #ca2100;
@@ -49,7 +51,7 @@ const styleHeader = css`
 const styleNav = css`
     display: grid;
     align-items: center;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
@@ -78,9 +80,6 @@ const styleAddButton = css`
     align-content: center;
     justify-content: center;
     border-radius: 50%;
-`;
-const styleDarkmodeButton = css`
-    margin: 0;
 `;
 
 const styleSearchBar = css`

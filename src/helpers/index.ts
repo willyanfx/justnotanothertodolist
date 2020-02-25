@@ -31,7 +31,6 @@ export async function signup({
     photoURL
 }: signUpProp) {
     try {
-        console.log(password);
         const { user } = await auth.createUserWithEmailAndPassword(
             email,
             password
@@ -45,4 +44,29 @@ export async function signup({
     } catch (error) {
         throw error;
     }
+}
+
+export const fetchDoc = limitCalls(function fetchDoc(path: string) {
+    return db
+        .doc(path)
+        .get()
+        .then(doc => doc.data());
+});
+
+function limitCalls(fn: any, limit: number = 20) {
+    let calls = 0;
+    return (...args: any) => {
+        calls++;
+        if (calls > limit) {
+            throw new Error(
+                `EASY THERE: You've called "${fn.name}" too many times too quickly`
+            );
+        } else {
+            setTimeout(() => {
+                calls = 0;
+            }, 3000);
+        }
+
+        return fn(...args);
+    };
 }

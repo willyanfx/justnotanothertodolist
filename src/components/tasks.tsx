@@ -13,8 +13,6 @@ const initial = Array.from({ length: 10 }, (v, k) => k).map(k => {
     return custom;
 });
 
-const GRID = 8;
-
 function ListItem({ item, index }: any) {
     return (
         <Draggable draggableId={item.id} index={index}>
@@ -92,6 +90,7 @@ export const Tasks = () => {
     );
 };
 
+const GRID = 8;
 const styleDisplay = css`
     width: 656px;
     background-color: white;
