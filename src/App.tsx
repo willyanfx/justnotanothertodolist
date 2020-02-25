@@ -15,7 +15,9 @@ const theme = {
 function App() {
     const { authAttempted, auth } = useAuth();
     if (!authAttempted) return null;
-    return <div>{auth ? <LoggedIn /> : <LoggedOut />}</div>;
+    return (
+        <div css={styleContainer}>{auth ? <LoggedIn /> : <LoggedOut />}</div>
+    );
 }
 
 export default () => (
@@ -25,11 +27,8 @@ export default () => (
         </AppStateProvider>
     </ThemeProvider>
 );
-
-const styles = css`
+const styleContainer = css`
     display: flex;
     justify-content: center;
-    min-height: calc(100vh);
-    margin-left: calc(100vw - 100%);
     margin-right: 0;
 `;

@@ -4,7 +4,8 @@ import { useAppState } from '../app-state';
 import { Navbar } from './layout/Navbar';
 import { Sidebar } from './layout/Sidebar';
 import { Tasks } from './Tasks';
-import { Route, Router, DefaultRoute } from 'react-router-dom';
+import { css, jsx } from '@emotion/core';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 export default function LoggedIn() {
     const [{ auth, user }, dispatch] = useAppState();
@@ -20,11 +21,23 @@ export default function LoggedIn() {
 
     return user ? (
         <Fragment>
-            <Navbar />
-            <main>
-                <Sidebar />
-                <Tasks />
-            </main>
+            <Router>
+                <Navbar />
+                <main>
+                    <Sidebar />
+                    <Switch>
+                        <Route path='/today'>
+                            <div>about</div>
+                        </Route>
+                        <Route path='/next7days'>
+                            <div>next 7 days</div>
+                        </Route>
+                        <Route path='/'>
+                            <Tasks />
+                        </Route>
+                    </Switch>
+                </main>
+            </Router>
         </Fragment>
     ) : null;
 }

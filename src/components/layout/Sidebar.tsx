@@ -1,22 +1,29 @@
 import React from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { Link } from 'react-router-dom';
 
 export const Sidebar = () => {
     return (
         <div css={styleSidebar}>
             <ul css={styleUl}>
                 <li css={styleIl}>
-                    <i css={styleIcon}>📥</i>
-                    <span css={styleContent}>Inbox</span>
+                    <Link to='/inbox'>
+                        <i css={styleIcon}>📥</i>
+                        <span css={styleContent}>Inbox</span>
+                    </Link>
                 </li>
                 <li css={styleIl}>
-                    <i css={styleIcon}>📆</i>
-                    <span css={styleContent}>Today</span>
+                    <Link to='/today'>
+                        <i css={styleIcon}>📆</i>
+                        <span css={styleContent}>Today</span>
+                    </Link>
                 </li>
                 <li css={styleIl}>
-                    <i css={styleIcon}>🗓</i>
-                    <span css={styleContent}>Next 7 days</span>
+                    <Link to='/next7days'>
+                        <i css={styleIcon}>🗓</i>
+                        <span css={styleContent}>Next 7 days</span>
+                    </Link>
                 </li>
                 <header css={styleProjects}>
                     <button>
