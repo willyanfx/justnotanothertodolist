@@ -101,3 +101,20 @@ export const subscribeTo = limitCalls(function subscribeTo(
         callback(getDocsFromSnapshot(snapshot))
     );
 });
+
+export const fetchTasks = limitCalls(function fetchTasks(uid: string) {
+    return db
+        .collection('tasks')
+        .orderBy('createdAt')
+        .where('uid', '==', uid)
+        .get()
+        .then(getDocsFromSnapshot);
+});
+
+export async function createTask(task: any) {
+    return db
+        .collection('tasks')
+        .add({ createdAt: Date.now(), ...task })
+        .then(ref => ref.get())
+        .then(doc => ({ ...doc.data(), id: doc.id }));
+}

@@ -5,17 +5,9 @@ import { Checkbox } from './Checkbox';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useAppState } from '../app-state';
 import useTasks from '../hooks/useTasks';
-// const initial = Array.from({ length: 10 }, (v, k) => k).map(k => {
-//     const custom = {
-//         id: `id-${k}`,
-//         content: `Quote ${k}`
-//     };
-
-//     return custom;
-// });
+import { AddTask } from './AddTask';
 
 function ListItem({ item, index }: any) {
-    console.log(item);
     return (
         <Draggable draggableId={item.id} index={index}>
             {provided => (
@@ -25,7 +17,7 @@ function ListItem({ item, index }: any) {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}>
                     <Checkbox />
-                    {/* <span>{item.content}</span> */}
+                    <span>{item.task}</span>
                 </div>
             )}
         </Draggable>
@@ -34,7 +26,6 @@ function ListItem({ item, index }: any) {
 
 // Ensuring the whole list does not re-render when the droppable re-renders
 const TasksList = React.memo(function TasksList({ items }: any) {
-    console.log('ITEMS::::', items);
     return items.map((item: any, index: number) => (
         <ListItem item={item} index={index} key={item.id} />
     ));
@@ -79,22 +70,25 @@ export const Tasks = () => {
     };
 
     return (
-        <div css={styleDisplay}>
-            <h2>Project name</h2>
-            <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId='list'>
-                    {provided => (
-                        <div
-                            css={styleList}
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}>
-                            <TasksList items={taskItems} />
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
-            </DragDropContext>
-        </div>
+        <>
+            <div css={styleDisplay}>
+                <h2>Project name</h2>
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId='list'>
+                        {provided => (
+                            <div
+                                css={styleList}
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}>
+                                <TasksList items={taskItems} />
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+                <AddTask />
+            </div>
+        </>
     );
 };
 
