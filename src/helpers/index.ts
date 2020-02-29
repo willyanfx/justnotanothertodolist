@@ -70,3 +70,34 @@ function limitCalls(fn: any, limit: number = 20) {
         return fn(...args);
     };
 }
+
+function getDataFromDoc(doc: any) {
+    return { ...doc.data(), id: doc.id };
+}
+
+type Docs = {
+    archived: boolean;
+    id: string;
+    projectId: string;
+    task: string;
+    uid: string;
+};
+
+function getDocsFromSnapshot(snapshot: any) {
+    let docs: Docs[] = [];
+
+    snapshot.forEach((doc: any) => {
+        docs.push(getDataFromDoc(doc));
+    });
+    return docs;
+}
+
+export const subscribeTo = limitCalls(function subscribeTo(
+    uid: string,
+    callback: Function
+) {
+    let collection = db.collection('tasks').where('uid', '==', uid);
+    return collection.onSnapshot(snapshot =>
+        callback(getDocsFromSnapshot(snapshot))
+    );
+});

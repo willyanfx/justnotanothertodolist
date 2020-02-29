@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { Checkbox } from './Checkbox';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { useAppState } from '../app-state';
+import useTasks from '../hooks/useTasks';
+// const initial = Array.from({ length: 10 }, (v, k) => k).map(k => {
+//     const custom = {
+//         id: `id-${k}`,
+//         content: `Quote ${k}`
+//     };
 
-const initial = Array.from({ length: 10 }, (v, k) => k).map(k => {
-    const custom = {
-        id: `id-${k}`,
-        content: `Quote ${k}`
-    };
-
-    return custom;
-});
+//     return custom;
+// });
 
 function ListItem({ item, index }: any) {
+    console.log(item);
     return (
         <Draggable draggableId={item.id} index={index}>
             {provided => (
@@ -23,7 +25,7 @@ function ListItem({ item, index }: any) {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}>
                     <Checkbox />
-                    <span>{item.content}</span>
+                    {/* <span>{item.content}</span> */}
                 </div>
             )}
         </Draggable>
@@ -32,7 +34,8 @@ function ListItem({ item, index }: any) {
 
 // Ensuring the whole list does not re-render when the droppable re-renders
 const TasksList = React.memo(function TasksList({ items }: any) {
-    return items.map((item: { id: number }, index: number) => (
+    console.log('ITEMS::::', items);
+    return items.map((item: any, index: number) => (
         <ListItem item={item} index={index} key={item.id} />
     ));
 });
@@ -50,24 +53,29 @@ const reorder = (
 };
 
 export const Tasks = () => {
-    const [tasks, setTasks] = useState(initial);
+    const [taskItems, setTasksItems] = useState([]);
+    const [{ user }] = useAppState();
+    const tasks = useTasks(user.uid);
+
+    useEffect(() => {
+        if (tasks) setTasksItems(tasks);
+    }, [tasks]);
 
     const onDragEnd = (result: any) => {
         if (!result.destination) {
             return;
         }
-
         if (result.destination.index === result.source.index) {
             return;
         }
 
         const newList: any = reorder(
-            tasks,
+            taskItems,
             result.source.index,
             result.destination.index
         );
 
-        setTasks(newList);
+        setTasksItems(newList);
     };
 
     return (
@@ -80,7 +88,7 @@ export const Tasks = () => {
                             css={styleList}
                             ref={provided.innerRef}
                             {...provided.droppableProps}>
-                            <TasksList items={tasks} />
+                            <TasksList items={taskItems} />
                             {provided.placeholder}
                         </div>
                     )}
