@@ -1,6 +1,4 @@
-const initialState = { authAttempted: false, auth: null, user: null }
-
-
+const initialState = { authAttempted: false, auth: null, user: null };
 
 export enum ChangeOrLoadType {
     auth_change = 'AUTH_CHANGE',
@@ -8,31 +6,27 @@ export enum ChangeOrLoadType {
 }
 
 export type ActionType = {
-    type: ChangeOrLoadType,
-    auth: any,
-    user: String
-}
+    type: ChangeOrLoadType;
+    auth: { displayName: string; photoURL: string; uid: string };
+    user: String;
+};
 export type StateType = {
-    authAttempted: boolean,
-    user: string
-}
+    authAttempted: boolean;
+    user: string;
+};
 
 const appStateReducer = (state: StateType, action: ActionType) => {
     switch (action.type) {
         case ChangeOrLoadType.auth_change:
-            return { ...state, auth: action.auth, authAttempted: true }
+            return { ...state, auth: action.auth, authAttempted: true };
 
         case ChangeOrLoadType.load_user: {
-            return { ...state, user: action.user }
+            return { ...state, user: action.user };
         }
         default:
             return state;
     }
-}
+};
 
-
-
-
-
-export { initialState }
-export default appStateReducer
+export { initialState };
+export default appStateReducer;

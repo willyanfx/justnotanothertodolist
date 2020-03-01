@@ -15,6 +15,7 @@ const AddProject = () => {
             },
             'projects'
         );
+        setProjectName('');
     };
     return (
         <div>

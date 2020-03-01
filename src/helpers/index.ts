@@ -93,12 +93,31 @@ function getDocsFromSnapshot(snapshot: any) {
     return docs;
 }
 
+function filterTasks(
+    collection: firebase.firestore.Query<firebase.firestore.DocumentData>,
+    selectedProject: string
+) {
+    // TODO: filter everything if not inbox
+    if (selectedProject && !collatedTasksExist(selectedProject)) {
+        collection.where('projectId', '==', selectedProject);
+    } else if (selectedProject === 'TODAY') {
+        return collection;
+        // collection = collection.where('date', '==', Date.now());
+    } else if (selectedProject === 'INBOX') {
+        collection = collection.where('date', '==', '');
+    }
+    return collection;
+}
+
 export const subscribeTo = limitCalls(function subscribeTo(
     uid: string,
     type: string,
     callback: Function
 ) {
+    let selectedProject = 'TODAY';
     let collection = db.collection(type).where('uid', '==', uid);
+    collection = filterTasks(collection, selectedProject);
+
     return collection.onSnapshot(snapshot =>
         callback(getDocsFromSnapshot(snapshot))
     );
@@ -132,4 +151,13 @@ export async function createDoc(task: AddTask, collected: string) {
 
 export async function deleteProject(docId: string) {
     return db.doc(`projects/${docId}`).delete();
+}
+export async function doneTask(docId: string) {
+    console.log(docId);
+    return db.doc(`tasks/${docId}`).update({
+        archived: true
+    });
+}
+export async function deleteTask(docId: string) {
+    return db.doc(`tasks/${docId}`).delete();
 }

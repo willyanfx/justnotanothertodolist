@@ -6,6 +6,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useAppState } from '../app-state';
 import useTasks from '../hooks/useTasks';
 import { AddTask } from './AddTask';
+import { deleteTask, doneTask } from '../helpers';
 
 function ListItem({ item, index }: any) {
     return (
@@ -16,8 +17,9 @@ function ListItem({ item, index }: any) {
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}>
-                    <Checkbox />
+                    <Checkbox onClick={() => doneTask(item.id)} />
                     <span>{item.task}</span>
+                    <button onClick={() => deleteTask(item.id)}>♻️</button>
                 </div>
             )}
         </Draggable>

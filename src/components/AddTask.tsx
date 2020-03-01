@@ -53,8 +53,8 @@ export const AddTask = () => {
                         <button>Add Task</button>
                         <button>Cancel</button>
                         <span css={dropdownCSS}>
-                            <button>Date</button>
-                            <button>Project</button>
+                            <span>Date</span>
+                            <span>Project</span>
                         </span>
                     </div>
                 </form>

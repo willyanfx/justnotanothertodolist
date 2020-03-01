@@ -2,13 +2,13 @@ import React from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-export const Checkbox = () => {
+export function Checkbox({ onClick }: any): React.ReactElement {
     return (
         <div>
-            <span css={styleCheckbox} />
+            <button css={styleCheckbox} onClick={onClick} />
         </div>
     );
-};
+}
 
 const styleCheckbox = css`
     cursor: pointer;
