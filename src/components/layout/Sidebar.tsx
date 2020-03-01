@@ -1,27 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { Link } from 'react-router-dom';
+import AddProject from '../AddProject';
+import Projects from '../Projects';
 
 export const Sidebar = () => {
+    const [showProjects, setShowProjects] = useState<boolean>(true);
+
     return (
         <div css={styleSidebar}>
             <ul css={styleUl}>
                 <li css={styleIl}>
-                    <Link to='/inbox'>
-                        <i css={styleIcon}>📥</i>
+                    <Link to='.'>
+                        <span>📥</span>
                         <span css={styleContent}>Inbox</span>
                     </Link>
                 </li>
                 <li css={styleIl}>
                     <Link to='/today'>
-                        <i css={styleIcon}>📆</i>
+                        <span>📆</span>
                         <span css={styleContent}>Today</span>
                     </Link>
                 </li>
                 <li css={styleIl}>
                     <Link to='/next7days'>
-                        <i css={styleIcon}>🗓</i>
+                        <span>🗓</span>
                         <span css={styleContent}>Next 7 days</span>
                     </Link>
                 </li>
@@ -33,7 +37,8 @@ export const Sidebar = () => {
                         <span>▾</span>
                     </button>
 
-                    <ul></ul>
+                    <ul>{showProjects && <Projects />}</ul>
+                    {showProjects && <AddProject />}
                 </header>
             </ul>
         </div>
@@ -93,6 +98,7 @@ const styleProjects = css`
     padding: 1px 0;
     position: relative;
     display: flex;
+    flex-direction: column;
     font-size: 14px;
     line-height: 1em;
     cursor: pointer;

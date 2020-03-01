@@ -1,5 +1,6 @@
 import { collatedTasks } from '../constants';
 import { db, auth } from '../db';
+import { AddTask } from '../types';
 
 export { auth, db };
 
@@ -94,9 +95,10 @@ function getDocsFromSnapshot(snapshot: any) {
 
 export const subscribeTo = limitCalls(function subscribeTo(
     uid: string,
+    type: string,
     callback: Function
 ) {
-    let collection = db.collection('tasks').where('uid', '==', uid);
+    let collection = db.collection(type).where('uid', '==', uid);
     return collection.onSnapshot(snapshot =>
         callback(getDocsFromSnapshot(snapshot))
     );
@@ -111,10 +113,23 @@ export const fetchTasks = limitCalls(function fetchTasks(uid: string) {
         .then(getDocsFromSnapshot);
 });
 
-export async function createTask(task: any) {
+export const fetchProject = limitCalls(function fetchTasks(uid: string) {
     return db
-        .collection('tasks')
+        .collection('projects')
+        .where('uid', '==', uid)
+        .orderBy('projectId')
+        .get()
+        .then(getDocsFromSnapshot);
+});
+
+export async function createDoc(task: AddTask, collected: string) {
+    return db
+        .collection(collected)
         .add({ createdAt: Date.now(), ...task })
         .then(ref => ref.get())
         .then(doc => ({ ...doc.data(), id: doc.id }));
+}
+
+export async function deleteProject(docId: string) {
+    return db.doc(`projects/${docId}`).delete();
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { subscribeTo } from '../helpers';
+import { subscribeTo, fetchTasks } from '../helpers';
 const cache: any = {};
 
 export default function useTasks(uid: string, { listen } = { listen: true }) {
@@ -7,7 +7,7 @@ export default function useTasks(uid: string, { listen } = { listen: true }) {
     const [tasks, setTasks] = useState(cached);
     useEffect(() => {
         if (listen) {
-            return subscribeTo(uid, (tasks: any) => {
+            return subscribeTo(uid, 'tasks', (tasks: any) => {
                 cache[uid] = tasks;
                 setTasks(tasks);
             });
@@ -15,4 +15,9 @@ export default function useTasks(uid: string, { listen } = { listen: true }) {
     }, [uid, listen]);
 
     return tasks;
+}
+
+export async function preloadTasks(uid: string) {
+    cache[uid] = await fetchTasks(uid);
+    return;
 }

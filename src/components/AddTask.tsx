@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useAppState } from '../app-state';
-import { createTask } from '../helpers';
+import { createDoc } from '../helpers';
 
 export const AddTask = () => {
     const [{ auth }] = useAppState();
@@ -25,13 +25,16 @@ export const AddTask = () => {
             let newdate = new Date();
             collectedDate = newdate.setDate(newdate.getDate() + 7);
         }
-        createTask({
-            date: collectedDate,
-            uid: auth.uid,
-            task: taskRef.current?.value,
-            projectId,
-            archived: false
-        });
+        createDoc(
+            {
+                date: collectedDate,
+                uid: auth.uid,
+                task: taskRef.current?.value,
+                projectId,
+                archived: false
+            },
+            'tasks'
+        );
     };
 
     return (
