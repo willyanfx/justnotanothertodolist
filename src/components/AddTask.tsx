@@ -3,6 +3,9 @@ import React, { useState, useRef } from 'react';
 import { css, jsx } from '@emotion/core';
 import { useAppState } from '../app-state';
 import { createDoc } from '../helpers';
+import { format as formatDate, addDays } from 'date-fns';
+
+import { MenuButton, MenuItem } from './MenuButton';
 
 export const AddTask = () => {
     const [{ auth }] = useAppState();
@@ -12,24 +15,24 @@ export const AddTask = () => {
     const [project, setProject] = useState('');
     const [showAddTask, setShowAddTask] = useState(true);
     const taskRef = useRef<HTMLInputElement | null>(null);
-    const formRef = useRef(null);
 
     const handleSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
         let projectId = project || 'TODAY';
-        let collectedDate: number;
+        let collectedDate: string;
 
         if (projectId === 'TODAY') {
-            collectedDate = Date.now();
+            collectedDate = formatDate(Date.now(), 'dd/MM/yyyy');
+        } else if (projectId === 'NEXT_7DAYS') {
+            collectedDate = formatDate(addDays(Date.now(), 6), 'dd/MM/yyyy');
         } else {
-            let newdate = new Date();
-            collectedDate = newdate.setDate(newdate.getDate() + 7);
+            collectedDate = formatDate(addDays(Date.now(), 14), 'dd/MM/yyyy');
         }
         createDoc(
             {
                 date: collectedDate,
                 uid: auth.uid,
-                task: taskRef.current?.value,
+                task: task,
                 projectId,
                 archived: false
             },
@@ -44,20 +47,28 @@ export const AddTask = () => {
                 <span>Add Task</span>
             </button>
             {showAddTask && (
-                <form
-                    ref={formRef}
-                    className='NewPost_form'
-                    onSubmit={handleSubmit}>
-                    <input css={inputCSS} type='text' ref={taskRef} />
+                <div className='NewPost_form'>
+                    <input
+                        css={inputCSS}
+                        type='text'
+                        onChange={e => setTask(e.target.value)}
+                    />
                     <div style={{ display: 'flex' }}>
-                        <button>Add Task</button>
-                        <button>Cancel</button>
+                        <button onClick={handleSubmit}>Add Task</button>
+                        <button onClick={() => setShowAddTask(!showAddTask)}>
+                            Cancel
+                        </button>
                         <span css={dropdownCSS}>
-                            <span>Date</span>
-                            <span>Project</span>
+                            <MenuButton>
+                                <MenuItem>Today</MenuItem>
+                                <MenuItem>Next 7 days</MenuItem>
+                            </MenuButton>
+                            <MenuButton placeholder='Projects'>
+                                <MenuItem></MenuItem>
+                            </MenuButton>
                         </span>
                     </div>
-                </form>
+                </div>
             )}
         </div>
     );

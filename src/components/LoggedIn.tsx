@@ -26,13 +26,7 @@ export default function LoggedIn() {
                 <main>
                     <Sidebar />
                     <Switch>
-                        <Route path='/today'>
-                            <div>about</div>
-                        </Route>
-                        <Route path='/next7days'>
-                            <div>next 7 days</div>
-                        </Route>
-                        <Route path='/'>
+                        <Route exact path='/:id'>
                             <Tasks />
                         </Route>
                     </Switch>

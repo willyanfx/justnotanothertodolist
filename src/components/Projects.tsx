@@ -2,11 +2,7 @@ import React, { useState, useEffect, FC } from 'react';
 import { useAppState } from '../app-state';
 import useProject from '../hooks/useProject';
 import { deleteProject } from '../helpers';
-
-const initialValue = [
-    { projectId: 'MUSIC', name: 'ELAIA' },
-    { projectId: 'asdadsads', name: 'test' }
-];
+import { Link } from 'react-router-dom';
 
 type Proj = {
     createdAt: number;
@@ -25,13 +21,12 @@ const Projects: React.FC = (): JSX.Element => {
     }, [projects]);
 
     let projectDisplay = projectCollection.map(proj => (
-        <li key={proj.id}>
-            <div
-                role='button'
-                tabIndex={0}
+        <li key={proj.id} tabIndex={0}>
+            <Link
+                to={`/${proj.name}`}
                 aria-label={`Select ${proj.name} as the task project`}>
                 {proj.name}
-            </div>
+            </Link>
             <button onClick={() => deleteProject(proj.id)}>delete</button>
         </li>
     ));

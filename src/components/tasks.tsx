@@ -7,6 +7,8 @@ import { useAppState } from '../app-state';
 import useTasks from '../hooks/useTasks';
 import { AddTask } from './AddTask';
 import { deleteTask, doneTask } from '../helpers';
+import { useLocation, useParams } from 'react-router-dom';
+import { StandardProj } from '../types';
 
 function ListItem({ item, index }: any) {
     return (
@@ -48,7 +50,10 @@ const reorder = (
 export const Tasks = () => {
     const [taskItems, setTasksItems] = useState([]);
     const [{ user }] = useAppState();
-    const tasks = useTasks(user.uid);
+    let { id } = useParams();
+    let selectedProject = '' + id;
+
+    const tasks = useTasks(user.uid, selectedProject);
 
     useEffect(() => {
         if (tasks) setTasksItems(tasks);
@@ -71,10 +76,25 @@ export const Tasks = () => {
         setTasksItems(newList);
     };
 
+    let title: string;
+    switch (id) {
+        case StandardProj.inbox:
+            title = 'Inbox';
+            break;
+        case StandardProj.today:
+            title = 'Today';
+            break;
+        case StandardProj.next7:
+            title = 'Next 7 Days';
+            break;
+        default:
+            title = '' + id;
+    }
+
     return (
         <>
             <div css={styleDisplay}>
-                <h2>Project name</h2>
+                <h2>{title}</h2>
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId='list'>
                         {provided => (

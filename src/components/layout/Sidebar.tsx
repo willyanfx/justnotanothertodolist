@@ -4,6 +4,7 @@ import { css, jsx } from '@emotion/core';
 import { Link } from 'react-router-dom';
 import AddProject from '../AddProject';
 import Projects from '../Projects';
+import { StandardProj } from '../../types';
 
 export const Sidebar = () => {
     const [showProjects, setShowProjects] = useState<boolean>(true);
@@ -12,19 +13,19 @@ export const Sidebar = () => {
         <div css={styleSidebar}>
             <ul css={styleUl}>
                 <li css={styleIl}>
-                    <Link to='.'>
+                    <Link to={`/${StandardProj.inbox}`}>
                         <span>📥</span>
                         <span css={styleContent}>Inbox</span>
                     </Link>
                 </li>
                 <li css={styleIl}>
-                    <Link to='/today'>
+                    <Link to={`/${StandardProj.today}`}>
                         <span>📆</span>
                         <span css={styleContent}>Today</span>
                     </Link>
                 </li>
                 <li css={styleIl}>
-                    <Link to='/next7days'>
+                    <Link to={`/${StandardProj.next7}`}>
                         <span>🗓</span>
                         <span css={styleContent}>Next 7 days</span>
                     </Link>

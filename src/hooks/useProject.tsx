@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { fetchProject, subscribeTo } from '../helpers';
+import { fetchProject, subscribeToProject } from '../helpers';
 
 const cache: any = {};
 export default function useProject(uid: string, { listen } = { listen: true }) {
     const [project, setProject] = useState();
     useEffect(() => {
         if (listen) {
-            return subscribeTo(uid, 'projects', (projects: any) => {
+            return subscribeToProject(uid, (projects: any) => {
                 cache[uid] = projects;
                 setProject(projects);
             });

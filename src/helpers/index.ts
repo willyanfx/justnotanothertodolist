@@ -1,11 +1,9 @@
-import { collatedTasks } from '../constants';
 import { db, auth } from '../db';
 import { AddTask } from '../types';
 
-export { auth, db };
+import { format as formatDate } from 'date-fns';
 
-export const collatedTasksExist = (selectedProject: string) =>
-    collatedTasks.find(task => task.key === selectedProject);
+export { auth, db };
 
 export function onAuthStateChanged(callback: any) {
     return auth.onAuthStateChanged(callback);
@@ -86,7 +84,6 @@ type Docs = {
 
 function getDocsFromSnapshot(snapshot: any) {
     let docs: Docs[] = [];
-
     snapshot.forEach((doc: any) => {
         docs.push(getDataFromDoc(doc));
     });
@@ -97,26 +94,38 @@ function filterTasks(
     collection: firebase.firestore.Query<firebase.firestore.DocumentData>,
     selectedProject: string
 ) {
-    // TODO: filter everything if not inbox
-    if (selectedProject && !collatedTasksExist(selectedProject)) {
-        collection.where('projectId', '==', selectedProject);
+    collection = collection.where('archived', '==', false);
+    if (selectedProject === 'NEXT_7DAYS') {
+        return collection.where('projectId', '==', 'NEXT_7DAYS');
     } else if (selectedProject === 'TODAY') {
-        return collection;
-        // collection = collection.where('date', '==', Date.now());
-    } else if (selectedProject === 'INBOX') {
-        collection = collection.where('date', '==', '');
+        return collection.where(
+            'date',
+            '==',
+            formatDate(Date.now(), 'dd/MM/yyyy')
+        );
+    } else {
+        return collection.where('projectId', '==', selectedProject);
     }
-    return collection;
 }
 
-export const subscribeTo = limitCalls(function subscribeTo(
+export const subscribeToTask = limitCalls(function subscribeTo(
     uid: string,
-    type: string,
+    projectId: string = 'TODAY',
     callback: Function
 ) {
-    let selectedProject = 'TODAY';
-    let collection = db.collection(type).where('uid', '==', uid);
-    collection = filterTasks(collection, selectedProject);
+    let collection = db.collection('tasks').where('uid', '==', uid);
+
+    collection = filterTasks(collection, projectId);
+    return collection.onSnapshot(snapshot =>
+        callback(getDocsFromSnapshot(snapshot))
+    );
+});
+
+export const subscribeToProject = limitCalls(function subscribeTo(
+    uid: string,
+    callback: Function
+) {
+    let collection = db.collection('projects').where('uid', '==', uid);
 
     return collection.onSnapshot(snapshot =>
         callback(getDocsFromSnapshot(snapshot))
@@ -144,7 +153,7 @@ export const fetchProject = limitCalls(function fetchTasks(uid: string) {
 export async function createDoc(task: AddTask, collected: string) {
     return db
         .collection(collected)
-        .add({ createdAt: Date.now(), ...task })
+        .add({ createdAt: formatDate(Date.now(), 'dd/MM/yyyy'), ...task })
         .then(ref => ref.get())
         .then(doc => ({ ...doc.data(), id: doc.id }));
 }
