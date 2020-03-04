@@ -5,7 +5,12 @@ import { Navbar } from './layout/Navbar';
 import { Sidebar } from './layout/Sidebar';
 import { Tasks } from './Tasks';
 import { css, jsx } from '@emotion/core';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect
+} from 'react-router-dom';
 
 export default function LoggedIn() {
     const [{ auth, user }, dispatch] = useAppState();
@@ -26,12 +31,15 @@ export default function LoggedIn() {
                 <main>
                     <Sidebar />
                     <Switch>
-                        <Route exact path='/:id'>
+                        <Route exact path='*/:id'>
                             <Tasks />
                         </Route>
+                        <Redirect from='/' to='/inbox' />
                     </Switch>
                 </main>
             </Router>
         </Fragment>
     ) : null;
 }
+
+// <Route exact path='/:id'>
