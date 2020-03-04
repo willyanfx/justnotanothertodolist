@@ -1,33 +1,34 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useAppState } from '../app-state';
 import { createDoc } from '../helpers';
 import { format as formatDate, addDays } from 'date-fns';
-
-import { MenuButton, MenuItem } from './MenuButton';
+import useProject from '../hooks/useProject';
+import { MenuItem, Menu } from './MenuButton';
+import { StandardProj } from '../types';
 
 export const AddTask = () => {
     const [{ auth }] = useAppState();
+    const [{ user }] = useAppState();
+    const projects = useProject(user.uid);
+    const [showAddTask, setShowAddTask] = useState(true);
 
     const [task, setTask] = useState('');
-    const [taskDate, setTaskDate] = useState('');
-    const [project, setProject] = useState('');
-    const [showAddTask, setShowAddTask] = useState(true);
-    const taskRef = useRef<HTMLInputElement | null>(null);
+    const [taskDate, setTaskDate] = useState('INBOX');
+    const [projectName, setProjectName] = useState('');
 
     const handleSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        let projectId = project || 'TODAY';
-        let collectedDate: string;
+        let projectId = projectName || taskDate;
+        let collectedDate: string = '';
 
         if (projectId === 'TODAY') {
             collectedDate = formatDate(Date.now(), 'dd/MM/yyyy');
         } else if (projectId === 'NEXT_7DAYS') {
             collectedDate = formatDate(addDays(Date.now(), 6), 'dd/MM/yyyy');
-        } else {
-            collectedDate = formatDate(addDays(Date.now(), 14), 'dd/MM/yyyy');
         }
+
         createDoc(
             {
                 date: collectedDate,
@@ -39,6 +40,9 @@ export const AddTask = () => {
             'tasks'
         );
     };
+    useEffect(() => {
+        console.log(projectName);
+    }, [projectName]);
 
     return (
         <div css={addTaskCSS}>
@@ -59,13 +63,39 @@ export const AddTask = () => {
                             Cancel
                         </button>
                         <span css={dropdownCSS}>
-                            <MenuButton>
-                                <MenuItem>Today</MenuItem>
-                                <MenuItem>Next 7 days</MenuItem>
-                            </MenuButton>
-                            <MenuButton placeholder='Projects'>
-                                <MenuItem></MenuItem>
-                            </MenuButton>
+                            <Menu label={taskDate}>
+                                <MenuItem
+                                    onClick={() =>
+                                        setTaskDate(StandardProj.inbox)
+                                    }>
+                                    Inbox
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={() =>
+                                        setTaskDate(StandardProj.today)
+                                    }>
+                                    Today
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={() =>
+                                        setTaskDate(StandardProj.next7)
+                                    }>
+                                    Next 7 days
+                                </MenuItem>
+                            </Menu>
+                            {projects && (
+                                <Menu label='tes'>
+                                    {projects.map((item: any) => (
+                                        <MenuItem
+                                            key={item.id}
+                                            onClick={() =>
+                                                setProjectName(item.name)
+                                            }>
+                                            {item.name}
+                                        </MenuItem>
+                                    ))}
+                                </Menu>
+                            )}
                         </span>
                     </div>
                 </div>
