@@ -8,14 +8,13 @@ import useProject from '../hooks/useProject';
 import { MenuItem, Menu } from './MenuButton';
 import { StandardProj } from '../types';
 
-export const AddTask = () => {
+export const AddTask = ({ onCancel }: any) => {
     const [{ auth }] = useAppState();
     const [{ user }] = useAppState();
     const projects = useProject(user.uid);
-    const [showAddTask, setShowAddTask] = useState(true);
 
     const [task, setTask] = useState('');
-    const [taskDate, setTaskDate] = useState('INBOX');
+    const [taskDate, setTaskDate] = useState('');
     const [projectName, setProjectName] = useState('');
 
     const handleSubmit = (event: React.SyntheticEvent) => {
@@ -39,74 +38,52 @@ export const AddTask = () => {
             },
             'tasks'
         );
+        setTask('');
+        setProjectName('');
     };
-    useEffect(() => {
-        console.log(projectName);
-    }, [projectName]);
 
     return (
-        <div css={addTaskCSS}>
-            <button onClick={() => setShowAddTask(!showAddTask)}>
-                <span>+</span>
-                <span>Add Task</span>
-            </button>
-            {showAddTask && (
-                <div className='NewPost_form'>
-                    <input
-                        css={inputCSS}
-                        type='text'
-                        onChange={e => setTask(e.target.value)}
-                    />
-                    <div style={{ display: 'flex' }}>
-                        <button onClick={handleSubmit}>Add Task</button>
-                        <button onClick={() => setShowAddTask(!showAddTask)}>
-                            Cancel
-                        </button>
-                        <span css={dropdownCSS}>
-                            <Menu label={taskDate}>
+        <div className='NewPost_form'>
+            <input
+                css={inputCSS}
+                type='text'
+                onChange={e => setTask(e.target.value)}
+            />
+            <div style={{ display: 'flex' }}>
+                <button onClick={handleSubmit}>Add Task</button>
+                <button onClick={onCancel}>Cancel</button>
+                <span css={dropdownCSS}>
+                    <Menu label='📆'>
+                        <MenuItem
+                            onClick={() => setTaskDate(StandardProj.inbox)}>
+                            Inbox
+                        </MenuItem>
+                        <MenuItem
+                            onClick={() => setTaskDate(StandardProj.today)}>
+                            Today
+                        </MenuItem>
+                        <MenuItem
+                            onClick={() => setTaskDate(StandardProj.next7)}>
+                            Next 7 days
+                        </MenuItem>
+                    </Menu>
+                    {projects && (
+                        <Menu label='👩‍💻'>
+                            {projects.map((item: any) => (
                                 <MenuItem
-                                    onClick={() =>
-                                        setTaskDate(StandardProj.inbox)
-                                    }>
-                                    Inbox
+                                    key={item.id}
+                                    onClick={() => setProjectName(item.name)}>
+                                    {item.name}
                                 </MenuItem>
-                                <MenuItem
-                                    onClick={() =>
-                                        setTaskDate(StandardProj.today)
-                                    }>
-                                    Today
-                                </MenuItem>
-                                <MenuItem
-                                    onClick={() =>
-                                        setTaskDate(StandardProj.next7)
-                                    }>
-                                    Next 7 days
-                                </MenuItem>
-                            </Menu>
-                            {projects && (
-                                <Menu label='tes'>
-                                    {projects.map((item: any) => (
-                                        <MenuItem
-                                            key={item.id}
-                                            onClick={() =>
-                                                setProjectName(item.name)
-                                            }>
-                                            {item.name}
-                                        </MenuItem>
-                                    ))}
-                                </Menu>
-                            )}
-                        </span>
-                    </div>
-                </div>
-            )}
+                            ))}
+                        </Menu>
+                    )}
+                </span>
+            </div>
         </div>
     );
 };
 
-const addTaskCSS = css`
-    margin-top: 20px;
-`;
 const inputCSS = css`
     height: 32px;
     width: 100%;

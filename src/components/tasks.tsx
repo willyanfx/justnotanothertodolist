@@ -7,8 +7,9 @@ import { useAppState } from '../app-state';
 import useTasks from '../hooks/useTasks';
 import { AddTask } from './AddTask';
 import { deleteTask, doneTask } from '../helpers';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { StandardProj } from '../types';
+import AddDialog from './AddDialog';
 
 function ListItem({ item, index }: any) {
     return (
@@ -49,6 +50,7 @@ const reorder = (
 
 export const Tasks = () => {
     const [taskItems, setTasksItems] = useState([]);
+    const [showAddTask, setShowAddTask] = useState(true);
     const [{ user }] = useAppState();
     let { id } = useParams();
     let selectedProject = '' + id;
@@ -93,6 +95,9 @@ export const Tasks = () => {
 
     return (
         <>
+            <AddDialog>
+                <AddTask />
+            </AddDialog>
             <div css={styleDisplay}>
                 <h2>{title}</h2>
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -108,13 +113,26 @@ export const Tasks = () => {
                         )}
                     </Droppable>
                 </DragDropContext>
-                <AddTask />
+                <div css={addTaskCSS}>
+                    <button onClick={() => setShowAddTask(!showAddTask)}>
+                        <span>+</span>
+                        <span>Add Task</span>
+                    </button>
+                    {showAddTask && (
+                        <AddTask
+                            onCancel={() => setShowAddTask(!showAddTask)}
+                        />
+                    )}
+                </div>
             </div>
         </>
     );
 };
 
 const GRID = 8;
+const addTaskCSS = css`
+    margin-top: 20px;
+`;
 const styleDisplay = css`
     width: 656px;
     background-color: white;

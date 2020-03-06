@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { css, jsx } from '@emotion/core';
 
 export function Menu(props: any) {
-    const [open, setOpen] = useState<boolean>(true);
+    const [open, setOpen] = useState<boolean>(false);
 
     return (
         <div css={menu}>
