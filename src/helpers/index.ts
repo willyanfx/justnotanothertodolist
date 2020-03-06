@@ -1,5 +1,5 @@
 import { db, auth } from '../db';
-import { AddTask } from '../types';
+import { AddTaskProps } from '../types';
 
 import { format as formatDate } from 'date-fns';
 
@@ -150,7 +150,7 @@ export const fetchProject = limitCalls(function fetchTasks(uid: string) {
         .then(getDocsFromSnapshot);
 });
 
-export async function createDoc(task: AddTask, collected: string) {
+export async function createDoc(task: AddTaskProps, collected: string) {
     return db
         .collection(collected)
         .add({ createdAt: formatDate(Date.now(), 'dd/MM/yyyy'), ...task })

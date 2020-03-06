@@ -4,10 +4,11 @@ export type Task = {
     red: boolean;
 };
 
-export type AddTask = {
+export type AddTaskProps = {
     name?: string;
     date?: string;
     uid: string;
+    id?: any | string;
     task?: string | undefined;
     projectId: string;
     archived?: boolean;

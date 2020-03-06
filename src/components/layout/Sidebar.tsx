@@ -31,7 +31,7 @@ export const Sidebar = () => {
                     </Link>
                 </li>
                 <header css={styleProjects}>
-                    <button>
+                    <button onClick={() => setShowProjects(!showProjects)}>
                         <span>
                             <h2>Projects</h2>
                         </span>

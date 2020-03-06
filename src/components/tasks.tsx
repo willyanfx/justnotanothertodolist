@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { Checkbox } from './Checkbox';
@@ -8,10 +8,11 @@ import useTasks from '../hooks/useTasks';
 import { AddTask } from './AddTask';
 import { deleteTask, doneTask } from '../helpers';
 import { useParams } from 'react-router-dom';
-import { StandardProj } from '../types';
+import { StandardProj, AddTaskProps } from '../types';
 import AddDialog from './AddDialog';
+import { DialogStateContext, DialogSetContext } from '../context/DialogContext';
 
-function ListItem({ item, index }: any) {
+function ListItem({ item, index }: { item: AddTaskProps; index: number }) {
     return (
         <Draggable draggableId={item.id} index={index}>
             {provided => (
@@ -31,15 +32,15 @@ function ListItem({ item, index }: any) {
 
 // Ensuring the whole list does not re-render when the droppable re-renders
 const TasksList = React.memo(function TasksList({ items }: any) {
-    return items.map((item: any, index: number) => (
+    return items.map((item: AddTaskProps, index: number) => (
         <ListItem item={item} index={index} key={item.id} />
     ));
 });
 
 const reorder = (
     list: Iterable<unknown> | ArrayLike<unknown>,
-    startIndex: any,
-    endIndex: any
+    startIndex: number,
+    endIndex: number
 ) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
@@ -51,12 +52,13 @@ const reorder = (
 export const Tasks = () => {
     const [taskItems, setTasksItems] = useState([]);
     const [showAddTask, setShowAddTask] = useState(true);
+    const showModal = useContext(DialogStateContext);
+    const setShowModal = useContext(DialogSetContext);
     const [{ user }] = useAppState();
     let { id } = useParams();
-    let selectedProject = '' + id;
+    let selectedProject = String(id);
 
     const tasks = useTasks(user.uid, selectedProject);
-
     useEffect(() => {
         if (tasks) setTasksItems(tasks);
     }, [tasks]);
@@ -95,7 +97,9 @@ export const Tasks = () => {
 
     return (
         <>
-            <AddDialog>
+            <AddDialog
+                isOpen={showModal}
+                onDismiss={() => setShowModal(!showModal)}>
                 <AddTask />
             </AddDialog>
             <div css={styleDisplay}>
