@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { ThemeProvider } from 'emotion-theming';
+import React from 'react';
+import styled, { ThemeProvider } from 'styled-components';
+
 import { AppStateProvider } from './app-state';
 import appReducer, { initialState } from './appReducer';
 import useAuth from './useAuth';
@@ -9,15 +8,22 @@ import LoggedOut from './components/LoggedOut';
 import LoggedIn from './components/LoggedIn';
 
 const theme = {
-    color: 'tomato'
+    background: '#121212'
 };
+
+const Container = styled.div`
+    background: ${props => props?.theme?.background};
+    display: flex;
+    justify-content: center;
+    margin-right: 0;
+    height: 100vh;
+    width: 100%;
+`;
 
 function App() {
     const { authAttempted, auth } = useAuth();
     if (!authAttempted) return null;
-    return (
-        <div css={styleContainer}>{auth ? <LoggedIn /> : <LoggedOut />}</div>
-    );
+    return <Container>{auth ? <LoggedIn /> : <LoggedOut />}</Container>;
 }
 
 export default () => (
@@ -27,8 +33,3 @@ export default () => (
         </AppStateProvider>
     </ThemeProvider>
 );
-const styleContainer = css`
-    display: flex;
-    justify-content: center;
-    margin-right: 0;
-`;

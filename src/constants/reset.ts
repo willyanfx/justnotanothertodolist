@@ -1,6 +1,6 @@
-import { css } from '@emotion/core';
+import { createGlobalStyle } from 'styled-components';
 
-const reset = `
+export const GlobalStyle = createGlobalStyle`
     html,
     body,
     div,
@@ -125,5 +125,3 @@ const reset = `
         border-spacing: 0;
     }
 `;
-
-export default reset;

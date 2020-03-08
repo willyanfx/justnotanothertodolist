@@ -2,24 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { css, jsx, Global } from '@emotion/core';
-import reset from './constants/reset';
+
+import { GlobalStyle } from './constants/reset';
 ReactDOM.render(
     <>
-        <Global
-            styles={css`
-                ${reset}
-                *, *::after, *::before {
-                    box-sizing: border-box;
-                    -moz-osx-font-smoothing: grayscale;
-                    -webkit-font-smoothing: antialiased;
-                    font-smoothing: antialiased;
-                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-                        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
-                        'Helvetica Neue', sans-serif;
-                }
-            `}
-        />
+        <GlobalStyle />
         <App />
     </>,
     document.getElementById('root')

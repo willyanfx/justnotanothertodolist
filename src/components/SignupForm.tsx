@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import VisuallyHidden from './VisuallyHidden';
 import TabsButton from './TabsButton';
 import { signup } from '../helpers';
+import styled from 'styled-components';
 export type TextInputProps = {
     id: string;
     label: string;

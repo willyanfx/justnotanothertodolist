@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 
 import { Checkbox } from './Checkbox';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -13,6 +11,8 @@ import { useParams } from 'react-router-dom';
 import { StandardProj, AddTaskProps } from '../types';
 import AddDialog from './AddDialog';
 import { DialogStateContext, DialogSetContext } from '../context/DialogContext';
+
+import { IoIosTrash } from 'react-icons/io';
 
 function ListItem({ item, index }: { item: AddTaskProps; index: number }) {
     return (
@@ -27,7 +27,9 @@ function ListItem({ item, index }: { item: AddTaskProps; index: number }) {
                         <h4>{item.task}</h4>
                     </span>
 
-                    <button onClick={() => deleteTask(item.id)}>♻️</button>
+                    <span onClick={() => deleteTask(item.id)}>
+                        <IoIosTrash />
+                    </span>
                 </ListItemDiv>
             )}
         </Draggable>

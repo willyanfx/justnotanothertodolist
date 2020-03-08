@@ -3,7 +3,8 @@ import { useAppState } from '../app-state';
 import useProject from '../hooks/useProject';
 import { deleteProject } from '../helpers';
 import { Link } from 'react-router-dom';
-import styled from '@emotion/styled';
+import styled from 'styled-components';
+import { IoIosTrash } from 'react-icons/io';
 
 type Proj = {
     createdAt: number;
@@ -28,7 +29,9 @@ const Projects: React.FC = (): JSX.Element => {
                 aria-label={`Select ${proj.name} as the task project`}>
                 {proj.name}
             </Link>
-            <button onClick={() => deleteProject(proj.id)}>♻️</button>
+            <span onClick={() => deleteProject(proj.id)}>
+                <IoIosTrash />
+            </span>
         </ProjectLi>
     ));
 
@@ -46,8 +49,9 @@ const ProjectLi = styled.li`
         text-decoration: none;
     }
 
-    button {
+    span {
         background: transparent;
         border-radius: 4px;
+        color: #fff;
     }
 `;

@@ -1,6 +1,5 @@
 import React, { useState, createContext, useContext, Children } from 'react';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import styled from 'styled-components';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 
@@ -32,7 +31,6 @@ function Tab({ children, isDisabled, ...rest }: any) {
     return (
         <div
             data-tab
-            css={styleTabsButton}
             onClick={isDisabled ? undefined : () => setActiveIndex(index)}
             {...rest}>
             {children}
@@ -83,11 +81,3 @@ export default function LoggedOut() {
         </div>
     );
 }
-
-const styleTabsButton = css`
-    margin-top: 1rem;
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    color: tomato;
-`;

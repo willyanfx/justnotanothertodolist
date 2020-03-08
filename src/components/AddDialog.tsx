@@ -1,14 +1,17 @@
 import React, { useRef, useState, forwardRef } from 'react';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+
+import styled from 'styled-components';
 import { AddTask } from './AddTask';
 import { useTransition, animated } from 'react-spring';
+import { IoMdClose } from 'react-icons/io';
 
-const DialogContent = ({ children }: any) => <div css={dialog}>{children}</div>;
+const DialogContent: React.FC = ({ children }) => <Dialog>{children}</Dialog>;
 
 const DialogOverlay = forwardRef<HTMLDivElement, DialogProps>(
     function DialogOverlay({ isOpen = true, ...props }, forwardRef) {
-        return isOpen ? <div css={dialogOverlay}>{props.children}</div> : null;
+        return isOpen ? (
+            <DialogOverlayDiv>{props.children}</DialogOverlayDiv>
+        ) : null;
     }
 );
 
@@ -23,13 +26,12 @@ const AddDialog = (props: any) => {
             rootRef.current.style.filter = `blur(${props.blur}px)`;
         }
     };
-    console.log(props);
 
     return (
         props.isOpen && (
             <DialogOverlay>
                 <DialogContent>
-                    <div css={header}>
+                    <Header>
                         <h2 className='header'>Quick Add Task</h2>
                         <span
                             className='add-task__cancel-x'
@@ -38,10 +40,10 @@ const AddDialog = (props: any) => {
                             onKeyDown={() => {}}
                             tabIndex={0}
                             role='button'>
-                            X
+                            <IoMdClose />
                         </span>
-                    </div>
-                    <div css={content}>
+                    </Header>
+                    <div>
                         <AddTask />
                     </div>
                 </DialogContent>
@@ -52,11 +54,17 @@ const AddDialog = (props: any) => {
 
 export default AddDialog;
 
-const content = css`
-    padding: 16px;
+const Header = styled.header`
+    width: 100%;
+    height: 32px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    justify-content: space-between; 
 `;
 
-const dialogOverlay = css`
+const DialogOverlayDiv = styled.div`
     background: hsla(0, 0%, 0%, 0.33);
     position: fixed;
     top: 0;
@@ -66,19 +74,21 @@ const dialogOverlay = css`
     overflow: auto;
 `;
 
-const dialog = css`
+const Dialog = styled.div`
     width: 40vw;
     margin: 10vh auto;
     background: white;
     /* padding: 2rem; */
     outline: none;
-`;
-const header = css`
-    width: 100%;
-    padding: 4px 16px;
-    background: lightgray;
-    display: flex;
-    justify-content: space-between; 
+    background: linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.16),
+            rgba(255, 255, 255, 0.16)
+        ),
+        #121212;
+    box-shadow: 0px 11px 15px rgba(0, 0, 0, 0.2),
+        0px 9px 46px rgba(0, 0, 0, 0.12), 0px 24px 38px rgba(0, 0, 0, 0.14);
+    border-radius: 4px;
 `;
 
 export type DialogProps = {

@@ -1,4 +1,4 @@
-# Just Not Another ToDo List
+# Boring ToDo List
 
 ## Working in Progress
 

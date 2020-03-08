@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 
 import { useAppState } from '../app-state';
 import { createDoc } from '../helpers';
@@ -7,6 +7,8 @@ import { format as formatDate, addDays } from 'date-fns';
 import useProject from '../hooks/useProject';
 import { MenuItem, Menu } from './MenuButton';
 import { StandardProj } from '../types';
+
+import { IoIosCalendar, IoMdBriefcase } from 'react-icons/io';
 
 export const AddTask = ({ onCancel }: any) => {
     const [{ auth }] = useAppState();
@@ -47,11 +49,11 @@ export const AddTask = ({ onCancel }: any) => {
             <input type='text' onChange={e => setTask(e.target.value)} />
             <div>
                 <span>
-                    <button onClick={handleSubmit}>Add Task</button>
-                    <button onClick={onCancel}>Cancel</button>
+                    <Button onClick={handleSubmit}>Add Task</Button>
+                    <Button onClick={onCancel}>Cancel</Button>
                 </span>
                 <DropdownContainers>
-                    <Menu label='📆'>
+                    <Menu label={<IoIosCalendar />}>
                         <MenuItem
                             onClick={() => setTaskDate(StandardProj.inbox)}>
                             Inbox
@@ -66,7 +68,7 @@ export const AddTask = ({ onCancel }: any) => {
                         </MenuItem>
                     </Menu>
                     {projects && (
-                        <Menu label='👩‍💻'>
+                        <Menu label={<IoMdBriefcase />}>
                             {projects.map((item: any) => (
                                 <MenuItem
                                     key={item.id}
@@ -81,6 +83,10 @@ export const AddTask = ({ onCancel }: any) => {
         </Newtask>
     );
 };
+
+const Button = styled.button`
+    height: 32px;
+`;
 
 const Newtask = styled.div`
     input {

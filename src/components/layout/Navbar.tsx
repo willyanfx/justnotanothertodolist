@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import styled from '@emotion/styled';
+import styled from 'styled-components';
+import { FiPlus } from 'react-icons/fi';
 
 import { logout } from '../../helpers';
 import { useAppState } from '../../app-state';
@@ -30,7 +31,7 @@ function Account() {
     return user ? (
         <AccountDiv>
             <QuickAddButton onClick={() => setShowModal(!showModal)}>
-                +
+                <FiPlus />
             </QuickAddButton>
 
             <DarkMode></DarkMode>
@@ -56,6 +57,14 @@ const QuickAddButton = styled.button`
     width: 32px;
     background: purple;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+        min-width: 24px;
+        min-height: 24px;
+        color: #fff;
+    }
 `;
 
 const AccountDiv = styled.div`

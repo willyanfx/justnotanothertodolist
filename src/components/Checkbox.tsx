@@ -1,16 +1,15 @@
 import React from 'react';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import styled from 'styled-components';
 
 export function Checkbox({ onClick }: any): React.ReactElement {
     return (
         <div>
-            <button css={styleCheckbox} onClick={onClick} />
+            <CheckboxBtn onClick={onClick} />
         </div>
     );
 }
 
-const styleCheckbox = css`
+const CheckboxBtn = styled.button`
     cursor: pointer;
     border-color: gray;
     color: #343434;

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import AddProject from '../AddProject';
 import Projects from '../Projects';
 import { StandardProj } from '../../types';
+import { MdInbox, MdToday, MdDateRange } from 'react-icons/md';
 
 export const Sidebar = () => {
     const [showProjects, setShowProjects] = useState<boolean>(true);
@@ -15,20 +14,26 @@ export const Sidebar = () => {
             <ul>
                 <li>
                     <Link to={`/${StandardProj.inbox}`}>
-                        <span>📥</span>
-                        <span css={styleContent}>Inbox</span>
+                        <span>
+                            <MdInbox />
+                        </span>
+                        <span>Inbox</span>
                     </Link>
                 </li>
                 <li>
                     <Link to={`/${StandardProj.today}`}>
-                        <span>📆</span>
-                        <span css={styleContent}>Today</span>
+                        <span>
+                            <MdToday />
+                        </span>
+                        <span>Today</span>
                     </Link>
                 </li>
                 <li>
                     <Link to={`/${StandardProj.next7}`}>
-                        <span>🗓</span>
-                        <span css={styleContent}>Next 7 days</span>
+                        <span>
+                            <MdDateRange />
+                        </span>
+                        <span>Next 7 days</span>
                     </Link>
                 </li>
             </ul>
@@ -94,14 +99,4 @@ const SidebarContainer = styled.div`
             color: #fff;
         }
     }
-`;
-
-const styleContent = css`
-    display: inline-block;
-    width: 187px;
-    vertical-align: top;
-    min-height: 24px;
-    line-height: 24px;
-    word-break: break-all;
-    word-break: break-word;
 `;
