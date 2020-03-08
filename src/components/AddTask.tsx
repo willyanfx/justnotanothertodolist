@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+
 import { useAppState } from '../app-state';
 import { createDoc } from '../helpers';
 import { format as formatDate, addDays } from 'date-fns';
@@ -43,16 +43,14 @@ export const AddTask = ({ onCancel }: any) => {
     };
 
     return (
-        <div className='NewPost_form'>
-            <input
-                css={inputCSS}
-                type='text'
-                onChange={e => setTask(e.target.value)}
-            />
-            <div style={{ display: 'flex' }}>
-                <button onClick={handleSubmit}>Add Task</button>
-                <button onClick={onCancel}>Cancel</button>
-                <span css={dropdownCSS}>
+        <Newtask>
+            <input type='text' onChange={e => setTask(e.target.value)} />
+            <div>
+                <span>
+                    <button onClick={handleSubmit}>Add Task</button>
+                    <button onClick={onCancel}>Cancel</button>
+                </span>
+                <DropdownContainers>
                     <Menu label='📆'>
                         <MenuItem
                             onClick={() => setTaskDate(StandardProj.inbox)}>
@@ -78,22 +76,39 @@ export const AddTask = ({ onCancel }: any) => {
                             ))}
                         </Menu>
                     )}
-                </span>
+                </DropdownContainers>
             </div>
-        </div>
+        </Newtask>
     );
 };
 
-const inputCSS = css`
-    height: 32px;
-    width: 100%;
-    border-radius: 4px;
-    border: 1px solid #cacaca;
-    margin-top: 8px;
-    margin-bottom: 8px;
+const Newtask = styled.div`
+    input {
+        height: 32px;
+        width: 100%;
+        border-radius: 4px;
+        border: 1px solid #dadada;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        background: #292929;
+    }
+
+    > div {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            height: 32px;
+            background: transparent;
+            border: transparent;
+            color: #fff;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+    }
 `;
 
-const dropdownCSS = css`
+const DropdownContainers = styled.span`
     display: inline-grid;
     grid-auto-flow: column;
     grid-column-gap: 16px;

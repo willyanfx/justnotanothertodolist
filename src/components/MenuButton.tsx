@@ -1,37 +1,32 @@
 import React, { useState } from 'react';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import styled from '@emotion/styled';
 
 export function Menu(props: any) {
     const [open, setOpen] = useState<boolean>(false);
 
     return (
-        <div css={menu}>
-            <button onClick={() => setOpen(!open)} css={menuButton}>
+        <MenuDiv>
+            <MenuButton onClick={() => setOpen(!open)}>
                 {props.label}
-            </button>
-            <div
-                css={css`
-                    opacity: ${open ? 1 : 0};
-                    position: absolute;
-                    border: 1px solid #000;
-                `}>
-                <ul css={menuList}>{props.children}</ul>
-            </div>
-        </div>
+            </MenuButton>
+
+            <MenuListContainer style={{ opacity: open ? 1 : 0 }}>
+                {props.children}
+            </MenuListContainer>
+        </MenuDiv>
     );
 }
 
 export function MenuItem({ children, onClick }: any) {
     return (
-        <li role='button' css={menuItem} onClick={onClick}>
+        <li role='button' onClick={onClick}>
             <span>{children}</span>
         </li>
     );
 }
 
-const menu = css``;
-const menuButton = css`
+const MenuDiv = styled.div``;
+const MenuButton = styled.button`
     padding: 9px 16px;
     border-radius: 6px;
     color: #151924;
@@ -43,23 +38,33 @@ const menuButton = css`
     -webkit-appearance: none;
 `;
 
-const menuList = css`
+const MenuListContainer = styled.ul`
+    position: absolute;
     padding: 0;
     margin: 0;
     visibility: visible;
-    /* transform: scale(1) translate(0, 12px);
-    transition: opacity 0.3s ease, visibility 0.3s ease,
-        transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32); */
-`;
-const menuItem = css`
-    height: 32px;
-    padding-left: 8px;
-    padding-right: 8px;
-    display: flex;
-    align-items: center;
-    /* transform: translate(6px, 0); */
-    transition: all 0.3s ease;
-    &:hover {
-        background: #cacaca;
+    background: linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.12),
+            rgba(255, 255, 255, 0.12)
+        ),
+        #121212;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2), 0px 3px 14px rgba(0, 0, 0, 0.12),
+        0px 8px 10px rgba(0, 0, 0, 0.14);
+    border-radius: 4px;
+    border: none;
+    outline: none;
+
+    li {
+        height: 32px;
+        padding-left: 8px;
+        padding-right: 8px;
+        display: flex;
+        align-items: center;
+        /* transform: translate(6px, 0); */
+        transition: all 0.3s ease;
+        &:hover {
+            background: #484848;
+        }
     }
 `;

@@ -1,17 +1,20 @@
-import React from 'react';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import React, { useContext } from 'react';
+import styled from '@emotion/styled';
+
 import { logout } from '../../helpers';
 import { useAppState } from '../../app-state';
-
+import {
+    DialogStateContext,
+    DialogSetContext
+} from '../../context/DialogContext';
 export const Navbar = () => {
     return (
-        <header css={styleHeader}>
-            <nav css={styleNav}>
+        <Header>
+            <NavBar>
                 <Logo />
                 <Account />
-            </nav>
-        </header>
+            </NavBar>
+        </Header>
     );
 };
 
@@ -22,71 +25,84 @@ const Logo = () => (
 );
 function Account() {
     const [{ user }] = useAppState();
+    const showModal = useContext(DialogStateContext);
+    const setShowModal = useContext(DialogSetContext);
     return user ? (
-        <div>
-            <div>
-                <div>Avatar</div>
-            </div>
-            <button onClick={() => logout()}>Log out</button>
-            <div>Darkmode</div>
-        </div>
+        <AccountDiv>
+            <QuickAddButton onClick={() => setShowModal(!showModal)}>
+                +
+            </QuickAddButton>
+
+            <DarkMode></DarkMode>
+            <div data-avatar></div>
+        </AccountDiv>
     ) : (
         <div>Loading user</div>
     );
 }
 
-const styleHeader = css`
-    border-bottom: solid 1px #ca2100;
-    background: #cacaca;
+{
+    /* <button onClick={() => logout()}>Log out</button> */
+}
+
+const DarkMode = styled.div`
+    height: 32px;
+    width: 32px;
+    background: teal;
+`;
+
+const QuickAddButton = styled.button`
+    height: 32px;
+    width: 32px;
+    background: purple;
+    border-radius: 50%;
+`;
+
+const AccountDiv = styled.div`
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 42px;
+    [data-avatar] {
+        position: relative;
+        height: 32px;
+        width: 32px;
+        background: purple;
+        border-radius: 50%;
+    }
+`;
+
+const Header = styled.header`
+    border-bottom: solid 1px #cacaca;
     transition: height 200ms ease-in;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    height: 44px;
+    height: 42px;
     z-index: 400;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
+
+    background: linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.11),
+            rgba(255, 255, 255, 0.11)
+        ),
+        #121212;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2), 0px 1px 18px rgba(0, 0, 0, 0.12),
+        0px 6px 10px rgba(0, 0, 0, 0.14);
 `;
 
-const styleNav = css`
+const NavBar = styled.nav`
+    position: relative;
     display: grid;
+    max-width: 922px;
+    width: 100%;
+    max-height: 42px;
+    margin: auto;
+    justify-content: center;
     align-items: center;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    max-width: 922px;
-    margin: auto;
-    height: 44px;
-`;
-
-const styleUl = css`
-    display: flex;
-    position: relative;
-    list-style: none;
-    justify-content: flex-end;
-    li {
-        list-style-type: none;
-        cursor: pointer;
-        width: 30px;
-        height: 30px;
-        text-align: center;
-    }
-`;
-const styleAddButton = css`
-    margin-right: 15px;
-    font-size: 22px;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    border-radius: 50%;
-`;
-
-const styleSearchBar = css`
-    width: 100%;
-    input {
-        width: 100%;
-        height: 40px;
-        font-size: 16px;
-    }
 `;

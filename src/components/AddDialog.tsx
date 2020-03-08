@@ -4,25 +4,7 @@ import { css, jsx } from '@emotion/core';
 import { AddTask } from './AddTask';
 import { useTransition, animated } from 'react-spring';
 
-const DialogContent = () => (
-    <div css={dialog}>
-        <div css={header}>
-            <h2 className='header'>Quick Add Task</h2>
-            <span
-                className='add-task__cancel-x'
-                aria-label='Cancel adding task'
-                onClick={() => {}}
-                onKeyDown={() => {}}
-                tabIndex={0}
-                role='button'>
-                X
-            </span>
-        </div>
-        <div css={content}>
-            <AddTask />
-        </div>
-    </div>
-);
+const DialogContent = ({ children }: any) => <div css={dialog}>{children}</div>;
 
 const DialogOverlay = forwardRef<HTMLDivElement, DialogProps>(
     function DialogOverlay({ isOpen = true, ...props }, forwardRef) {
@@ -41,11 +23,30 @@ const AddDialog = (props: any) => {
             rootRef.current.style.filter = `blur(${props.blur}px)`;
         }
     };
+    console.log(props);
 
     return (
-        <DialogOverlay>
-            <DialogContent />
-        </DialogOverlay>
+        props.isOpen && (
+            <DialogOverlay>
+                <DialogContent>
+                    <div css={header}>
+                        <h2 className='header'>Quick Add Task</h2>
+                        <span
+                            className='add-task__cancel-x'
+                            aria-label='Cancel adding task'
+                            onClick={props.onDismiss}
+                            onKeyDown={() => {}}
+                            tabIndex={0}
+                            role='button'>
+                            X
+                        </span>
+                    </div>
+                    <div css={content}>
+                        <AddTask />
+                    </div>
+                </DialogContent>
+            </DialogOverlay>
+        )
     );
 };
 

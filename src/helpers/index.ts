@@ -3,6 +3,8 @@ import { AddTaskProps } from '../types';
 
 import { format as formatDate } from 'date-fns';
 
+import { Docs, signUpProp } from '../types';
+
 export { auth, db };
 
 export function onAuthStateChanged(callback: any) {
@@ -16,12 +18,6 @@ export function logout() {
 export function login(email: string, password: string) {
     return auth.signInWithEmailAndPassword(email, password);
 }
-type signUpProp = {
-    email: string;
-    password: string;
-    displayName: string;
-    photoURL: string;
-};
 
 export async function signup({
     email,
@@ -73,14 +69,6 @@ function limitCalls(fn: any, limit: number = 20) {
 function getDataFromDoc(doc: any) {
     return { ...doc.data(), id: doc.id };
 }
-
-type Docs = {
-    archived: boolean;
-    id: string;
-    projectId: string;
-    task: string;
-    uid: string;
-};
 
 function getDocsFromSnapshot(snapshot: any) {
     let docs: Docs[] = [];

@@ -3,6 +3,7 @@ import { useAppState } from '../app-state';
 import useProject from '../hooks/useProject';
 import { deleteProject } from '../helpers';
 import { Link } from 'react-router-dom';
+import styled from '@emotion/styled';
 
 type Proj = {
     createdAt: number;
@@ -21,16 +22,32 @@ const Projects: React.FC = (): JSX.Element => {
     }, [projects]);
 
     let projectDisplay = projectCollection.map(proj => (
-        <li key={proj.id} tabIndex={0}>
+        <ProjectLi key={proj.id} tabIndex={0}>
             <Link
                 to={`/${proj.name}`}
                 aria-label={`Select ${proj.name} as the task project`}>
                 {proj.name}
             </Link>
-            <button onClick={() => deleteProject(proj.id)}>delete</button>
-        </li>
+            <button onClick={() => deleteProject(proj.id)}>♻️</button>
+        </ProjectLi>
     ));
 
-    return <ul> {projectDisplay}</ul>;
+    return <>{projectDisplay}</>;
 };
 export default Projects;
+
+const ProjectLi = styled.li`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 32px;
+
+    a {
+        text-decoration: none;
+    }
+
+    button {
+        background: transparent;
+        border-radius: 4px;
+    }
+`;

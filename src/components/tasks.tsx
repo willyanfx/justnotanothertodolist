@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import styled from '@emotion/styled';
+
 import { Checkbox } from './Checkbox';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useAppState } from '../app-state';
@@ -16,15 +18,17 @@ function ListItem({ item, index }: { item: AddTaskProps; index: number }) {
     return (
         <Draggable draggableId={item.id} index={index}>
             {provided => (
-                <div
-                    css={styleItems}
+                <ListItemDiv
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}>
-                    <Checkbox onClick={() => doneTask(item.id)} />
-                    <span>{item.task}</span>
+                    <span>
+                        <Checkbox onClick={() => doneTask(item.id)} />
+                        <h4>{item.task}</h4>
+                    </span>
+
                     <button onClick={() => deleteTask(item.id)}>♻️</button>
-                </div>
+                </ListItemDiv>
             )}
         </Draggable>
     );
@@ -92,7 +96,7 @@ export const Tasks = () => {
             title = 'Next 7 Days';
             break;
         default:
-            title = '' + id;
+            title = String(id);
     }
 
     return (
@@ -102,22 +106,21 @@ export const Tasks = () => {
                 onDismiss={() => setShowModal(!showModal)}>
                 <AddTask />
             </AddDialog>
-            <div css={styleDisplay}>
+            <DisplayItem>
                 <h2>{title}</h2>
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId='list'>
                         {provided => (
-                            <div
-                                css={styleList}
+                            <List
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}>
                                 <TasksList items={taskItems} />
                                 {provided.placeholder}
-                            </div>
+                            </List>
                         )}
                     </Droppable>
                 </DragDropContext>
-                <div css={addTaskCSS}>
+                <AddTaskDiv>
                     <button onClick={() => setShowAddTask(!showAddTask)}>
                         <span>+</span>
                         <span>Add Task</span>
@@ -127,19 +130,24 @@ export const Tasks = () => {
                             onCancel={() => setShowAddTask(!showAddTask)}
                         />
                     )}
-                </div>
-            </div>
+                </AddTaskDiv>
+            </DisplayItem>
         </>
     );
 };
 
 const GRID = 8;
-const addTaskCSS = css`
+
+const AddTaskDiv = styled.div`
+    border-top: 1px solid #999999;
     margin-top: 20px;
+    padding-top: 16px;
 `;
-const styleDisplay = css`
+
+const DisplayItem = styled.div`
     width: 656px;
-    background-color: white;
+    background: #121212;
+    color: #fff;
     margin-left: 266px;
     border-right: 3px;
     vertical-align: top;
@@ -147,31 +155,29 @@ const styleDisplay = css`
     padding-right: 40px;
     padding-top: 80px;
     padding-bottom: 84px;
-
     h2 {
         font-size: 20px;
         font-weight: normal;
         margin: 0 30px 20px 0;
     }
 `;
-
-const styleList = css`
+const List = styled.div`
     display: flex;
     flex-direction: column;
-    line-height: 18px;
-    color: #333;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-size: 14px;
-    list-style-type: none;
-    border-bottom: 1px solid #f0f0f0;
 `;
 
-const styleItems = css`
+const ListItemDiv = styled.div`
     display: flex;
     width: 100%;
-    border: 1px solid grey;
+    background: #1e1e1e;
+    border-radius: 3px;
     margin-bottom: ${GRID}px;
-    background-color: #fff;
     padding: ${GRID}px;
+    justify-content: space-between;
+    span {
+        display: inline-flex;
+    }
+    h4 {
+        margin-left: 8px;
+    }
 `;

@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { createDoc } from '../helpers';
 import { useAppState } from '../app-state';
+import styled from '@emotion/styled';
 
 const AddProject = () => {
     const [{ auth }] = useAppState();
-    const [show, setShow] = useState<boolean>(false);
+    const [show, setShow] = useState<boolean>(true);
     const [projectName, setProjectName] = useState<string>('');
     const handleAddProject = () => {
         createDoc(
@@ -18,17 +19,17 @@ const AddProject = () => {
         setProjectName('');
     };
     return (
-        <div>
+        <>
             {show && (
-                <div>
+                <AddProjectDiv>
                     <input
                         value={projectName}
                         onChange={e => setProjectName(e.target.value)}
                         type='text'
                     />
                     <button onClick={handleAddProject}>Add Project</button>
-                    <a href=''>Cancel</a>
-                </div>
+                    <div onClick={() => setShow(!show)}>Cancel</div>
+                </AddProjectDiv>
             )}
             <span>+</span>
             <span
@@ -40,8 +41,24 @@ const AddProject = () => {
                 tabIndex={0}>
                 Add Project
             </span>
-        </div>
+        </>
     );
 };
 
 export default AddProject;
+
+const AddProjectDiv = styled.div`
+    display: block;
+    margin: 8px 16px;
+    color: #fff;
+    input {
+        width: 100%;
+        height: 32px;
+        background: transparent;
+        border: 1px solid #cacaca;
+    }
+    button {
+        color: #fff;
+        background: transparent;
+    }
+`;
