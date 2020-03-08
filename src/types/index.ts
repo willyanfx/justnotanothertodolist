@@ -15,9 +15,9 @@ export interface AddTaskProps {
 }
 
 export enum StandardProj {
-    inbox = 'INBOX',
-    today = 'TODAY',
-    next7 = 'NEXT_7DAYS'
+    inbox = 'inbox',
+    today = 'today',
+    next7 = 'next7days'
 }
 export type Docs = {
     archived: boolean;

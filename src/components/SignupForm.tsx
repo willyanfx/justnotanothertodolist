@@ -15,7 +15,13 @@ function TextInput({ id, label, type = 'text' }: TextInputProps) {
             <VisuallyHidden>
                 <label htmlFor={id}>{label}</label>
             </VisuallyHidden>
-            <input type={type} id={id} placeholder={label} required />
+            <input
+                data-todo-input
+                type={type}
+                id={id}
+                placeholder={label}
+                required
+            />
         </Fragment>
     );
 }
@@ -53,15 +59,18 @@ export default function SignupForm() {
                     </p>
                 </div>
             )}
-            <form onSubmit={handleSignup}>
+            <Form onSubmit={handleSignup}>
                 <TextInput id='displayName' label='Display Name' />
-                <TextInput id='email' label='Email' />
+                <TextInput data-todo-input id='email' label='Email' />
                 <TextInput id='password' type='password' label='Password' />
                 <TabsButton>
                     <i>♦︎</i>
                     <span>{loading ? 'Loading...' : 'Sign Up'}</span>
                 </TabsButton>
-            </form>
+            </Form>
         </div>
     );
 }
+const Form = styled.form`
+    display: grid;
+`;

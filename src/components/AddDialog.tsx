@@ -72,6 +72,7 @@ const DialogOverlayDiv = styled.div`
     bottom: 0;
     left: 0;
     overflow: auto;
+    z-index: 30000;
 `;
 
 const Dialog = styled.div`

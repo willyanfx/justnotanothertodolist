@@ -3,6 +3,7 @@ import { createDoc } from '../helpers';
 import { useAppState } from '../app-state';
 import styled from 'styled-components';
 import { FiPlus } from 'react-icons/fi';
+import { rems } from '../constants/tokens';
 
 const AddProject = () => {
     const [{ auth }] = useAppState();
@@ -36,6 +37,8 @@ const AddProject = () => {
             {show && (
                 <AddProjectDiv>
                     <input
+                        tabIndex={0}
+                        data-todo-input
                         value={projectName}
                         onChange={e => setProjectName(e.target.value)}
                         type='text'
@@ -60,12 +63,12 @@ export default AddProject;
 
 const ProjectBtn = styled.span`
     color: #fff;
-    padding: 0 16px;
+    padding: 0 ${rems[16]};
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 32px;
-    font-size: 14px;
+    height: ${rems[32]};
+    font-size: ${rems[16]};
     text-align: center;
     &:hover {
         background: rgba(187, 134, 252, 0.04);
@@ -73,24 +76,20 @@ const ProjectBtn = styled.span`
 `;
 
 const AddProjectDiv = styled.div`
-    display: block;
-    margin: 8px 16px;
+    /* display: block; */
+    position: relative;
+    margin: ${rems[8]} ${rems[8]};
     color: #fff;
-    input {
-        width: 100%;
-        height: 32px;
-        background: transparent;
-        border: 1px solid #cacaca;
-    }
+
     > div {
         display: grid;
-        grid-column-gap: 8px;
+        grid-column-gap: ${rems[8]};
         grid-template-columns: 1fr 1fr;
-        margin-top: 8px;
+        margin-top: ${rems[8]};
     }
     button {
         color: #fff;
         background: transparent;
-        height: 32px;
+        height: ${rems[32]};
     }
 `;

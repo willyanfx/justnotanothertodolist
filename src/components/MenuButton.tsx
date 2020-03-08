@@ -1,47 +1,50 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { rems } from '../constants/tokens';
 
 export function Menu(props: any) {
     const [open, setOpen] = useState<boolean>(false);
 
     return (
-        <MenuDiv>
+        <MenuContainer>
             <MenuButton onClick={() => setOpen(!open)}>
                 {props.label}
             </MenuButton>
-
             <MenuListContainer style={{ opacity: open ? 1 : 0 }}>
                 {props.children}
             </MenuListContainer>
-        </MenuDiv>
+        </MenuContainer>
     );
 }
 
 export function MenuItem({ children, onClick }: any) {
     return (
         <li role='button' onClick={onClick}>
-            <span>{children}</span>
+            {children}
         </li>
     );
 }
 
-const MenuDiv = styled.div``;
+const MenuContainer = styled.div`
+    position: static;
+`;
+
 const MenuButton = styled.button`
-    padding: 9px 16px;
-    border-radius: 6px;
+    padding: ${rems[8]} ${rems[16]};
+    border-radius: ${rems[4]};
     color: #151924;
     border: 1px solid #151924;
     background: #fff;
-    line-height: 22px;
-    font-size: 16px;
+    font-size: ${rems[16]};
     font-family: inherit;
     -webkit-appearance: none;
 `;
 
 const MenuListContainer = styled.ul`
     position: absolute;
-    padding: 0;
+    padding: 4px 0;
     margin: 0;
+    width: 100%;
     visibility: visible;
     background: linear-gradient(
             0deg,
@@ -54,13 +57,16 @@ const MenuListContainer = styled.ul`
     border-radius: 4px;
     border: none;
     outline: none;
+    z-index: 2000;
 
     li {
+        min-width: 100%;
         height: 32px;
         padding-left: 8px;
         padding-right: 8px;
         display: flex;
         align-items: center;
+        word-wrap: none;
         /* transform: translate(6px, 0); */
         transition: all 0.3s ease;
         &:hover {

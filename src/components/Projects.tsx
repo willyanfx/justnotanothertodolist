@@ -5,6 +5,7 @@ import { deleteProject } from '../helpers';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { IoIosTrash } from 'react-icons/io';
+import { rems } from '../constants/tokens';
 
 type Proj = {
     createdAt: number;
@@ -23,7 +24,7 @@ const Projects: React.FC = (): JSX.Element => {
     }, [projects]);
 
     let projectDisplay = projectCollection.map(proj => (
-        <ProjectLi key={proj.id} tabIndex={0}>
+        <ProjectLi data-todo-sidebar-list key={proj.id} tabIndex={0}>
             <Link
                 to={`/${proj.name}`}
                 aria-label={`Select ${proj.name} as the task project`}>
@@ -40,18 +41,13 @@ const Projects: React.FC = (): JSX.Element => {
 export default Projects;
 
 const ProjectLi = styled.li`
-    width: 100%;
     display: flex;
     justify-content: space-between;
-    height: 32px;
-
-    a {
-        text-decoration: none;
-    }
+    height: ${rems[32]};
 
     span {
         background: transparent;
-        border-radius: 4px;
+        border-radius: ${rems[4]};
         color: #fff;
     }
 `;

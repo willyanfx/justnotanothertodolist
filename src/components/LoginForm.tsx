@@ -44,6 +44,7 @@ export default function LoginForm() {
                     <label htmlFor='login:email'>Email:</label>
                 </VisuallyHidden>
                 <input
+                    data-todo-input
                     ref={emailRef}
                     type='text'
                     id='login:email'
@@ -55,6 +56,7 @@ export default function LoginForm() {
                     <label htmlFor='login:password'>Password:</label>
                 </VisuallyHidden>
                 <input
+                    data-todo-input
                     ref={passwordRef}
                     id='login:password'
                     required
@@ -65,6 +67,7 @@ export default function LoginForm() {
                 <div>
                     <label>
                         <input
+                            data-todo-input
                             type='checkbox'
                             onChange={handleShowPassword}
                             checked={showPassword}
@@ -73,7 +76,7 @@ export default function LoginForm() {
                     </label>
                 </div>
 
-                <button>
+                <button data-todo-button>
                     <span>{loading ? 'Loading...' : 'Login'}</span>
                 </button>
             </form>

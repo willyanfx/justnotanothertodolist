@@ -5,6 +5,8 @@ import AddProject from '../AddProject';
 import Projects from '../Projects';
 import { StandardProj } from '../../types';
 import { MdInbox, MdToday, MdDateRange } from 'react-icons/md';
+import { IoMdArrowDropdown } from 'react-icons/io';
+import { rems } from '../../constants/tokens';
 
 export const Sidebar = () => {
     const [showProjects, setShowProjects] = useState<boolean>(true);
@@ -12,7 +14,7 @@ export const Sidebar = () => {
     return (
         <SidebarContainer>
             <ul>
-                <li>
+                <li data-todo-sidebar-list>
                     <Link to={`/${StandardProj.inbox}`}>
                         <span>
                             <MdInbox />
@@ -20,7 +22,7 @@ export const Sidebar = () => {
                         <span>Inbox</span>
                     </Link>
                 </li>
-                <li>
+                <li data-todo-sidebar-list>
                     <Link to={`/${StandardProj.today}`}>
                         <span>
                             <MdToday />
@@ -28,7 +30,7 @@ export const Sidebar = () => {
                         <span>Today</span>
                     </Link>
                 </li>
-                <li>
+                <li data-todo-sidebar-list>
                     <Link to={`/${StandardProj.next7}`}>
                         <span>
                             <MdDateRange />
@@ -39,7 +41,8 @@ export const Sidebar = () => {
             </ul>
             <HeaderContainer>
                 <AccordionButton onClick={() => setShowProjects(!showProjects)}>
-                    <span>▾</span>
+                    <IoMdArrowDropdown />
+
                     <h2>Projects</h2>
                 </AccordionButton>
 
@@ -54,24 +57,32 @@ const AccordionButton = styled.button`
     display: inline-flex;
     align-items: center;
     width: 100%;
-    height: 32px;
+    height: 2rem;
     background: transparent;
     color: #fff;
-    span {
+    font-size: 0.875rem;
+    svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.25rem;
     }
 `;
 
 const HeaderContainer = styled.header`
     display: inline-block;
-    width: 100%;
+    width: 266px;
     vertical-align: top;
-    min-height: 24px;
-    line-height: 24px;
+    min-height: 1.5rem;
+    line-height: 1.5rem;
     word-break: break-all;
     word-break: break-word;
+    ul {
+        position: relative;
+    }
 `;
 
 const SidebarContainer = styled.div`
+    position: relative;
     width: 266px;
     height: calc(100vh);
     padding-top: 62px;
@@ -85,18 +96,21 @@ const SidebarContainer = styled.div`
         margin: 0;
         padding: 0;
     }
-    li {
-        min-height: 24px;
-        font-size: 14px;
+    [data-todo-sidebar-list] {
+        min-height: ${rems[32]};
+        font-size: ${rems[16]};
         list-style: none;
         cursor: pointer;
-        padding: 8px 16px 8px 8px;
+        padding: ${rems[8]} ${rems[16]} ${rems[8]} ${rems[8]};
         transition: color 0.1s ease-in, background-color 0.1s ease-in;
         display: flex;
-        border-radius: 3px;
         align-items: center;
+        &:hover {
+            background: #cacaca;
+        }
         a {
             color: #fff;
+            text-decoration: none;
         }
     }
 `;

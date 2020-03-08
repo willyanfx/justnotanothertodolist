@@ -13,6 +13,7 @@ import AddDialog from './AddDialog';
 import { DialogStateContext, DialogSetContext } from '../context/DialogContext';
 
 import { IoIosTrash } from 'react-icons/io';
+import { rems } from '../constants/tokens';
 
 function ListItem({ item, index }: { item: AddTaskProps; index: number }) {
     return (
@@ -123,7 +124,9 @@ export const Tasks = () => {
                     </Droppable>
                 </DragDropContext>
                 <AddTaskDiv>
-                    <button onClick={() => setShowAddTask(!showAddTask)}>
+                    <button
+                        data-todo-button
+                        onClick={() => setShowAddTask(!showAddTask)}>
                         <span>+</span>
                         <span>Add Task</span>
                     </button>
@@ -138,29 +141,29 @@ export const Tasks = () => {
     );
 };
 
-const GRID = 8;
+const GRID = 0.5;
 
 const AddTaskDiv = styled.div`
     border-top: 1px solid #999999;
-    margin-top: 20px;
-    padding-top: 16px;
+    margin-top: ${rems[16]};
+    padding-top: ${rems[16]};
 `;
 
 const DisplayItem = styled.div`
-    width: 656px;
+    width: 41rem;
     background: #121212;
     color: #fff;
-    margin-left: 266px;
-    border-right: 3px;
+    margin-left: 16.625rem;
+    border-right: ${rems[4]};
     vertical-align: top;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: ${rems[40]};
+    padding-right: ${rems[40]};
     padding-top: 80px;
     padding-bottom: 84px;
     h2 {
-        font-size: 20px;
+        font-size: ${rems[20]};
         font-weight: normal;
-        margin: 0 30px 20px 0;
+        margin: 0 ${rems[30]} ${rems[20]} 0;
     }
 `;
 const List = styled.div`
@@ -171,15 +174,20 @@ const List = styled.div`
 const ListItemDiv = styled.div`
     display: flex;
     width: 100%;
-    background: #1e1e1e;
-    border-radius: 3px;
-    margin-bottom: ${GRID}px;
-    padding: ${GRID}px;
+    min-height: ${rems[32]};
+    background: #333;
+    border-radius: ${rems[4]};
+    margin-bottom: ${GRID}rem;
+    padding: 0 ${GRID}rem;
+    align-items: center;
     justify-content: space-between;
     span {
-        display: inline-flex;
+        display: flex;
+        flex-direction: row;
     }
     h4 {
-        margin-left: 8px;
+        padding: 0;
+        margin: 0;
+        margin-left: ${rems[8]};
     }
 `;

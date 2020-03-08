@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { FiPlus } from 'react-icons/fi';
 
@@ -8,6 +8,8 @@ import {
     DialogStateContext,
     DialogSetContext
 } from '../../context/DialogContext';
+import { Toggle } from '../Toggle';
+import { rems } from '../../constants/tokens';
 export const Navbar = () => {
     return (
         <Header>
@@ -19,50 +21,62 @@ export const Navbar = () => {
     );
 };
 
-const Logo = () => (
-    <div>
-        <img src='' alt='logo' />
-    </div>
-);
+const Logo = () => <LogoSvg>L</LogoSvg>;
 function Account() {
     const [{ user }] = useAppState();
     const showModal = useContext(DialogStateContext);
     const setShowModal = useContext(DialogSetContext);
+    const [showMenu, setShowMenu] = useState(false);
+
     return user ? (
         <AccountDiv>
             <QuickAddButton onClick={() => setShowModal(!showModal)}>
                 <FiPlus />
             </QuickAddButton>
 
-            <DarkMode></DarkMode>
-            <div data-avatar></div>
+            <Toggle />
+
+            <div data-avatar>
+                <img
+                    src={user.photoURL}
+                    alt='Avatar'
+                    onClick={() => setShowMenu(!showMenu)}
+                />
+
+                {showMenu && (
+                    <ul>
+                        <li>{user.displayName}</li>
+                        <li>
+                            <span role='button' onClick={() => logout()}>
+                                Logout
+                            </span>
+                        </li>
+                    </ul>
+                )}
+            </div>
         </AccountDiv>
     ) : (
         <div>Loading user</div>
     );
 }
 
-{
-    /* <button onClick={() => logout()}>Log out</button> */
-}
-
-const DarkMode = styled.div`
-    height: 32px;
-    width: 32px;
-    background: teal;
+const LogoSvg = styled.div`
+    width: ${rems[32]};
+    height: ${rems[32]};
+    background: tomato;
 `;
 
 const QuickAddButton = styled.button`
-    height: 32px;
-    width: 32px;
+    height: 2rem;
+    width: 2rem;
     background: purple;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     svg {
-        min-width: 24px;
-        min-height: 24px;
+        min-width: 1.5rem;
+        min-height: 1.5rem;
         color: #fff;
     }
 `;
@@ -72,13 +86,42 @@ const AccountDiv = styled.div`
     align-items: center;
     justify-content: flex-end;
     width: 100%;
-    height: 42px;
+    height: 100%;
     [data-avatar] {
         position: relative;
-        height: 32px;
-        width: 32px;
-        background: purple;
-        border-radius: 50%;
+        margin: 0 1rem;
+        img {
+            border-radius: 50%;
+            height: 2rem;
+            width: 2rem;
+        }
+        > ul {
+            color: #fff;
+            position: absolute;
+            padding: 0.25rem 0;
+            visibility: visible;
+            background: linear-gradient(
+                    0deg,
+                    rgba(255, 255, 255, 0.12),
+                    rgba(255, 255, 255, 0.12)
+                ),
+                #121212;
+            box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2),
+                0px 3px 14px rgba(0, 0, 0, 0.12),
+                0px 8px 10px rgba(0, 0, 0, 0.14);
+            border-radius: 0.25rem;
+            border: none;
+            outline: none;
+            li {
+                padding: 0 0.5rem;
+                height: 2rem;
+                display: flex;
+                align-items: center;
+                &:hover {
+                    background: #484848;
+                }
+            }
+        }
     }
 `;
 
@@ -86,7 +129,7 @@ const Header = styled.header`
     border-bottom: solid 1px #cacaca;
     transition: height 200ms ease-in;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    height: 42px;
+    height: 52px;
     z-index: 400;
     position: fixed;
     top: 0;

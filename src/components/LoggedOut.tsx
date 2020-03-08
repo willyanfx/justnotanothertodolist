@@ -2,6 +2,7 @@ import React, { useState, createContext, useContext, Children } from 'react';
 import styled from 'styled-components';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
+import { rems } from '../constants/tokens';
 
 const TabsContext = createContext({});
 
@@ -30,7 +31,7 @@ function Tab({ children, isDisabled, ...rest }: any) {
     const clsIsDisabled = isDisabled ? 'disabled' : 'isActive' ? 'active' : '';
     return (
         <div
-            data-tab
+            data-tab={isActive}
             onClick={isDisabled ? undefined : () => setActiveIndex(index)}
             {...rest}>
             {children}
@@ -39,7 +40,7 @@ function Tab({ children, isDisabled, ...rest }: any) {
 }
 
 function TabPanels({ children }: any) {
-    const { activeIndex }: any = useContext(TabsContext);
+    const { activeIndex }: any = useContext(TabsContext)!;
     return <div data-tab-panels>{children[activeIndex]}</div>;
 }
 
@@ -76,8 +77,33 @@ export default function LoggedOut() {
         }
     ];
     return (
-        <div>
+        <Container>
             <DataTabs data={tabData} />
-        </div>
+        </Container>
     );
 }
+
+const Container = styled.div`
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+
+    [data-tab-panels] {
+        width: 22.5rem;
+        padding: ${rems[16]} ${rems[16]};
+    }
+    [data-tab-list] {
+        display: inline-flex;
+    }
+    [data-tab] {
+        padding: ${rems[8]} ${rems[16]};
+        background: grey;
+        margin-right: ${rems[4]};
+    }
+    [data-tab='true'] {
+        background: tomato;
+    }
+`;

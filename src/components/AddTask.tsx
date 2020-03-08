@@ -46,11 +46,19 @@ export const AddTask = ({ onCancel }: any) => {
 
     return (
         <Newtask>
-            <input type='text' onChange={e => setTask(e.target.value)} />
+            <input
+                data-todo-input
+                type='text'
+                onChange={e => setTask(e.target.value)}
+            />
             <div>
                 <span>
-                    <Button onClick={handleSubmit}>Add Task</Button>
-                    <Button onClick={onCancel}>Cancel</Button>
+                    <Button data-todo-button onClick={handleSubmit}>
+                        Add Task
+                    </Button>
+                    <Button data-todo-secondary-btn onClick={onCancel}>
+                        Cancel
+                    </Button>
                 </span>
                 <DropdownContainers>
                     <Menu label={<IoIosCalendar />}>
@@ -89,28 +97,9 @@ const Button = styled.button`
 `;
 
 const Newtask = styled.div`
-    input {
-        height: 32px;
-        width: 100%;
-        border-radius: 4px;
-        border: 1px solid #dadada;
-        margin-top: 8px;
-        margin-bottom: 8px;
-        background: #292929;
-    }
-
     > div {
         display: flex;
         justify-content: space-between;
-
-        button {
-            height: 32px;
-            background: transparent;
-            border: transparent;
-            color: #fff;
-            border-radius: 4px;
-            margin-right: 8px;
-        }
     }
 `;
 
