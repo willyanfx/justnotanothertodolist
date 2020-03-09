@@ -126,7 +126,6 @@ const AccountDiv = styled.div`
 `;
 
 const Header = styled.header`
-    border-bottom: solid 1px #cacaca;
     transition: height 200ms ease-in;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
     height: 52px;
@@ -135,6 +134,8 @@ const Header = styled.header`
     top: 0;
     left: 0;
     width: 100%;
+    display: flex;
+    align-items: center;
 
     background: linear-gradient(
             0deg,

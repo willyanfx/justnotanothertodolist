@@ -151,7 +151,7 @@ const AddTaskDiv = styled.div`
 
 const DisplayItem = styled.div`
     width: 41rem;
-    background: #121212;
+    background: ${props => props.theme.background};
     color: #fff;
     margin-left: 16.625rem;
     border-right: ${rems[4]};

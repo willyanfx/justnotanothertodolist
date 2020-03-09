@@ -33,10 +33,14 @@ export default function LoggedIn() {
                     <main>
                         <Sidebar />
                         <Switch>
-                            <Route exact path='/:id'>
-                                <Tasks />
-                            </Route>
-                            <Redirect from='/' to='/inbox' />
+                            {auth && (
+                                <>
+                                    <Route exact path='/:id'>
+                                        <Tasks />
+                                    </Route>
+                                    <Redirect from='/' to='/inbox' />
+                                </>
+                            )}
                         </Switch>
                     </main>
                 </DialogProvider>

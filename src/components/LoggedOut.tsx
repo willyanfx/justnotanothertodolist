@@ -6,31 +6,37 @@ import { rems } from '../constants/tokens';
 
 const TabsContext = createContext({});
 
-function Tabs({ children }: any) {
+const Tabs: React.FC = ({ children }) => {
     const [activeIndex, setActiveIndex] = useState<number>(0);
     return (
         <TabsContext.Provider value={{ activeIndex, setActiveIndex }}>
             <div data-tabs>{children}</div>
         </TabsContext.Provider>
     );
-}
+};
 
 const TabContext = createContext({});
 
-function TabList({ children }: any) {
+const TabList: React.FC = ({ children }) => {
     const wrappedChildren = Children.map(children, (child, index) => (
         <TabContext.Provider value={index}> {child}</TabContext.Provider>
     ));
     return <div data-tab-list>{wrappedChildren}</div>;
-}
+};
 
-function Tab({ children, isDisabled, ...rest }: any) {
+type TabProps = {
+    isDisabled?: boolean;
+    children: React.ReactNode;
+};
+
+function Tab<T extends TabProps>({ children, isDisabled, ...rest }: T) {
     const index = useContext(TabContext);
     const { activeIndex, setActiveIndex } = useContext<any>(TabsContext);
     const isActive = index === activeIndex;
     const clsIsDisabled = isDisabled ? 'disabled' : 'isActive' ? 'active' : '';
     return (
         <div
+            disabled={clsIsDisabled}
             data-tab={isActive}
             onClick={isDisabled ? undefined : () => setActiveIndex(index)}
             {...rest}>
@@ -68,12 +74,12 @@ function DataTabs({ data }: any) {
 export default function LoggedOut() {
     const tabData = [
         {
-            label: 'Signup',
-            content: <SignupForm />
-        },
-        {
             label: 'Login',
             content: <LoginForm />
+        },
+        {
+            label: 'Signup',
+            content: <SignupForm />
         }
     ];
     return (
@@ -93,7 +99,15 @@ const Container = styled.div`
 
     [data-tab-panels] {
         width: 22.5rem;
-        padding: ${rems[16]} ${rems[16]};
+        padding: ${rems[32]} ${rems[32]};
+        border-radius: ${rems[4]};
+        border-top-left-radius: 0;
+
+        background: #2f2f2f;
+        /* 06 dp */
+
+        box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2),
+            0px 1px 18px rgba(0, 0, 0, 0.12), 0px 6px 10px rgba(0, 0, 0, 0.14);
     }
     [data-tab-list] {
         display: inline-flex;
@@ -102,8 +116,14 @@ const Container = styled.div`
         padding: ${rems[8]} ${rems[16]};
         background: grey;
         margin-right: ${rems[4]};
+        background: #2f2f2f;
+        z-index: 200;
+        border-top-left-radius: ${rems[4]};
+        border-top-right-radius: ${rems[4]};
     }
     [data-tab='true'] {
-        background: tomato;
+        background: #252525;
+        border-top-left-radius: ${rems[4]};
+        border-top-right-radius: ${rems[4]};
     }
 `;
