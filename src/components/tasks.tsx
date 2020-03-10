@@ -15,7 +15,7 @@ import { DialogStateContext, DialogSetContext } from '../context/DialogContext';
 import { IoIosTrash } from 'react-icons/io';
 import { rems } from '../constants/tokens';
 import { Button } from './Buttons';
-
+{/* <Checkbox onClick={() => doneTask(item.id)} /> */ }
 function ListItem({ item, index }: { item: AddTaskProps; index: number }) {
     return (
         <Draggable draggableId={item.id} index={index}>
@@ -25,7 +25,7 @@ function ListItem({ item, index }: { item: AddTaskProps; index: number }) {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}>
                     <span>
-                        <Checkbox onClick={() => doneTask(item.id)} />
+                        <Checkbox onClick={() => console.log(item.id)} />
                         <h4>{item.task}</h4>
                     </span>
 
