@@ -14,6 +14,7 @@ import { DialogStateContext, DialogSetContext } from '../context/DialogContext';
 
 import { IoIosTrash } from 'react-icons/io';
 import { rems } from '../constants/tokens';
+import { Button } from './Buttons';
 
 function ListItem({ item, index }: { item: AddTaskProps; index: number }) {
     return (
@@ -124,12 +125,10 @@ export const Tasks = () => {
                     </Droppable>
                 </DragDropContext>
                 <AddTaskDiv>
-                    <button
-                        data-todo-button
-                        onClick={() => setShowAddTask(!showAddTask)}>
+                    <Button onClick={() => setShowAddTask(!showAddTask)}>
                         <span>+</span>
                         <span>Add Task</span>
-                    </button>
+                    </Button>
                     {showAddTask && (
                         <AddTask
                             onCancel={() => setShowAddTask(!showAddTask)}
@@ -174,11 +173,11 @@ const List = styled.div`
 const ListItemDiv = styled.div`
     display: flex;
     width: 100%;
-    min-height: ${rems[32]};
+    height: 100%;
     background: #333;
     border-radius: ${rems[4]};
     margin-bottom: ${GRID}rem;
-    padding: 0 ${GRID}rem;
+    padding: ${rems[16]} ${rems[16]};
     align-items: center;
     justify-content: space-between;
     span {
@@ -186,6 +185,7 @@ const ListItemDiv = styled.div`
         flex-direction: row;
     }
     h4 {
+        font-size: ${rems[20]};
         padding: 0;
         margin: 0;
         margin-left: ${rems[8]};

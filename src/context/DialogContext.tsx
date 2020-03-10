@@ -5,7 +5,7 @@ type SetStateContext = React.Dispatch<React.SetStateAction<boolean>> | any;
 export const DialogStateContext = createContext<boolean>(false);
 export const DialogSetContext = createContext<SetStateContext>(null);
 export const DialogProvider: React.FC = ({ children }) => {
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(true);
     return (
         <DialogStateContext.Provider value={showModal}>
             <DialogSetContext.Provider value={setShowModal}>

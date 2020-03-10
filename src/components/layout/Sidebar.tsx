@@ -57,10 +57,18 @@ const AccordionButton = styled.button`
     display: inline-flex;
     align-items: center;
     width: 100%;
-    height: 2rem;
+    padding: 0 ${rems[8]};
     background: transparent;
-    color: #fff;
-    font-size: 0.875rem;
+    margin-top: ${rems[16]};
+    border: none;
+    &:hover {
+        background: #2f2f2f;
+    }
+    h2 {
+        color: #fff;
+        font-size: ${rems[16]};
+        line-height: ${rems[20]};
+    }
     svg {
         width: 1.5rem;
         height: 1.5rem;

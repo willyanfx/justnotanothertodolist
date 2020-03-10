@@ -3,6 +3,7 @@ import VisuallyHidden from './VisuallyHidden';
 import { login } from '../helpers';
 import styled, { keyframes } from 'styled-components';
 import { rems } from '../constants/tokens';
+import { Button } from './Buttons';
 
 export default function LoginForm() {
     const [error, setError] = useState<Error | null>(null);
@@ -67,12 +68,12 @@ export default function LoginForm() {
                 />
                 <CheckboxContainer>
                     <input
-                        id='morning'
+                        id='showPassword'
                         type='checkbox'
                         checked={showPassword}
-                        onClick={() => setShowPassword(!showPassword)}
+                        onClick={() => handleShowPassword}
                     />
-                    <label htmlFor='morning'>
+                    <label htmlFor='showPassword'>
                         <span>
                             <svg
                                 id='check'
@@ -86,9 +87,9 @@ export default function LoginForm() {
                     </label>
                 </CheckboxContainer>
 
-                <button data-todo-button>
+                <Button>
                     <span>{loading ? 'Loading...' : 'Login'}</span>
-                </button>
+                </Button>
             </form>
         </div>
     );

@@ -4,6 +4,7 @@ import { useAppState } from '../app-state';
 import styled from 'styled-components';
 import { FiPlus } from 'react-icons/fi';
 import { rems } from '../constants/tokens';
+import { Button, SecondaryBtn } from './Buttons';
 
 const AddProject = () => {
     const [{ auth }] = useAppState();
@@ -44,14 +45,10 @@ const AddProject = () => {
                         type='text'
                     />
                     <div>
-                        <ProjectBtn onClick={handleAddProject}>
-                            Add Project
-                        </ProjectBtn>
-                        <span
-                            data-cancel-project
-                            onClick={() => setShow(!show)}>
+                        <Button onClick={handleAddProject}>Add Project</Button>
+                        <SecondaryBtn onClick={() => setShow(!show)}>
                             Cancel
-                        </span>
+                        </SecondaryBtn>
                     </div>
                 </AddProjectDiv>
             )}
@@ -86,10 +83,5 @@ const AddProjectDiv = styled.div`
         grid-column-gap: ${rems[8]};
         grid-template-columns: 1fr 1fr;
         margin-top: ${rems[8]};
-    }
-    button {
-        color: #fff;
-        background: transparent;
-        height: ${rems[32]};
     }
 `;

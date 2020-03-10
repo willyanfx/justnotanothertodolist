@@ -6,7 +6,7 @@ import appReducer, { initialState } from './appReducer';
 import useAuth from './useAuth';
 import LoggedOut from './components/LoggedOut';
 import LoggedIn from './components/LoggedIn';
-import { rems } from './constants/tokens';
+import { rems, colors } from './constants/tokens';
 
 function App() {
     const { authAttempted, auth } = useAuth();
@@ -24,7 +24,7 @@ export default () => (
 
 const theme = {
     background: '#050505',
-    fontColor: '#fff'
+    fontColor: colors.blue
 };
 
 const Container = styled.div`
@@ -35,16 +35,6 @@ const Container = styled.div`
     height: 100vh;
     width: 100%;
 
-    [data-todo-button] {
-        height: 2rem;
-        font-size: 1rem;
-        border-radius: 0.25rem;
-        span {
-            width: 1.5rem;
-            height: 1.5rem;
-            margin-left: 0.25rem;
-        }
-    }
     [data-todo-input] {
         background: transparent;
         height: 2rem;
@@ -58,8 +48,5 @@ const Container = styled.div`
         &:focus {
             background: #292929;
         }
-    }
-
-    [data-todo-secondary-btn] {
     }
 `;

@@ -9,6 +9,7 @@ import { MenuItem, Menu } from './MenuButton';
 import { StandardProj } from '../types';
 
 import { IoIosCalendar, IoMdBriefcase } from 'react-icons/io';
+import { Button, SecondaryBtn } from './Buttons';
 
 export const AddTask = ({ onCancel }: any) => {
     const [{ auth }] = useAppState();
@@ -53,14 +54,10 @@ export const AddTask = ({ onCancel }: any) => {
             />
             <div>
                 <span>
-                    <Button data-todo-button onClick={handleSubmit}>
-                        Add Task
-                    </Button>
-                    <Button data-todo-secondary-btn onClick={onCancel}>
-                        Cancel
-                    </Button>
+                    <Button onClick={handleSubmit}>Add Task</Button>
+                    <SecondaryBtn onClick={onCancel}>Cancel</SecondaryBtn>
                 </span>
-                <DropdownContainers>
+                <span>
                     <Menu label={<IoIosCalendar />}>
                         <MenuItem
                             onClick={() => setTaskDate(StandardProj.inbox)}>
@@ -86,25 +83,21 @@ export const AddTask = ({ onCancel }: any) => {
                             ))}
                         </Menu>
                     )}
-                </DropdownContainers>
+                </span>
             </div>
         </Newtask>
     );
 };
 
-const Button = styled.button`
-    height: 32px;
-`;
-
 const Newtask = styled.div`
+    color: #fff;
     > div {
         display: flex;
         justify-content: space-between;
+        > span {
+            display: inline-grid;
+            grid-auto-flow: column;
+            grid-column-gap: 16px;
+        }
     }
-`;
-
-const DropdownContainers = styled.span`
-    display: inline-grid;
-    grid-auto-flow: column;
-    grid-column-gap: 16px;
 `;
