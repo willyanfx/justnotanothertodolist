@@ -1,22 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-
-import { Checkbox } from './Checkbox';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useAppState } from '../app-state';
 import useTasks from '../hooks/useTasks';
 import { AddTask } from './AddTask';
-import { deleteTask, doneTask } from '../helpers';
+import { deleteTask, doneTask, useID } from '../helpers';
 import { useParams } from 'react-router-dom';
 import { StandardProj, AddTaskProps } from '../types';
 import AddDialog from './AddDialog';
+import { Checkbox } from './Checkbox';
 import { DialogStateContext, DialogSetContext } from '../context/DialogContext';
-
-import { IoIosTrash } from 'react-icons/io';
 import { rems } from '../constants/tokens';
 import { Button } from './Buttons';
-{/* <Checkbox onClick={() => doneTask(item.id)} /> */ }
+
+import { IoIosTrash } from 'react-icons/io';
+
 function ListItem({ item, index }: { item: AddTaskProps; index: number }) {
+    let { id } = useParams();
+    const getId = useID(`checkbox-${id}`);
     return (
         <Draggable draggableId={item.id} index={index}>
             {provided => (
@@ -25,7 +26,7 @@ function ListItem({ item, index }: { item: AddTaskProps; index: number }) {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}>
                     <span>
-                        <Checkbox onClick={() => console.log(item.id)} />
+                        <Checkbox id={getId} onClick={() => doneTask(item.id)} />
                         <h4>{item.task}</h4>
                     </span>
 
@@ -88,20 +89,7 @@ export const Tasks = () => {
         setTasksItems(newList);
     };
 
-    let title: string;
-    switch (id) {
-        case StandardProj.inbox:
-            title = 'Inbox';
-            break;
-        case StandardProj.today:
-            title = 'Today';
-            break;
-        case StandardProj.next7:
-            title = 'Next 7 Days';
-            break;
-        default:
-            title = String(id);
-    }
+    let title = id === StandardProj.next7 ? 'Next 7 Days' : id;
 
     return (
         <>
@@ -160,7 +148,8 @@ const DisplayItem = styled.div`
     padding-top: 80px;
     padding-bottom: 84px;
     h2 {
-        font-size: ${rems[20]};
+        text-transform: capitalize;
+        font-size: ${rems[24]};
         font-weight: normal;
         margin: 0 ${rems[30]} ${rems[20]} 0;
     }

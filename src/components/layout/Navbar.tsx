@@ -34,7 +34,7 @@ function Account() {
                 <FiPlus />
             </QuickAddButton>
 
-            <Toggle />
+            <Toggle defaultChecked={false} onClick={() => console.log('ehehe')} />
 
             <div data-avatar>
                 <img
@@ -45,7 +45,7 @@ function Account() {
 
                 {showMenu && (
                     <ul>
-                        <li>{user.displayName}</li>
+                        <p>{user.displayName}</p>
                         <li>
                             <span role='button' onClick={() => logout()}>
                                 Logout
@@ -56,8 +56,8 @@ function Account() {
             </div>
         </AccountDiv>
     ) : (
-        <div>Loading user</div>
-    );
+            <div>Loading user</div>
+        );
 }
 
 const LogoSvg = styled.div`
@@ -69,12 +69,16 @@ const LogoSvg = styled.div`
 const QuickAddButton = styled.button`
     height: 2rem;
     width: 2rem;
-    background: purple;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    svg {
+    background: #BB86FC;
+    border: 1px solid transparent;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2), 
+                0px 3px 14px rgba(0, 0, 0, 0.12), 
+                0px 8px 10px rgba(0, 0, 0, 0.14);   
+     svg {
         min-width: 1.5rem;
         min-height: 1.5rem;
         color: #fff;
@@ -98,6 +102,7 @@ const AccountDiv = styled.div`
         > ul {
             color: #fff;
             position: absolute;
+            margin: 4px 0;
             padding: 0.25rem 0;
             visibility: visible;
             background: linear-gradient(
@@ -112,6 +117,11 @@ const AccountDiv = styled.div`
             border-radius: 0.25rem;
             border: none;
             outline: none;
+            p {
+                padding: 0 0.5rem;
+                color: #BB86FC;
+                font-weight: 600;
+            }
             li {
                 padding: 0 0.5rem;
                 height: 2rem;

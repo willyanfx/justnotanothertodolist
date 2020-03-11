@@ -1,21 +1,34 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { ThemeConsumer } from 'styled-components';
 import { rems } from '../constants/tokens';
-export const Toggle = () => {
+
+type ToggleProps = {
+    onClick: ((event: React.MouseEvent<HTMLLabelElement, MouseEvent>) => void)
+    defaultChecked: boolean;
+}
+
+
+
+export const Toggle: React.FC<ToggleProps> = ({ onClick, defaultChecked }) => {
+    const [checked, setChecked] = useState(defaultChecked)
     return (
-        <Center>
+
+
+        <ToggleDiv>
             <input
-                id='MaterialToggleRed'
-                name='MaterialToggleRed'
+                checked={checked}
+                id='toggle'
+                name='toggle'
                 type='checkbox'
             />
-            <label htmlFor='MaterialToggleRed' className='label-red'></label>
-        </Center>
+            <label onChange={() => setChecked(!checked)} onClick={onClick} htmlFor='toggle' className='label-red'></label>
+        </ToggleDiv>
+
     );
 };
 
-const ToggleLabel = styled.label``;
-const Center = styled.div`
+
+const ToggleDiv = styled.div`
     display: flex;
     height: 100%;
     align-items: center;
@@ -26,11 +39,11 @@ const Center = styled.div`
         display: none;
 
         &:checked + label::before {
-            background: lime;
+            background: #fff;
             opacity: 0.5;
         }
         &:checked + label::after {
-            background: tomato;
+            background: black;
             left: 20px;
         }
     }

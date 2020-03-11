@@ -3,12 +3,13 @@ import styled from 'styled-components';
 
 type CheckboxProps = {
     onClick: () => void;
+    id: string;
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({ onClick }) => (
-    <CheckboxBtn onClick={onClick}>
-        <input type="checkbox" id="check" name="check" value="" />
-        <label htmlFor="check">
+export const Checkbox: React.FC<CheckboxProps> = ({ onClick, id }) => (
+    <CheckboxBtn role='checkbox' onClick={onClick}>
+        <input type="checkbox" id={id} name="check" value="" />
+        <label htmlFor={id}>
             <span></span>
         </label>
     </CheckboxBtn>

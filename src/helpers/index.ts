@@ -1,8 +1,7 @@
+import { useState, useEffect } from 'react';
 import { db, auth } from '../db';
 import { AddTaskProps } from '../types';
-
 import { format as formatDate } from 'date-fns';
-
 import { Docs, signUpProp } from '../types';
 
 export { auth, db };
@@ -158,3 +157,14 @@ export async function doneTask(docId: string) {
 export async function deleteTask(docId: string) {
     return db.doc(`tasks/${docId}`).delete();
 }
+// ID generator
+export const useID = (prefix: string) => {
+    const [ID, setID] = useState<string>(null!);
+    useEffect(() => {
+        const _id = `${prefix}-${Math.random()
+            .toString(36)
+            .substr(2, 9)}`;
+        setID(_id);
+    }, [prefix]);
+    return ID;
+};
