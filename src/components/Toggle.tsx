@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import styled, { ThemeConsumer } from 'styled-components';
+import styled from 'styled-components';
 import { rems } from '../constants/tokens';
+
+import useTheme from '../hooks/useTheme'
 
 type ToggleProps = {
     onClick: ((event: React.MouseEvent<HTMLLabelElement, MouseEvent>) => void)
@@ -9,19 +11,26 @@ type ToggleProps = {
 
 
 
-export const Toggle: React.FC<ToggleProps> = ({ onClick, defaultChecked }) => {
-    const [checked, setChecked] = useState(defaultChecked)
+export const Toggle: React.FC<ToggleProps> = () => {
+    const [checked, setChecked] = useState(false)
+    const [theme, setTheme] = useTheme()
+
+    function changeTheme() {
+        setChecked(theme.mode === 'dark' ? true : false)
+        theme.mode === 'dark'
+            ? setTheme({ ...theme, mode: 'light' })
+            : setTheme({ ...theme, mode: 'dark' })
+    }
+
     return (
-
-
         <ToggleDiv>
             <input
-                checked={checked}
+                defaultChecked={checked}
                 id='toggle'
                 name='toggle'
                 type='checkbox'
             />
-            <label onChange={() => setChecked(!checked)} onClick={onClick} htmlFor='toggle' className='label-red'></label>
+            <label onClick={changeTheme} htmlFor='toggle' className='label-red'></label>
         </ToggleDiv>
 
     );
