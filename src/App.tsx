@@ -7,6 +7,7 @@ import useAuth from './useAuth';
 import LoggedOut from './components/LoggedOut';
 import LoggedIn from './components/LoggedIn';
 import { rems, colors } from './constants/tokens';
+import { ThemeModeProvider } from './context/ThemeContext';
 
 function App() {
     const { authAttempted, auth } = useAuth();
@@ -15,20 +16,17 @@ function App() {
 }
 
 export default () => (
-    <ThemeProvider theme={theme}>
+    <ThemeModeProvider>
         <AppStateProvider reducer={appReducer} initialState={initialState}>
             <App />
         </AppStateProvider>
-    </ThemeProvider>
+    </ThemeModeProvider>
+
 );
 
-const theme = {
-    background: '#050505',
-    fontColor: colors.blue
-};
 
 const Container = styled.div`
-    background: ${props => props.theme.background};
+    background: ${props => props.theme.body};
     display: flex;
     justify-content: center;
     margin-right: 0;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { rems } from '../constants/tokens';
 
-import useTheme from '../hooks/useTheme'
+import { useThemeValue } from '../context/ThemeContext'
 
 type ToggleProps = {
     onClick: ((event: React.MouseEvent<HTMLLabelElement, MouseEvent>) => void)
@@ -13,7 +13,7 @@ type ToggleProps = {
 
 export const Toggle: React.FC<ToggleProps> = () => {
     const [checked, setChecked] = useState(false)
-    const [theme, setTheme] = useTheme()
+    const { theme, setTheme } = useThemeValue()
 
     function changeTheme() {
         setChecked(theme.mode === 'dark' ? true : false)

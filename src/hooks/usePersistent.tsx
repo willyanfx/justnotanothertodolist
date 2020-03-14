@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 
 
-export default function useTheme(defaultTheme = { mode: 'light' }) {
+export default function usePersistent(defaultTheme = { mode: 'light' }) {
 
     const [theme, setTheme] = useState(() => {
         const storageValue = localStorage.getItem('theme');
-
         if (storageValue) {
             return JSON.parse(storageValue);
         } else {
@@ -18,6 +17,6 @@ export default function useTheme(defaultTheme = { mode: 'light' }) {
         localStorage.setItem('theme', JSON.stringify(theme));
     }, [theme]);
 
-    return [theme, setTheme];
+    return { theme, setTheme };
 
 }
