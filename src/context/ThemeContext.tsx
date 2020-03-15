@@ -8,7 +8,6 @@ export const ThemeContext = createContext<ThemeMode>(null!);
 
 export const ThemeModeProvider: React.FC = ({ children }) => {
     const { theme, setTheme } = usePersistent()
-    console.log(theme)
     let mode = theme.mode === 'light' ? lightTheme : darkTheme;
     return (
         <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -30,6 +29,7 @@ export const lightTheme = {
     text: '#363537',
     toggleBorder: '#FFF',
     gradient: 'linear-gradient(#39598A, #79D7ED)',
+
 }
 
 export const darkTheme = {
@@ -37,4 +37,6 @@ export const darkTheme = {
     text: '#FAFAFA',
     toggleBorder: '#6B8096',
     gradient: 'linear-gradient(#091236, #1E215D)',
+    hover: '#484848',
+    popup: '#2f2f2f'
 }

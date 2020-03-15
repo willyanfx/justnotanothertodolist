@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 
 import { useAppState } from '../app-state';
 import { createDoc } from '../helpers';
 import { format as formatDate, addDays } from 'date-fns';
 import useProject from '../hooks/useProject';
-import { MenuItem, Menu } from './MenuButton';
+import { MenuItem, Menu, MenuButton, MenuList } from './MenuButton';
 import { StandardProj } from '../types';
-
+import { Input } from './Input'
 import { IoIosCalendar, IoMdBriefcase } from 'react-icons/io';
 import { Button, SecondaryBtn } from './Buttons';
 
-export const AddTask = ({ onCancel }: any) => {
+export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) }> = ({ onCancel }) => {
+
     const [{ auth }] = useAppState();
     const [{ user }] = useAppState();
     const projects = useProject(user.uid);
 
-    const [task, setTask] = useState('');
+    const [value, setValue] = useState<string>('');
     const [taskDate, setTaskDate] = useState('');
     const [projectName, setProjectName] = useState('');
+
+
+    const handleChange = useCallback((newValue) => {
+        const text: string = newValue.currentTarget.value
+        setValue(text)
+    }, []);
 
     const handleSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
@@ -35,52 +42,61 @@ export const AddTask = ({ onCancel }: any) => {
             {
                 date: collectedDate,
                 uid: auth.uid,
-                task: task,
+                task: value,
                 projectId,
                 archived: false
             },
             'tasks'
-        );
-        setTask('');
-        setProjectName('');
+        ).then(() => {
+            setValue('');
+            setProjectName('');
+        })
+
     };
+
+
 
     return (
         <Newtask>
-            <input
-                data-todo-input
-                type='text'
-                onChange={e => setTask(e.target.value)}
-            />
+            <Input value={value} placeholder='Add Task' onChange={handleChange} />
             <div>
                 <span>
                     <Button onClick={handleSubmit}>Add Task</Button>
                     <SecondaryBtn onClick={onCancel}>Cancel</SecondaryBtn>
                 </span>
                 <span>
-                    <Menu label={<IoIosCalendar />}>
-                        <MenuItem
-                            onClick={() => setTaskDate(StandardProj.inbox)}>
-                            Inbox
+                    <Menu>
+                        <MenuButton>
+                            <IoIosCalendar />
+                        </MenuButton>
+                        <MenuList>
+                            <MenuItem
+                                onClick={() => setTaskDate(StandardProj.inbox)}>
+                                Inbox
                         </MenuItem>
-                        <MenuItem
-                            onClick={() => setTaskDate(StandardProj.today)}>
-                            Today
+
+                            <MenuItem
+                                onClick={() => setTaskDate(StandardProj.today)}>
+                                Today
                         </MenuItem>
-                        <MenuItem
-                            onClick={() => setTaskDate(StandardProj.next7)}>
-                            Next 7 days
+                            <MenuItem
+                                onClick={() => setTaskDate(StandardProj.next7)}>
+                                Next 7 days
                         </MenuItem>
+                        </MenuList>
                     </Menu>
                     {projects && (
-                        <Menu label={<IoMdBriefcase />}>
-                            {projects.map((item: any) => (
-                                <MenuItem
-                                    key={item.id}
-                                    onClick={() => setProjectName(item.name)}>
-                                    {item.name}
-                                </MenuItem>
-                            ))}
+                        <Menu >
+                            <MenuButton><IoMdBriefcase /></MenuButton>
+                            <MenuList>
+                                {projects.map((item: any) => (
+                                    <MenuItem
+                                        key={item.id}
+                                        onClick={() => setProjectName(item.name)}>
+                                        {item.name}
+                                    </MenuItem>
+                                ))}
+                            </MenuList>
                         </Menu>
                     )}
                 </span>

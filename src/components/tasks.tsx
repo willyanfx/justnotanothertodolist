@@ -90,14 +90,14 @@ export const Tasks = () => {
     };
 
     let title = id === StandardProj.next7 ? 'Next 7 Days' : id;
-
     return (
         <>
             <AddDialog
                 isOpen={showModal}
-                onDismiss={() => setShowModal(!showModal)}>
-                <AddTask />
-            </AddDialog>
+                onDismiss={() => setShowModal(!showModal)}
+            />
+
+
             <DisplayItem>
                 <h2>{title}</h2>
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -138,7 +138,7 @@ const AddTaskDiv = styled.div`
 
 const DisplayItem = styled.div`
     width: 41rem;
-    background: ${props => props.theme.background};
+    background: ${props => props.theme.body};
     color: #fff;
     margin-left: 16.625rem;
     border-right: ${rems[4]};

@@ -6,39 +6,48 @@ import { useTransition, animated } from 'react-spring';
 import { IoMdClose } from 'react-icons/io';
 import { rems } from '../constants/tokens';
 
-const DialogContent: React.FC = ({ children }) => <Dialog>{children}</Dialog>;
+
+
+const DialogContent: React.FC<{
+    style?: {
+        transform: any;
+    }
+}> = (props) => <Dialog {...props}>{props.children}</Dialog>;
 
 const DialogOverlay = forwardRef<HTMLDivElement, DialogProps>(
     function DialogOverlay({ isOpen = true, ...props }, forwardRef) {
+
         return isOpen ? (
-            <DialogOverlayDiv>{props.children}</DialogOverlayDiv>
+            <DialogOverlayDiv ref={forwardRef}>{props.children}</DialogOverlayDiv>
         ) : null;
     }
 );
 
-const AddDialog = (props: any) => {
-    const rootRef = useRef<any>(null);
 
-    const updateRootElement = (item: any, state: any, props: any) => {
-        if (item) {
-            if (!rootRef.current) {
-                rootRef.current = document.getElementById('root')!;
-            }
-            rootRef.current.style.filter = `blur(${props.blur}px)`;
-        }
-    };
+function AddDialog({ isOpen = false, onDismiss }: DialogProps): JSX.Element | null {
 
-    return (
-        props.isOpen && (
-            <DialogOverlay>
-                <DialogContent>
+    const transitions = useTransition(isOpen, null, {
+        config: { duration: 110 },
+        from: { opacity: 0, transform: 'translateY(-10px)' },
+        enter: { opacity: 1, transform: 'translateY(0)' },
+        leave: { opacity: 0, transform: 'translateY(-10px)' }
+    })
+
+
+    return (<>
+        {transitions.map(({ item, key, props: { opacity, transform } }) => item
+            && <DialogOverlay style={{ opacity }}
+                isOpen={item}
+                key={key}>
+                {item && console.log(typeof transform)}
+                <DialogContent style={{ transform }}>
                     <Header>
                         <h2 className='header'>Quick Add Task</h2>
                         <ButtonClose
                             className='add-task__cancel-x'
                             aria-label='Cancel adding task'
-                            onClick={props.onDismiss}
-                            onKeyDown={() => {}}
+                            onClick={onDismiss}
+
                             tabIndex={0}
                             role='button'>
                             <IoMdClose />
@@ -48,9 +57,9 @@ const AddDialog = (props: any) => {
                         <AddTask />
                     </ContainerAddTask>
                 </DialogContent>
-            </DialogOverlay>
-        )
-    );
+            </DialogOverlay>)
+        }
+    </>)
 };
 
 export default AddDialog;
@@ -85,7 +94,7 @@ const ButtonClose = styled.button`
     }
 `;
 
-const DialogOverlayDiv = styled.div`
+const DialogOverlayDiv = styled(animated.div)`
     background: hsla(0, 0%, 0%, 0.33);
     position: fixed;
     top: 0;
@@ -96,7 +105,7 @@ const DialogOverlayDiv = styled.div`
     z-index: 30000;
 `;
 
-const Dialog = styled.div`
+const Dialog = styled(animated.div)`
     width: 40vw;
     margin: 10vh auto;
     background: white;
@@ -105,6 +114,7 @@ const Dialog = styled.div`
     box-shadow: 0px 11px 15px rgba(0, 0, 0, 0.2),
         0px 9px 46px rgba(0, 0, 0, 0.12), 0px 24px 38px rgba(0, 0, 0, 0.14);
     border-radius: 4px;
+    z-index: 99999999;
 `;
 
 const ContainerAddTask = styled.div`
@@ -112,13 +122,7 @@ const ContainerAddTask = styled.div`
 `;
 
 export type DialogProps = {
-    allowPinchZoom?: boolean;
-
-    isOpen?: boolean;
-
-    onDismiss?: (event?: React.SyntheticEvent) => void;
-
-    children?: React.ReactNode;
-
+    isOpen: boolean;
+    onDismiss?: ((event?: React.SyntheticEvent<Element, Event>) => void);
     initialFocusRef?: React.RefObject<any>;
 } & React.HTMLAttributes<HTMLDivElement>;

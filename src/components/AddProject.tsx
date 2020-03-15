@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { FiPlus } from 'react-icons/fi';
 import { rems } from '../constants/tokens';
 import { Button, SecondaryBtn } from './Buttons';
+import { Input } from './Input';
 
 const AddProject = () => {
     const [{ auth }] = useAppState();
@@ -37,12 +38,10 @@ const AddProject = () => {
             </ProjectBtn>
             {show && (
                 <AddProjectDiv>
-                    <input
-                        tabIndex={0}
-                        data-todo-input
+                    <Input
                         value={projectName}
+                        placeholder='Add Project'
                         onChange={e => setProjectName(e.target.value)}
-                        type='text'
                     />
                     <div>
                         <Button onClick={handleAddProject}>Add Project</Button>

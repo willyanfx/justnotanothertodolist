@@ -1,81 +1,179 @@
-import React, { useState } from 'react';
+import React, { useState, createContext, useContext, useReducer } from 'react';
 import styled from 'styled-components';
 import { rems } from '../constants/tokens';
 
-export function Menu(props: any) {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+import { useTransition, animated } from 'react-spring';
+
+const MenuContext = createContext<any>(null!);
+
+const useMenuContext = () => useContext(MenuContext);
+
+const initialState = {
+    isOpen: false
+};
+
+
+type MenuState = {
+    isOpen: boolean
+}
+type MenuAction = {
+    type: string,
+}
+
+function reducer(state: MenuState, action: MenuAction) {
+    switch (action.type) {
+        case 'OPEN_MENU':
+            return {
+                ...state,
+                isOpen: true
+            };
+        case 'CLOSE_MENU':
+            return {
+                ...state,
+                isOpen: false
+            };
+        default:
+            return state;
+    }
+}
+
+
+
+export const Menu: React.FC = ({ children }) => {
+    let [state, dispatch] = useReducer(reducer, initialState);
+
+    let context = { state, dispatch };
 
     return (
-        <MenuContainer>
-            <MenuButton
-                data-menu-open={isOpen}
-                onClick={() => setIsOpen(!isOpen)}>
-                {props.label}
-            </MenuButton>
-            <MenuListContainer style={{ opacity: isOpen ? 1 : 0 }}>
-                {props.children}
-            </MenuListContainer>
-        </MenuContainer>
+        <MenuContext.Provider value={context}>
+            <MenuContainer>
+                {children}
+            </MenuContainer>
+        </MenuContext.Provider>
     );
 }
 
-export function MenuItem({ children, onClick }: any) {
+export const MenuButton: React.FC = ({ children }) => {
+    let {
+        dispatch,
+        state: { isOpen }
+    } = useMenuContext();
+
+    function handleMouseDown(event: React.MouseEvent) {
+        event.preventDefault();
+
+        if (isOpen === false) {
+            dispatch({ type: 'OPEN_MENU' });
+        } else if (isOpen === true) {
+            dispatch({ type: 'CLOSE_MENU' });
+        }
+    }
+
     return (
-        <li role='button' onClick={onClick}>
+        <Button
+            aria-expanded={isOpen}
+            aria-haspopup
+            type="button"
+            onClick={handleMouseDown}>
             {children}
-        </li>
+        </Button>
     );
-}
+};
 
+export const MenuList: React.FC = ({ children }) => {
+
+    let {
+        state: { isOpen }
+    } = useMenuContext();
+
+    const transitions = useTransition(isOpen, null, {
+        config: { duration: 110 },
+        from: {
+            position: 'absolute',
+            transformOrigin: 'top',
+            opacity: 0,
+            visibility: 'hidden',
+            transform: 'translateY(-16px)'
+        },
+        enter: {
+            visibility: 'visible',
+            opacity: 1,
+            transform: 'translateY(0)'
+        },
+        leave: {
+            transform: 'translateY(-14px)',
+            opacity: 0,
+            visibility: 'hidden'
+        }
+    }
+    );
+
+    return (<>
+        {transitions.map(
+            ({ item, key, props }) =>
+                item && (
+                    <ListUL key={key} style={props}>
+                        {children}
+                    </ListUL>
+                )
+        )}
+    </>);
+};
+
+
+
+export const MenuItem: React.FC<{ onClick?: ((event: React.MouseEvent<HTMLLIElement, MouseEvent>) => void) }> = ({
+    children,
+    onClick
+}) => <li onClick={onClick}>{children}</li>;
+
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////  STYLES  //////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 const MenuContainer = styled.div`
     position: static;
 `;
 
-const MenuButton = styled.button`
-    width: ${rems[32]};
-    height: ${rems[32]};
-    border-radius: ${rems[4]};
-    color: #fff;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: ${rems[16]};
-    font-family: inherit;
-    -webkit-appearance: none;
-    &:hover {
-        background: #2e2c31;
-    }
-    &[data-menu-open='true'] {
-        background: #2f2f2f;
-    }
-`;
 
-const MenuListContainer = styled.ul`
-    position: absolute;
-    padding: ${rems[4]} 0;
-    margin: ${rems[4]} 0;
-    min-width: 100%;
-    visibility: visible;
-    background: #2f2f2f;
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2), 0px 3px 14px rgba(0, 0, 0, 0.12),
-        0px 8px 10px rgba(0, 0, 0, 0.14);
-    border-radius: 4px;
-    border: none;
+const Button = styled.button`
+
+
+`
+
+
+const ListUL = styled(animated.div)`
+	position: absolute;
+	padding: 0;
+	margin-top: 4px;
+	background: ${props => props.theme.popup};
+	border: none;
     outline: none;
+	box-sizing: border-box;
+	box-shadow: 0px 1.2px 3.6px rgba(64, 64, 64, 0.11),
+		0px 8px 16px rgba(64, 64, 64, 0.16);
+	border-radius: 3px;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
     z-index: 2000;
-    white-space: nowrap;
-
     li {
+        width: 100%;
         min-width: 100%;
         height: ${rems[32]};
         padding-left: ${rems[8]};
         padding-right: ${rems[8]};
         display: flex;
         align-items: center;
-        /* transform: translate(6px, 0); */
+        color: ${props => props.theme.text};
+
         transition: all 0.3s ease;
         &:hover {
-            background: #484848;
+                background: ${props => props.theme.hover};
         }
     }
+	
 `;
+

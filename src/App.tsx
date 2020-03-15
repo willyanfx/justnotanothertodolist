@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 
 import { AppStateProvider } from './app-state';
 import appReducer, { initialState } from './appReducer';
@@ -32,19 +32,4 @@ const Container = styled.div`
     margin-right: 0;
     height: 100vh;
     width: 100%;
-
-    [data-todo-input] {
-        background: transparent;
-        height: 2rem;
-        width: 100%;
-        border-radius: 0.25rem;
-        border: 1px solid #747474;
-        color: #fff;
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-        padding: ${rems[4]};
-        &:focus {
-            background: #292929;
-        }
-    }
 `;
