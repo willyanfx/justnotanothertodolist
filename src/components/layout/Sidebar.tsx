@@ -98,7 +98,8 @@ const SidebarContainer = styled.div`
     overflow-x: hidden;
     overflow-y: hidden;
     border-right: 3px;
-    background: #1e1e1e;
+    background: ${props => props.theme.body};
+    color: ${props => props.theme.text}
 
     ul {
         margin: 0;

@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useReducer } from 'react';
+import React, { useState, createContext, useContext, useReducer, useEffect } from 'react';
 import styled from 'styled-components';
 import { rems } from '../constants/tokens';
 
@@ -130,11 +130,12 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 
 }) => {
     let { dispatch } = useMenuContext();
-    const handleChange = () => {
+    const handleSelection = () => {
         dispatch({ type: 'CLOSE_MENU' })
     }
 
-    return <li onClick={onClick} onPointerDown={handleChange} > {children}</li >
+
+    return <li onClick={onClick} onClickCapture={handleSelection} > {children}</li >
 };
 
 
@@ -178,12 +179,13 @@ const ListUL = styled(animated.div)`
     z-index: 2000;
     li {
         width: 100%;
-        min-width: 100%;
+        white-space: nowrap;
         height: ${rems[32]};
         padding-left: ${rems[8]};
         padding-right: ${rems[8]};
         display: flex;
         align-items: center;
+        cursor: pointer;
         color: ${props => props.theme.text};
 
         transition: all 0.3s ease;

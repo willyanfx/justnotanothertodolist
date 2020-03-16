@@ -7,18 +7,19 @@ interface ButtonProps {
 }
 
 export const Button: React.FC<ButtonProps> = ({ children, onClick }) => (
-    <Container onClick={onClick}>{children}</Container>
+    <Primary onClick={onClick}>{children}</Primary>
 );
 
 export const SecondaryBtn: React.FC<ButtonProps> = ({ children, onClick }) => (
     <Secondary onClick={onClick}>{children}</Secondary>
 );
 
-const Container = styled.button`
-    font-size: ${rems[14]};
+const Primary = styled.button`
+    font-size: ${rems[16]};
     height: ${rems[32]};
-    color: #fff;
-    border: 1px solid #434343;
+    color: ${props => props.theme.primary};
+    font-weight: 600;
+    border: 1px solid transparent;
     border-radius: ${rems[4]};
     background: transparent;
     &:hover {

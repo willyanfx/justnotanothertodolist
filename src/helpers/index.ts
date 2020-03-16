@@ -149,7 +149,6 @@ export async function deleteProject(docId: string) {
     return db.doc(`projects/${docId}`).delete();
 }
 export async function doneTask(docId: string) {
-    console.log(docId);
     return db.doc(`tasks/${docId}`).update({
         archived: true
     });

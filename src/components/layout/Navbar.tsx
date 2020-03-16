@@ -73,7 +73,7 @@ const QuickAddButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #BB86FC;
+    background: ${props => props.theme.primary};
     border: 1px solid transparent;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2), 
                 0px 3px 14px rgba(0, 0, 0, 0.12), 
@@ -147,12 +147,7 @@ const Header = styled.header`
     display: flex;
     align-items: center;
 
-    background: linear-gradient(
-            0deg,
-            rgba(255, 255, 255, 0.11),
-            rgba(255, 255, 255, 0.11)
-        ),
-        #121212;
+    background: ${props => props.theme.header};
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2), 0px 1px 18px rgba(0, 0, 0, 0.12),
         0px 6px 10px rgba(0, 0, 0, 0.14);
 `;

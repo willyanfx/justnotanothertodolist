@@ -18,9 +18,8 @@ export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButton
         const [{ user }] = useAppState();
         const projects = useProject(user.uid);
         const [value, setValue] = useState<string>('');
-        const [taskDate, setTaskDate] = useState('TODAY');
+        const [taskDate, setTaskDate] = useState('today');
         const [projectName, setProjectName] = useState('');
-
 
         const handleChange = useCallback((newValue) => {
             const text: string = newValue.currentTarget.value
@@ -37,6 +36,8 @@ export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButton
             } else if (projectId === 'NEXT_7DAYS') {
                 collectedDate = formatDate(addDays(Date.now(), 6), 'dd/MM/yyyy');
             }
+
+
 
             createDoc(
                 {

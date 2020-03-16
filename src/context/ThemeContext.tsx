@@ -33,10 +33,15 @@ export const lightTheme = {
 }
 
 export const darkTheme = {
-    body: '#363537',
+    body: '#1E1E1E',
+    primary: '#0B6DF6',
     text: '#FAFAFA',
     toggleBorder: '#6B8096',
     gradient: 'linear-gradient(#091236, #1E215D)',
     hover: '#484848',
-    popup: '#2f2f2f'
+    popup: '#2f2f2f',
+    main: '#232323',
+    header: '#2C2C2C'
 }
+// main: '#1E1E1E'
+// body: '#232323',

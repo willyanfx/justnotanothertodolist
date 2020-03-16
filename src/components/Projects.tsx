@@ -23,7 +23,7 @@ const Projects: React.FC = (): JSX.Element => {
         if (projects) setProjectCollection(projects);
     }, [projects]);
 
-    let projectDisplay = projectCollection.map(proj => (
+    const projectDisplay = projectCollection.map(proj => (
         <ProjectLi data-todo-sidebar-list key={proj.id} tabIndex={0}>
             <Link
                 to={`/${proj.name}`}
