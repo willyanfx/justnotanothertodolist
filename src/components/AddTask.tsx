@@ -7,103 +7,103 @@ import { format as formatDate, addDays } from 'date-fns';
 import useProject from '../hooks/useProject';
 import { MenuItem, Menu, MenuButton, MenuList } from './MenuButton';
 import { StandardProj } from '../types';
-import { Input } from './Input'
+import { Input } from '../Styles/styles'
 import { IoIosCalendar, IoMdBriefcase } from 'react-icons/io';
 import { Button, SecondaryBtn } from './Buttons';
 
-export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) }> = ({ onCancel }) => {
+export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) }>
+    = ({ onCancel }) => {
 
-    const [{ auth }] = useAppState();
-    const [{ user }] = useAppState();
-    const projects = useProject(user.uid);
-
-    const [value, setValue] = useState<string>('');
-    const [taskDate, setTaskDate] = useState('');
-    const [projectName, setProjectName] = useState('');
-
-
-    const handleChange = useCallback((newValue) => {
-        const text: string = newValue.currentTarget.value
-        setValue(text)
-    }, []);
-
-    const handleSubmit = (event: React.SyntheticEvent) => {
-        event.preventDefault();
-        let projectId = projectName || taskDate;
-        let collectedDate: string = '';
-
-        if (projectId === 'TODAY') {
-            collectedDate = formatDate(Date.now(), 'dd/MM/yyyy');
-        } else if (projectId === 'NEXT_7DAYS') {
-            collectedDate = formatDate(addDays(Date.now(), 6), 'dd/MM/yyyy');
-        }
-
-        createDoc(
-            {
-                date: collectedDate,
-                uid: auth.uid,
-                task: value,
-                projectId,
-                archived: false
-            },
-            'tasks'
-        ).then(() => {
-            setValue('');
-            setProjectName('');
-        })
-
-    };
+        const [{ auth }] = useAppState();
+        const [{ user }] = useAppState();
+        const projects = useProject(user.uid);
+        const [value, setValue] = useState<string>('');
+        const [taskDate, setTaskDate] = useState('TODAY');
+        const [projectName, setProjectName] = useState('');
 
 
+        const handleChange = useCallback((newValue) => {
+            const text: string = newValue.currentTarget.value
+            setValue(text)
+        }, []);
 
-    return (
-        <Newtask>
-            <Input value={value} placeholder='Add Task' onChange={handleChange} />
-            <div>
-                <span>
-                    <Button onClick={handleSubmit}>Add Task</Button>
-                    <SecondaryBtn onClick={onCancel}>Cancel</SecondaryBtn>
-                </span>
-                <span>
-                    <Menu>
-                        <MenuButton>
-                            <IoIosCalendar />
-                        </MenuButton>
-                        <MenuList>
-                            <MenuItem
-                                onClick={() => setTaskDate(StandardProj.inbox)}>
-                                Inbox
-                        </MenuItem>
+        const handleSubmit = (event: React.SyntheticEvent) => {
+            event.preventDefault();
+            let projectId = projectName || taskDate;
+            let collectedDate: string = '';
 
-                            <MenuItem
-                                onClick={() => setTaskDate(StandardProj.today)}>
-                                Today
-                        </MenuItem>
-                            <MenuItem
-                                onClick={() => setTaskDate(StandardProj.next7)}>
-                                Next 7 days
-                        </MenuItem>
-                        </MenuList>
-                    </Menu>
-                    {projects && (
-                        <Menu >
-                            <MenuButton><IoMdBriefcase /></MenuButton>
+            if (projectId === 'TODAY') {
+                collectedDate = formatDate(Date.now(), 'dd/MM/yyyy');
+            } else if (projectId === 'NEXT_7DAYS') {
+                collectedDate = formatDate(addDays(Date.now(), 6), 'dd/MM/yyyy');
+            }
+
+            createDoc(
+                {
+                    date: collectedDate,
+                    uid: auth.uid,
+                    task: value,
+                    projectId,
+                    archived: false
+                },
+                'tasks'
+            ).then(() => {
+                setValue('');
+                setProjectName('');
+            })
+
+        };
+
+
+
+        return (
+            <Newtask>
+                <Input value={value} placeholder='Add Task' onChange={handleChange} />
+                <div>
+                    <span>
+                        <Button onClick={handleSubmit}>Add Task</Button>
+                        <SecondaryBtn onClick={onCancel}>Cancel</SecondaryBtn>
+                    </span>
+                    <span>
+                        <Menu>
+                            <MenuButton>
+                                <IoIosCalendar />
+                            </MenuButton>
                             <MenuList>
-                                {projects.map((item: any) => (
-                                    <MenuItem
-                                        key={item.id}
-                                        onClick={() => setProjectName(item.name)}>
-                                        {item.name}
-                                    </MenuItem>
-                                ))}
+                                <MenuItem
+                                    onClick={() => setTaskDate(StandardProj.inbox)}>
+                                    Inbox
+                        </MenuItem>
+
+                                <MenuItem
+                                    onClick={() => setTaskDate(StandardProj.today)}>
+                                    Today
+                        </MenuItem>
+                                <MenuItem
+                                    onClick={() => setTaskDate(StandardProj.next7)}>
+                                    Next 7 days
+                        </MenuItem>
                             </MenuList>
                         </Menu>
-                    )}
-                </span>
-            </div>
-        </Newtask>
-    );
-};
+                        {projects && (
+                            <Menu >
+                                <MenuButton><IoMdBriefcase /></MenuButton>
+                                <MenuList>
+                                    {projects.map((item: any) => (
+                                        <MenuItem
+                                            key={item.id}
+                                            onClick={() => setProjectName(item.name)}>
+                                            {item.name}
+                                        </MenuItem>
+                                    ))}
+                                </MenuList>
+                            </Menu>
+                        )}
+                    </span>
+                </div>
+            </Newtask>
+        );
+    };
 
 const Newtask = styled.div`
     color: #fff;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 import { rems } from '../constants/tokens'
 
@@ -24,7 +24,7 @@ export const Input: React.FC<InputProps> = ({ value, onChange, placeholder }) =>
 }
 
 
-const InputField = styled.input`
+export const InputField = styled.input`
         background: transparent;
         height: 2rem;
         width: 100%;

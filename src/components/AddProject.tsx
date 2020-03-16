@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { FiPlus } from 'react-icons/fi';
 import { rems } from '../constants/tokens';
 import { Button, SecondaryBtn } from './Buttons';
-import { Input } from './Input';
+import { Input } from '../Styles/styles';
 
 const AddProject = () => {
     const [{ auth }] = useAppState();

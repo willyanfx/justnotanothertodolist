@@ -102,7 +102,7 @@ const Container = styled.div`
         padding: ${rems[32]} ${rems[32]};
         border-radius: ${rems[4]};
         border-top-left-radius: 0;
-
+        
         background: #2f2f2f;
         /* 06 dp */
 
@@ -116,13 +116,14 @@ const Container = styled.div`
         padding: ${rems[8]} ${rems[16]};
         background: grey;
         margin-right: ${rems[4]};
-        background: #2f2f2f;
+        background: #252525;
         z-index: 200;
+        cursor: pointer;
         border-top-left-radius: ${rems[4]};
         border-top-right-radius: ${rems[4]};
     }
     [data-tab='true'] {
-        background: #252525;
+        background: #2f2f2f;
         border-top-left-radius: ${rems[4]};
         border-top-right-radius: ${rems[4]};
     }

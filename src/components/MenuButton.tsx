@@ -120,12 +120,22 @@ export const MenuList: React.FC = ({ children }) => {
     </>);
 };
 
+type MenuItemProps = {
+    onClick?: ((event: React.MouseEvent<HTMLLIElement, MouseEvent>) => void);
+}
 
-
-export const MenuItem: React.FC<{ onClick?: ((event: React.MouseEvent<HTMLLIElement, MouseEvent>) => void) }> = ({
+export const MenuItem: React.FC<MenuItemProps> = ({
     children,
-    onClick
-}) => <li onClick={onClick}>{children}</li>;
+    onClick,
+
+}) => {
+    let { dispatch } = useMenuContext();
+    const handleChange = () => {
+        dispatch({ type: 'CLOSE_MENU' })
+    }
+
+    return <li onClick={onClick} onPointerDown={handleChange} > {children}</li >
+};
 
 
 
@@ -140,7 +150,14 @@ const MenuContainer = styled.div`
 
 
 const Button = styled.button`
-
+    height: ${rems[32]};
+    font-size: ${rems[16]}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: ${rems[4]};
+    color: #fff;
 
 `
 

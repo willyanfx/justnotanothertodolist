@@ -4,6 +4,7 @@ import { login } from '../helpers';
 import styled, { keyframes } from 'styled-components';
 import { rems } from '../constants/tokens';
 import { Button } from './Buttons';
+import { InputField } from '../Styles/styles';
 
 export default function LoginForm() {
     const [error, setError] = useState<Error | null>(null);
@@ -46,7 +47,7 @@ export default function LoginForm() {
                 <VisuallyHidden>
                     <label htmlFor='login:email'>Email:</label>
                 </VisuallyHidden>
-                <input
+                <InputField
                     data-todo-input
                     ref={emailRef}
                     type='text'
@@ -58,7 +59,7 @@ export default function LoginForm() {
                 <VisuallyHidden>
                     <label htmlFor='login:password'>Password:</label>
                 </VisuallyHidden>
-                <input
+                <InputField
                     data-todo-input
                     ref={passwordRef}
                     id='login:password'
@@ -67,6 +68,7 @@ export default function LoginForm() {
                     type={showPassword ? 'text' : 'password'}
                 />
                 <CheckboxContainer>
+
                     <input
                         id='showPassword'
                         type='checkbox'
@@ -94,6 +96,9 @@ export default function LoginForm() {
         </div>
     );
 }
+
+
+
 
 const Alert = styled.div`
     background: rgba(255, 23, 68, 0.12);

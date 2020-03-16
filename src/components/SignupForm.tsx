@@ -3,11 +3,13 @@ import VisuallyHidden from './VisuallyHidden';
 import TabsButton from './TabsButton';
 import { signup } from '../helpers';
 import styled from 'styled-components';
+import { InputField } from '../Styles/styles';
 export type TextInputProps = {
     id: string;
     label: string;
     type?: string;
 };
+
 
 function TextInput({ id, label, type = 'text' }: TextInputProps) {
     return (
@@ -15,7 +17,7 @@ function TextInput({ id, label, type = 'text' }: TextInputProps) {
             <VisuallyHidden>
                 <label htmlFor={id}>{label}</label>
             </VisuallyHidden>
-            <input
+            <InputField
                 data-todo-input
                 type={type}
                 id={id}
