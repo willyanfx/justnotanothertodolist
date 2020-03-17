@@ -4,57 +4,49 @@ import { Link } from 'react-router-dom';
 import AddProject from '../AddProject';
 import Projects from '../Projects';
 import { StandardProj } from '../../types';
-import { MdInbox, MdToday, MdDateRange } from 'react-icons/md';
-import { IoMdArrowDropdown } from 'react-icons/io';
 import { rems } from '../../constants/tokens';
+import { Today, Next7, Inbox, ArrowDown } from '../Icons';
 
 export const Sidebar = () => {
     const [showProjects, setShowProjects] = useState<boolean>(true);
 
     return (
         <SidebarContainer>
-            <ul>
+            <SidebarUl>
                 <li data-todo-sidebar-list>
                     <Link to={`/${StandardProj.inbox}`}>
-                        <span>
-                            <MdInbox />
-                        </span>
+                        <Inbox />
                         <span>Inbox</span>
                     </Link>
                 </li>
                 <li data-todo-sidebar-list>
                     <Link to={`/${StandardProj.today}`}>
-                        <span>
-                            <MdToday />
-                        </span>
+                        <Today />
                         <span>Today</span>
                     </Link>
                 </li>
                 <li data-todo-sidebar-list>
                     <Link to={`/${StandardProj.next7}`}>
-                        <span>
-                            <MdDateRange />
-                        </span>
+                        <Next7 />
                         <span>Next 7 days</span>
                     </Link>
                 </li>
-            </ul>
-            <HeaderContainer>
+            </SidebarUl>
+            <ProjectContainer>
                 <AccordionButton onClick={() => setShowProjects(!showProjects)}>
-                    <IoMdArrowDropdown />
-
+                    <ArrowDown />
                     <h2>Projects</h2>
                 </AccordionButton>
 
                 <ul>{showProjects && <Projects />}</ul>
                 {showProjects && <AddProject />}
-            </HeaderContainer>
+            </ProjectContainer>
         </SidebarContainer>
     );
 };
 
 const AccordionButton = styled.button`
-    display: inline-flex;
+    display: flex;
     align-items: center;
     width: 100%;
     padding: 0 ${rems[8]};
@@ -62,7 +54,7 @@ const AccordionButton = styled.button`
     margin-top: ${rems[16]};
     border: none;
     &:hover {
-        background: #2f2f2f;
+        background: ${props => props.theme.hover};
     }
     h2 {
         color: #fff;
@@ -76,7 +68,7 @@ const AccordionButton = styled.button`
     }
 `;
 
-const HeaderContainer = styled.header`
+const ProjectContainer = styled.header`
     display: inline-block;
     width: 266px;
     vertical-align: top;
@@ -85,9 +77,25 @@ const HeaderContainer = styled.header`
     word-break: break-all;
     word-break: break-word;
     ul {
+        margin: 0;
+        padding: 0;
         position: relative;
+        border-bottom: 1px solid ${props => props.theme.divider};
+        margin-bottom: ${rems[16]};
+
     }
 `;
+
+const SidebarUl = styled.ul`
+    margin: 0;
+    padding: 0;
+    li {
+        margin: 0;
+        span{
+            margin-left: ${rems[8]}
+        }
+    }
+`
 
 const SidebarContainer = styled.div`
     position: relative;
@@ -115,11 +123,12 @@ const SidebarContainer = styled.div`
         display: flex;
         align-items: center;
         &:hover {
-            background: #cacaca;
+            background:  ${props => props.theme.hover};
         }
         a {
-            color: #fff;
+            color: ${props => props.theme.text};
             text-decoration: none;
+            margin-left: ${rems[4]}
         }
     }
 `;

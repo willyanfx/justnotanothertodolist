@@ -4,8 +4,8 @@ import useProject from '../hooks/useProject';
 import { deleteProject } from '../helpers';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { IoIosTrash } from 'react-icons/io';
 import { rems } from '../constants/tokens';
+import { Delete } from './Icons';
 
 type Proj = {
     createdAt: number;
@@ -20,7 +20,7 @@ const Projects: React.FC = (): JSX.Element => {
     const [projectCollection, setProjectCollection] = useState<Proj[]>([]);
     const projects = useProject(user.uid);
     useEffect(() => {
-        if (projects) setProjectCollection(projects);
+        if (projects) setProjectCollection(projects!);
     }, [projects]);
 
     const projectDisplay = projectCollection.map(proj => (
@@ -31,7 +31,7 @@ const Projects: React.FC = (): JSX.Element => {
                 {proj.name}
             </Link>
             <span onClick={() => deleteProject(proj.id)}>
-                <IoIosTrash />
+                <Delete />
             </span>
         </ProjectLi>
     ));
@@ -48,6 +48,6 @@ const ProjectLi = styled.li`
     span {
         background: transparent;
         border-radius: ${rems[4]};
-        color: #fff;
+        color: ${props => props.theme.text};
     }
 `;

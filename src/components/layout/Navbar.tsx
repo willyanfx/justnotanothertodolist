@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { FiPlus } from 'react-icons/fi';
 
 import { logout } from '../../helpers';
 import { useAppState } from '../../app-state';
@@ -10,6 +9,7 @@ import {
 } from '../../context/DialogContext';
 import { Toggle } from '../Toggle';
 import { rems } from '../../constants/tokens';
+import { Plus } from '../Icons';
 export const Navbar = () => {
     return (
         <Header>
@@ -31,7 +31,7 @@ function Account() {
     return user ? (
         <AccountDiv>
             <QuickAddButton onClick={() => setShowModal(!showModal)}>
-                <FiPlus />
+                <Plus />
             </QuickAddButton>
 
             <Toggle defaultChecked={false} onClick={() => console.log('ehehe')} />

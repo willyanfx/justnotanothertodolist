@@ -236,16 +236,19 @@ template {
   display: none;
 }
 
+*:hover {
+  outline: none;
+}
 
-    *, *::after, *::before {	
-                    box-sizing: border-box;	
-                    position: relative;
-                    -moz-osx-font-smoothing: grayscale;	
-                    -webkit-font-smoothing: antialiased;	
-                    font-smoothing: antialiased;	
-                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',	
-                        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',	
-                        'Helvetica Neue', sans-serif;
-    }
 
+*, *::after, *::before {	
+    box-sizing: border-box;	
+    position: relative;
+    -moz-osx-font-smoothing: grayscale;	
+    -webkit-font-smoothing: antialiased;	
+    font-smoothing: antialiased;	
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',	
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',	
+        'Helvetica Neue', sans-serif;        
+}
 `;

@@ -11,9 +11,8 @@ import AddDialog from './AddDialog';
 import { Checkbox } from './Checkbox';
 import { DialogStateContext, DialogSetContext } from '../context/DialogContext';
 import { rems } from '../constants/tokens';
-import { Button } from './Buttons';
+import { Delete, Plus } from './Icons';
 
-import { IoIosTrash } from 'react-icons/io';
 
 function ListItem({ item, index }: { item: AddTaskProps; index: number }) {
     let { id } = useParams();
@@ -31,7 +30,7 @@ function ListItem({ item, index }: { item: AddTaskProps; index: number }) {
                     </span>
 
                     <span onClick={() => deleteTask(item.id)}>
-                        <IoIosTrash />
+                        <Delete />
                     </span>
                 </ListItemDiv>
             )}
@@ -96,8 +95,6 @@ export const Tasks = () => {
                 isOpen={showModal}
                 onDismiss={() => setShowModal(!showModal)}
             />
-
-
             <DisplayItem>
                 <h2>{title}</h2>
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -113,10 +110,10 @@ export const Tasks = () => {
                     </Droppable>
                 </DragDropContext>
                 <AddTaskDiv>
-                    <Button onClick={() => setShowAddTask(!showAddTask)}>
-                        <span>+</span>
+                    <button onClick={() => setShowAddTask(!showAddTask)}>
+                        <Plus />
                         <span>Add Task</span>
-                    </Button>
+                    </button>
                     {showAddTask && (
                         <AddTask
                             onCancel={() => setShowAddTask(!showAddTask)}
@@ -131,9 +128,27 @@ export const Tasks = () => {
 const GRID = 0.5;
 
 const AddTaskDiv = styled.div`
-    border-top: 1px solid #999999;
+    border-top: 1px solid ${props => props.theme.divider};
     margin-top: ${rems[16]};
     padding-top: ${rems[16]};
+    > button {
+       color: ${props => props.theme.text};
+       font-size: ${rems[20]};
+       border: none;
+       background: none;
+       font-weight: 600;
+       padding: 0 ${rems[8]};
+       border-radius: ${rems[4]};
+       display: flex;
+       align-items: center;
+        svg {
+           width: ${rems[30]};
+           height: ${rems[30]};
+       }
+       &:hover {
+           background: ${props => props.theme.btnHover}
+        }
+    }
 `;
 
 const DisplayItem = styled.div`
@@ -164,7 +179,7 @@ const ListItemDiv = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
-    background: #333;
+    background: ${props => props.theme.level100};
     border-radius: ${rems[4]};
     margin-bottom: ${GRID}rem;
     padding: ${rems[16]} ${rems[16]};

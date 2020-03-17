@@ -23,17 +23,19 @@ const Primary = styled.button`
     border-radius: ${rems[4]};
     background: transparent;
     &:hover {
-        background: #2e2c31;
+        background: ${props => props.theme.btnHover};
     }
 `;
+
+
 const Secondary = styled.button`
     font-size: ${rems[14]};
     border-radius: ${rems[4]};
-    color: #fff;
+    color: ${props => props.theme.textSecond};
     border: none;
     background: transparent;
     height: ${rems[32]};
     &:hover {
-        background: #2e2c31;
+        background: ${props => props.theme.btnHover};
     }
 `;

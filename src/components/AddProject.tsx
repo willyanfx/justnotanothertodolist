@@ -2,10 +2,10 @@ import React, { useState, useRef } from 'react';
 import { createDoc } from '../helpers';
 import { useAppState } from '../app-state';
 import styled from 'styled-components';
-import { FiPlus } from 'react-icons/fi';
 import { rems } from '../constants/tokens';
 import { Button, SecondaryBtn } from './Buttons';
 import { Input } from '../Styles/styles';
+import { Plus } from './Icons';
 
 const AddProject = () => {
     const [{ auth }] = useAppState();
@@ -32,7 +32,7 @@ const AddProject = () => {
                 role='button'
                 tabIndex={0}>
                 <span>
-                    <FiPlus />
+                    <Plus />
                 </span>
                 <span>Add Project</span>
             </ProjectBtn>
@@ -58,7 +58,7 @@ const AddProject = () => {
 export default AddProject;
 
 const ProjectBtn = styled.span`
-    color: #fff;
+    color: ${props => props.theme.text};
     padding: 0 ${rems[16]};
     display: flex;
     justify-content: center;
@@ -66,16 +66,16 @@ const ProjectBtn = styled.span`
     height: ${rems[32]};
     font-size: ${rems[16]};
     text-align: center;
+    margin: 0 ${rems[8]};
     &:hover {
-        background: rgba(187, 134, 252, 0.04);
+        background: ${props => props.theme.hover};
     }
 `;
 
 const AddProjectDiv = styled.div`
-    /* display: block; */
     position: relative;
     margin: ${rems[8]} ${rems[8]};
-    color: #fff;
+    color: ${props => props.theme.text};
 
     > div {
         display: grid;

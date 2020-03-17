@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
 import styled from 'styled-components';
 import { rems } from '../constants/tokens';
 
@@ -74,6 +74,7 @@ export const MenuButton: React.FC = ({ children }) => {
             aria-expanded={isOpen}
             aria-haspopup
             type="button"
+
             onClick={handleMouseDown}>
             {children}
         </Button>
@@ -158,8 +159,11 @@ const Button = styled.button`
     justify-content: center;
     background: transparent;
     border-radius: ${rems[4]};
-    color: #fff;
-
+    border-color: transparent;
+    color:${props => props.theme.text};
+    &:hover, &:active, &[aria-expanded='true']{
+        background:  ${props => props.theme.btnHover}
+    }
 `
 
 

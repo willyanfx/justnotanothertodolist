@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
-
 import { useAppState } from '../app-state';
 import { createDoc } from '../helpers';
 import { format as formatDate, addDays } from 'date-fns';
@@ -8,8 +7,8 @@ import useProject from '../hooks/useProject';
 import { MenuItem, Menu, MenuButton, MenuList } from './MenuButton';
 import { StandardProj } from '../types';
 import { Input } from '../Styles/styles'
-import { IoIosCalendar, IoMdBriefcase } from 'react-icons/io';
 import { Button, SecondaryBtn } from './Buttons';
+import { Today, ProjectIcon } from './Icons';
 
 export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) }>
     = ({ onCancel }) => {
@@ -68,7 +67,7 @@ export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButton
                     <span>
                         <Menu>
                             <MenuButton>
-                                <IoIosCalendar />
+                                <Today />
                             </MenuButton>
                             <MenuList>
                                 <MenuItem
@@ -88,7 +87,7 @@ export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButton
                         </Menu>
                         {projects && (
                             <Menu >
-                                <MenuButton><IoMdBriefcase /></MenuButton>
+                                <MenuButton><ProjectIcon /> </MenuButton>
                                 <MenuList>
                                     {projects.map((item: any) => (
                                         <MenuItem
@@ -107,7 +106,7 @@ export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButton
     };
 
 const Newtask = styled.div`
-    color: #fff;
+    color: ${props => props.theme.text};
     > div {
         display: flex;
         justify-content: space-between;

@@ -17,11 +17,11 @@ const Button = styled.button`
     font-size: ${rems[14]};
     height: ${rems[32]};
     color: #fff;
-    border: 1px solid #434343;
+    border: 1px solid ${props => props.theme.outline};
     border-radius: ${rems[4]};
     background: transparent;
     &:hover {
-        background: #2e2c31;
+        background: ${props => props.theme.main};
     }
 
 `

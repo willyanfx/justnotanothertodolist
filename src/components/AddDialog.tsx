@@ -1,10 +1,10 @@
-import React, { useRef, useState, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 import styled from 'styled-components';
 import { AddTask } from './AddTask';
-import { useTransition, animated } from 'react-spring';
-import { IoMdClose } from 'react-icons/io';
+import { useTransition, animated, config } from 'react-spring';
 import { rems } from '../constants/tokens';
+import { CloseX } from './Icons';
 
 
 
@@ -27,39 +27,40 @@ const DialogOverlay = forwardRef<HTMLDivElement, DialogProps>(
 function AddDialog({ isOpen = false, onDismiss }: DialogProps): JSX.Element | null {
 
     const transitions = useTransition(isOpen, null, {
-        config: { duration: 110 },
-        from: { opacity: 0, transform: 'translateY(-10px)' },
+        from: { opacity: 0, transform: 'translateY(-20px)' },
         enter: { opacity: 1, transform: 'translateY(0)' },
-        leave: { opacity: 0, transform: 'translateY(-10px)' }
+        leave: { opacity: 0, transform: 'translateY(-20px)' },
+        config: { duration: 150, mass: 1, tension: 170, friction: 26 },
     })
 
 
-    return (<>
-        {transitions.map(({ item, key, props: { opacity, transform } }) => item
-            && <DialogOverlay style={{ opacity }}
-                isOpen={item}
-                key={key}>
-                {item && console.log(typeof transform)}
-                <DialogContent style={{ transform }}>
-                    <Header>
-                        <h2 className='header'>Quick Add Task</h2>
-                        <ButtonClose
-                            className='add-task__cancel-x'
-                            aria-label='Cancel adding task'
-                            onClick={onDismiss}
+    return (
+        <>
+            {transitions.map(({ item, key, props: { opacity, transform } }) => item
+                && <DialogOverlay style={{ opacity }}
+                    isOpen={item}
+                    key={key}>
+                    {item && console.log(typeof transform)}
+                    <DialogContent style={{ transform }}>
+                        <Header>
+                            <h2 className='header'>Quick Add Task</h2>
+                            <ButtonClose
+                                className='add-task__cancel-x'
+                                aria-label='Cancel adding task'
+                                onClick={onDismiss}
 
-                            tabIndex={0}
-                            role='button'>
-                            <IoMdClose />
-                        </ButtonClose>
-                    </Header>
-                    <ContainerAddTask>
-                        <AddTask />
-                    </ContainerAddTask>
-                </DialogContent>
-            </DialogOverlay>)
-        }
-    </>)
+                                tabIndex={0}
+                                role='button'>
+                                <CloseX />
+                            </ButtonClose>
+                        </Header>
+                        <ContainerAddTask>
+                            <AddTask onCancel={onDismiss} />
+                        </ContainerAddTask>
+                    </DialogContent>
+                </DialogOverlay>)
+            }
+        </>)
 };
 
 export default AddDialog;
@@ -85,12 +86,12 @@ const ButtonClose = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: ${props => props.theme.text};
     background: transparent;
     border-radius: ${rems[4]};
     border-color: transparent;
     &:hover {
-        background: #2e2c31;
+        background: ${props => props.theme.btnHover};
     }
 `;
 
@@ -108,9 +109,8 @@ const DialogOverlayDiv = styled(animated.div)`
 const Dialog = styled(animated.div)`
     width: 40vw;
     margin: 10vh auto;
-    background: white;
     outline: none;
-    background: #383838;
+    background: ${props => props.theme.level100};
     box-shadow: 0px 11px 15px rgba(0, 0, 0, 0.2),
         0px 9px 46px rgba(0, 0, 0, 0.12), 0px 24px 38px rgba(0, 0, 0, 0.14);
     border-radius: 4px;
