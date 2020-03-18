@@ -3,8 +3,7 @@ import VisuallyHidden from './VisuallyHidden';
 import { login } from '../helpers';
 import styled, { keyframes } from 'styled-components';
 import { rems } from '../constants/tokens';
-import { Button } from './Buttons';
-import { InputField } from '../Styles/styles';
+import { InputField, PrimaryBtn } from '../Styles';
 
 export default function LoginForm() {
     const [error, setError] = useState<Error | null>(null);
@@ -89,9 +88,9 @@ export default function LoginForm() {
                     </label>
                 </CheckboxContainer>
 
-                <Button>
+                <PrimaryBtn>
                     <span>{loading ? 'Loading...' : 'Login'}</span>
-                </Button>
+                </PrimaryBtn>
             </form>
         </div>
     );

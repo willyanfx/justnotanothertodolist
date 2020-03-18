@@ -12,8 +12,8 @@ type ToggleProps = {
 
 
 export const Toggle: React.FC<ToggleProps> = () => {
-    const [checked, setChecked] = useState(false)
-    const { theme, setTheme } = useThemeValue()
+    const { theme, setTheme } = useThemeValue();
+    const [checked, setChecked] = useState(theme.mode === 'dark');
 
     function changeTheme() {
         setChecked(theme.mode === 'dark' ? true : false)
@@ -48,11 +48,11 @@ const ToggleDiv = styled.div`
         display: none;
 
         &:checked + label::before {
-            background: #fff;
+            background: ${props => props.theme.primary};
             opacity: 0.5;
         }
         &:checked + label::after {
-            background: black;
+            background: ${props => props.theme.toggle};
             left: 20px;
         }
     }

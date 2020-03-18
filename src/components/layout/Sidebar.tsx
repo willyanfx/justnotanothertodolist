@@ -57,14 +57,16 @@ const AccordionButton = styled.button`
         background: ${props => props.theme.hover};
     }
     h2 {
-        color: #fff;
-        font-size: ${rems[16]};
+        color:  ${props => props.theme.text};
+        font-weight: 400;
+        font-size: ${rems[20]};
         line-height: ${rems[20]};
     }
     svg {
-        width: 1.5rem;
-        height: 1.5rem;
-        margin-right: 0.25rem;
+        fill: ${props => props.theme.text};
+        width: ${rems[24]};
+        height: ${rems[24]};
+        margin-right:${rems[8]};
     }
 `;
 
@@ -91,6 +93,7 @@ const SidebarUl = styled.ul`
     padding: 0;
     li {
         margin: 0;
+        
         span{
             margin-left: ${rems[8]}
         }
@@ -126,6 +129,9 @@ const SidebarContainer = styled.div`
             background:  ${props => props.theme.hover};
         }
         a {
+            display: flex;
+            align-items: center;
+            width: 100%;
             color: ${props => props.theme.text};
             text-decoration: none;
             margin-left: ${rems[4]}

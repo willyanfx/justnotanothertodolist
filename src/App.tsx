@@ -6,7 +6,6 @@ import appReducer, { initialState } from './appReducer';
 import useAuth from './useAuth';
 import LoggedOut from './components/LoggedOut';
 import LoggedIn from './components/LoggedIn';
-import { rems, colors } from './constants/tokens';
 import { ThemeModeProvider } from './context/ThemeContext';
 
 function App() {

@@ -30,9 +30,11 @@ const Projects: React.FC = (): JSX.Element => {
                 aria-label={`Select ${proj.name} as the task project`}>
                 {proj.name}
             </Link>
-            <span onClick={() => deleteProject(proj.id)}>
+            <button
+                aria-label='delete button'
+                onClick={() => deleteProject(proj.id)}>
                 <Delete />
-            </span>
+            </button>
         </ProjectLi>
     ));
 
@@ -43,11 +45,19 @@ export default Projects;
 const ProjectLi = styled.li`
     display: flex;
     justify-content: space-between;
+    align-items: center;
     height: ${rems[32]};
-
-    span {
+    width: 100%;
+    button {
         background: transparent;
-        border-radius: ${rems[4]};
-        color: ${props => props.theme.text};
+        border: none;
+        height: ${rems[24]};
+        cursor: pointer;
+        svg {
+            width: ${rems[20]};
+            color: ${props => props.theme.text};
+            height: ${rems[20]};
+        }
     }
+  
 `;

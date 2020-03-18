@@ -3,8 +3,8 @@ import { createDoc } from '../helpers';
 import { useAppState } from '../app-state';
 import styled from 'styled-components';
 import { rems } from '../constants/tokens';
-import { Button, SecondaryBtn } from './Buttons';
-import { Input } from '../Styles/styles';
+import { PrimaryBtn, SecondaryBtn } from '../Styles';
+import { Input } from '../Styles';
 import { Plus } from './Icons';
 
 const AddProject = () => {
@@ -31,9 +31,7 @@ const AddProject = () => {
                 onKeyDown={() => setShow(!show)}
                 role='button'
                 tabIndex={0}>
-                <span>
-                    <Plus />
-                </span>
+                <Plus />
                 <span>Add Project</span>
             </ProjectBtn>
             {show && (
@@ -44,8 +42,8 @@ const AddProject = () => {
                         onChange={e => setProjectName(e.target.value)}
                     />
                     <div>
-                        <Button onClick={handleAddProject}>Add Project</Button>
-                        <SecondaryBtn onClick={() => setShow(!show)}>
+                        <PrimaryBtn aria-label='Add Project' onClick={handleAddProject}>Add Project</PrimaryBtn>
+                        <SecondaryBtn aria-label='Cancel' onClick={() => setShow(!show)}>
                             Cancel
                         </SecondaryBtn>
                     </div>
@@ -70,16 +68,20 @@ const ProjectBtn = styled.span`
     &:hover {
         background: ${props => props.theme.hover};
     }
+    svg {
+        fill: ${props => props.theme.text};
+        width: ${rems[24]};
+        height: ${rems[24]};
+    }
 `;
 
 const AddProjectDiv = styled.div`
     position: relative;
     margin: ${rems[8]} ${rems[8]};
     color: ${props => props.theme.text};
-
     > div {
         display: grid;
-        grid-column-gap: ${rems[8]};
+        grid-column-gap: ${rems[4]};
         grid-template-columns: 1fr 1fr;
         margin-top: ${rems[8]};
     }

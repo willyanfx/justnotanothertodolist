@@ -28,7 +28,7 @@ const CheckboxBtn = styled.div`
 
     label {
         display: inline-block; 
-        color: #fff;
+        color: ${props => props.theme.text};
         cursor: pointer;
         position: relative; 
 
@@ -39,7 +39,7 @@ const CheckboxBtn = styled.div`
             width: 25px;
             height: 25px;
             transform-origin: center;
-            border: 2px solid #fff;
+            border: 2px solid ${props => props.theme.text};
             border-radius: 50%;
             vertical-align: -6px;
             margin-right: 10px;
@@ -51,7 +51,7 @@ const CheckboxBtn = styled.div`
                 width: 0px;
                 height: 2px;
                 border-radius: 2px;
-                background: #fff;
+                background: ${props => props.theme.text};
                 position: absolute;
                 transform: rotate(45deg);
                 top: 10px;
@@ -65,7 +65,7 @@ const CheckboxBtn = styled.div`
                 width: 0;
                 height: 2px;
                 border-radius: 2px; 
-                background: #fff;
+                background: ${props => props.theme.text};
                 position: absolute;
                 transform: rotate(305deg);
                 top: 15px;
@@ -97,36 +97,36 @@ const CheckboxBtn = styled.div`
     &:checked {
         + label {
         span {
-            background-color: #fff;
+            background-color: ${props => props.theme.text};
             transform: scale(1.25); 
             
             &:after {
             width: 10px;
-            background: #1790b5;
+            background: ${props => props.theme.primary};
             transition: width 150ms ease 100ms; 
             }
             
             &:before {
             width: 5px;
-            background: #1790b5;
+            background: ${props => props.theme.primary};
             transition: width 150ms ease 100ms; 
             }
         }
         
         &:hover { 
             span {
-            background-color: #fff;
+            background-color: ${props => props.theme.text};
             transform: scale(1.25); 
 
             &:after {
                 width: 10px;
-                background: #1790b5;
+                background: ${props => props.theme.primary};
                 transition: width 150ms ease 100ms; 
             }
 
             &:before {
                 width: 5px;
-                background: #1790b5;
+                background: ${props => props.theme.primary};
                 transition: width 150ms ease 100ms; 
             }
             }  

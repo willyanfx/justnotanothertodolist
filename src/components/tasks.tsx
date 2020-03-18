@@ -59,7 +59,7 @@ const reorder = (
 
 export const Tasks = () => {
     const [taskItems, setTasksItems] = useState([]);
-    const [showAddTask, setShowAddTask] = useState(true);
+    const [showAddTask, setShowAddTask] = useState(false);
     const showModal = useContext(DialogStateContext);
     const setShowModal = useContext(DialogSetContext);
     const [{ user }] = useAppState();
@@ -155,7 +155,7 @@ const DisplayItem = styled.div`
     width: 41rem;
     height: 100%;
     background: ${props => props.theme.main};
-    color: #fff;
+    color: ${props => props.theme.text};
     margin-left: 16.625rem;
     border-right: ${rems[4]};
     vertical-align: top;

@@ -6,8 +6,8 @@ import { format as formatDate, addDays } from 'date-fns';
 import useProject from '../hooks/useProject';
 import { MenuItem, Menu, MenuButton, MenuList } from './MenuButton';
 import { StandardProj } from '../types';
-import { Input } from '../Styles/styles'
-import { Button, SecondaryBtn } from './Buttons';
+import { Input } from '../Styles'
+import { PrimaryBtn, SecondaryBtn } from '../Styles';
 import { Today, ProjectIcon } from './Icons';
 
 export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) }>
@@ -61,7 +61,7 @@ export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButton
                 <Input value={value} placeholder='Add Task' onChange={handleChange} />
                 <div>
                     <span>
-                        <Button onClick={handleSubmit}>Add Task</Button>
+                        <PrimaryBtn onClick={handleSubmit}>Add Task</PrimaryBtn>
                         <SecondaryBtn onClick={onCancel}>Cancel</SecondaryBtn>
                     </span>
                     <span>

@@ -3,7 +3,7 @@ import VisuallyHidden from './VisuallyHidden';
 import TabsButton from './TabsButton';
 import { signup } from '../helpers';
 import styled from 'styled-components';
-import { InputField } from '../Styles/styles';
+import { InputField } from '../Styles';
 export type TextInputProps = {
     id: string;
     label: string;

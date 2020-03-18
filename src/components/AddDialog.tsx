@@ -72,7 +72,7 @@ const Header = styled.header`
     padding-right: ${rems[16]};
     display: flex;
     align-items: center;
-    color: #fff;
+    color: ${props => props.theme.text};
     justify-content: space-between;
       h2 {
         font-size: ${rems[20]};

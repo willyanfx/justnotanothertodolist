@@ -45,8 +45,8 @@ function Account() {
 
                 {showMenu && (
                     <ul>
-                        <p>{user.displayName}</p>
-                        <li>
+                        <li>{user.displayName}</li>
+                        <li onClick={() => setShowMenu(!showMenu)}>
                             <span role='button' onClick={() => logout()}>
                                 Logout
                             </span>
@@ -67,8 +67,8 @@ const LogoSvg = styled.div`
 `;
 
 const QuickAddButton = styled.button`
-    height: 2rem;
-    width: 2rem;
+    height: ${rems[32]};
+    width: ${rems[32]};
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -79,9 +79,9 @@ const QuickAddButton = styled.button`
                 0px 3px 14px rgba(0, 0, 0, 0.12), 
                 0px 8px 10px rgba(0, 0, 0, 0.14);   
      svg {
-        min-width: 1.5rem;
-        min-height: 1.5rem;
-        color: #fff;
+        min-width: ${rems[24]};
+        min-height: ${rems[24]};
+        color: ${props => props.theme.primary};
     }
 `;
 
@@ -93,24 +93,19 @@ const AccountDiv = styled.div`
     height: 100%;
     [data-avatar] {
         position: relative;
-        margin: 0 1rem;
+        margin: 0 ${rems[16]};
         img {
             border-radius: 50%;
-            height: 2rem;
-            width: 2rem;
+            height: ${rems[32]};
+            width: ${rems[32]};
         }
         > ul {
             color: #fff;
             position: absolute;
-            margin: 4px 0;
-            padding: 0.25rem 0;
+            margin: ${rems[4]} 0;
+            padding: ${rems[4]} 0;
             visibility: visible;
-            background: linear-gradient(
-                    0deg,
-                    rgba(255, 255, 255, 0.12),
-                    rgba(255, 255, 255, 0.12)
-                ),
-                #121212;
+            background: ${props => props.theme.popup};
             box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2),
                 0px 3px 14px rgba(0, 0, 0, 0.12),
                 0px 8px 10px rgba(0, 0, 0, 0.14);
@@ -118,17 +113,18 @@ const AccountDiv = styled.div`
             border: none;
             outline: none;
             p {
-                padding: 0 0.5rem;
-                color: #BB86FC;
+                padding: 0 ${rems[8]};
+                color: ${props => props.theme.text};
                 font-weight: 600;
             }
             li {
-                padding: 0 0.5rem;
-                height: 2rem;
+                padding: 0 ${rems[8]};
+                height: ${rems[32]};
                 display: flex;
                 align-items: center;
+                cursor: pointer;
                 &:hover {
-                    background: #484848;
+                    background: ${props => props.theme.hover};
                 }
             }
         }

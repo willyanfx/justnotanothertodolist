@@ -12,7 +12,6 @@ const initialState = {
     isOpen: false
 };
 
-
 type MenuState = {
     isOpen: boolean
 }
@@ -74,7 +73,6 @@ export const MenuButton: React.FC = ({ children }) => {
             aria-expanded={isOpen}
             aria-haspopup
             type="button"
-
             onClick={handleMouseDown}>
             {children}
         </Button>
@@ -153,7 +151,7 @@ const MenuContainer = styled.div`
 
 const Button = styled.button`
     height: ${rems[32]};
-    font-size: ${rems[16]}
+    width: ${rems[32]};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -163,6 +161,10 @@ const Button = styled.button`
     color:${props => props.theme.text};
     &:hover, &:active, &[aria-expanded='true']{
         background:  ${props => props.theme.btnHover}
+    }
+    svg {
+        width: ${rems[30]};
+        height: ${rems[30]};
     }
 `
 
