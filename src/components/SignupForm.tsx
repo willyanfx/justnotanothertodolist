@@ -4,6 +4,7 @@ import TabsButton from './TabsButton';
 import { signup } from '../helpers';
 import styled from 'styled-components';
 import { InputField } from '../Styles';
+import { User } from './Icons';
 export type TextInputProps = {
     id: string;
     label: string;
@@ -66,8 +67,8 @@ export default function SignupForm() {
                 <TextInput data-todo-input id='email' label='Email' />
                 <TextInput id='password' type='password' label='Password' />
                 <TabsButton>
-                    <i>♦︎</i>
-                    <span>{loading ? 'Loading...' : 'Sign Up'}</span>
+                    <User />
+                    {loading ? 'Loading...' : 'Sign Up'}
                 </TabsButton>
             </Form>
         </div>

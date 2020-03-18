@@ -1,3 +1,5 @@
+import { PrimaryBtn } from '../Styles';
+
 export const rems = {
     4: '0.25rem',
     8: '0.5rem',
@@ -14,26 +16,28 @@ export const lightTheme = {
     body: '#E1E1E3',
     text: '#121212',
     toggle: '#fff',
-    gradient: 'linear-gradient(#39598A, #79D7ED)',
+    login: '#2684FF',
     primary: '#fff',
     textSecond: '#666',
     hover: '#D2D2D6',
     popup: '#F9F9FA',
     main: '#F0F0F1',
-    header: '#0B6DF6',
+    header: '#2684FF',
     divider: '#B4B4BB',
     btnHover: '#D2D2D6',
     level100: '#E1E1E3',
-    outline: '#4A4B57'
+    outline: '#4A4B57',
+    primaryBtn: '#2684FF'
 };
 
 export const darkTheme = {
     body: '#1E1E1E',
-    primary: '#0B6DF6',
+    primary: '#2684FF',
     text: '#FFF',
     textSecond: '#a0a0a0',
     toggle: '#fff',
-    gradient: 'linear-gradient(#091236, #1E215D)',
+    login:
+        'linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898',
     hover: '#484848',
     popup: '#2f2f2f',
     main: '#232323',
@@ -41,5 +45,6 @@ export const darkTheme = {
     divider: '#999999',
     btnHover: '#2e2c31',
     level100: '#383838',
-    outline: '#747474'
+    outline: '#747474',
+    primaryBtn: '#2684FF'
 };

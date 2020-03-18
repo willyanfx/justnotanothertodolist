@@ -6,9 +6,10 @@ import { format as formatDate, addDays } from 'date-fns';
 import useProject from '../hooks/useProject';
 import { MenuItem, Menu, MenuButton, MenuList } from './MenuButton';
 import { StandardProj } from '../types';
-import { Input } from '../Styles'
+import { InputField } from '../Styles'
 import { PrimaryBtn, SecondaryBtn } from '../Styles';
 import { Today, ProjectIcon } from './Icons';
+import { useRequiredInput } from '../hooks/useRequiredInput';
 
 export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) }>
     = ({ onCancel }) => {
@@ -19,6 +20,7 @@ export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButton
         const [value, setValue] = useState<string>('');
         const [taskDate, setTaskDate] = useState('today');
         const [projectName, setProjectName] = useState('');
+        const { error, setError } = useRequiredInput()
 
         const handleChange = useCallback((newValue) => {
             const text: string = newValue.currentTarget.value
@@ -37,20 +39,24 @@ export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButton
             }
 
 
+            if (value === '') {
+                setError(true)
+            } else {
+                createDoc(
+                    {
+                        date: collectedDate,
+                        uid: auth.uid,
+                        task: value,
+                        projectId,
+                        archived: false
+                    },
+                    'tasks'
+                ).then(() => {
+                    setValue('');
+                    setProjectName('');
+                })
+            }
 
-            createDoc(
-                {
-                    date: collectedDate,
-                    uid: auth.uid,
-                    task: value,
-                    projectId,
-                    archived: false
-                },
-                'tasks'
-            ).then(() => {
-                setValue('');
-                setProjectName('');
-            })
 
         };
 
@@ -58,7 +64,17 @@ export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButton
 
         return (
             <Newtask>
-                <Input value={value} placeholder='Add Task' onChange={handleChange} />
+                <InputField
+                    data-error={error}
+                    value={value}
+                    placeholder='Add Task'
+                    onChange={handleChange}
+                    tabIndex={0}
+                    aria-atomic="true"
+                    aria-label='add task'
+                    type="text"
+                    required
+                />
                 <div>
                     <span>
                         <PrimaryBtn onClick={handleSubmit}>Add Task</PrimaryBtn>

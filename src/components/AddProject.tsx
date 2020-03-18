@@ -4,23 +4,30 @@ import { useAppState } from '../app-state';
 import styled from 'styled-components';
 import { rems } from '../constants/tokens';
 import { PrimaryBtn, SecondaryBtn } from '../Styles';
-import { Input } from '../Styles';
+import { InputField } from '../Styles';
 import { Plus } from './Icons';
+import { useRequiredInput } from '../hooks/useRequiredInput';
+
 
 const AddProject = () => {
     const [{ auth }] = useAppState();
     const [show, setShow] = useState<boolean>(true);
     const [projectName, setProjectName] = useState<string>('');
+    const { error, setError } = useRequiredInput()
     const handleAddProject = () => {
-        createDoc(
-            {
-                name: projectName,
-                uid: auth.uid,
-                projectId: ''
-            },
-            'projects'
-        );
-        setProjectName('');
+        if (projectName === '') {
+            setError(true)
+        } else {
+            createDoc(
+                {
+                    name: projectName,
+                    uid: auth.uid,
+                    projectId: ''
+                },
+                'projects'
+            );
+            setProjectName('');
+        }
     };
     return (
         <>
@@ -36,7 +43,13 @@ const AddProject = () => {
             </ProjectBtn>
             {show && (
                 <AddProjectDiv>
-                    <Input
+                    <InputField
+                        data-error={error}
+                        tabIndex={0}
+                        aria-atomic="true"
+                        aria-label='add task'
+                        type="text"
+                        required
                         value={projectName}
                         placeholder='Add Project'
                         onChange={e => setProjectName(e.target.value)}

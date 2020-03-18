@@ -80,7 +80,7 @@ export default function LoggedOut() {
         {
             label: 'Signup',
             content: <SignupForm />
-        }
+        },
     ];
     return (
         <Container>
@@ -92,10 +92,11 @@ export default function LoggedOut() {
 const Container = styled.div`
     height: 100%;
     width: 100%;
+    background: ${props => props.theme.login};
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color:${props => props.theme.text};
 
     [data-tab-panels] {
         width: 22.5rem;
@@ -103,7 +104,8 @@ const Container = styled.div`
         border-radius: ${rems[4]};
         border-top-left-radius: 0;
         
-        background: #2f2f2f;
+        background:  ${props => props.theme.main};
+        /* background: #2f2f2f; */
         /* 06 dp */
 
         box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2),
@@ -114,16 +116,15 @@ const Container = styled.div`
     }
     [data-tab] {
         padding: ${rems[8]} ${rems[16]};
-        background: grey;
         margin-right: ${rems[4]};
-        background: #252525;
+        background:  ${props => props.theme.hover};
         z-index: 200;
         cursor: pointer;
         border-top-left-radius: ${rems[4]};
         border-top-right-radius: ${rems[4]};
     }
     [data-tab='true'] {
-        background: #2f2f2f;
+        background: ${props => props.theme.main};
         border-top-left-radius: ${rems[4]};
         border-top-right-radius: ${rems[4]};
     }

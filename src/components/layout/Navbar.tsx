@@ -100,7 +100,7 @@ const AccountDiv = styled.div`
             width: ${rems[32]};
         }
         > ul {
-            color: #fff;
+            color:  ${props => props.theme.text};
             position: absolute;
             margin: ${rems[4]} 0;
             padding: ${rems[4]} 0;

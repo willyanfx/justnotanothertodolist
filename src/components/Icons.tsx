@@ -75,6 +75,16 @@ export const ProjectIcon = () => (
 );
 
 
+export const User = () => (
+    <SVG viewBox='0 0 32 32'>
+        <path
+            d="M12 4a5 5 0 110 10 5 5 0 010-10zm0-2a7 7 0 100 14 7 7 0 000-14zm10 28h-2v-5a5 5 0 00-5-5H9a5 5 0 00-5 5v5H2v-5a7 7 0 017-7h6a7 7 0 017 7v5zm3-13.82l-2.59-2.59L21 15l4 4 7-7-1.41-1.41L25 16.18z"
+        />
+    </SVG>
+);
+
+
+
 const SVG = styled.svg`
         fill: ${props => props.theme.text};
     width: ${rems[20]};

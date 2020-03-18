@@ -26,11 +26,6 @@ export default function LoginForm() {
         }
     };
 
-    const handleShowPassword = (event: {
-        target: { checked: React.SetStateAction<boolean> };
-    }) => {
-        setShowPassword(event.target.checked);
-    };
 
     return (
         <div>
@@ -72,7 +67,7 @@ export default function LoginForm() {
                         id='showPassword'
                         type='checkbox'
                         checked={showPassword}
-                        onClick={() => handleShowPassword}
+                        onClick={() => setShowPassword(!showPassword)}
                     />
                     <label htmlFor='showPassword'>
                         <span>

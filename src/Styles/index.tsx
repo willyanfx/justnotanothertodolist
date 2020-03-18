@@ -8,22 +8,6 @@ interface InputProps {
     onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void | '')
 }
 
-export const Input: React.FC<InputProps> = ({ value, onChange, placeholder }) => {
-    return (
-        <InputField
-            tabIndex={0}
-            placeholder={placeholder}
-            aria-atomic="true"
-            aria-label='add task'
-            value={value} onChange={onChange}
-            type="text"
-            required
-        />
-
-    )
-}
-
-
 export const InputField = styled.input`
         background: transparent;
         height: 2rem;
@@ -35,8 +19,17 @@ export const InputField = styled.input`
         margin-bottom: 0.5rem;
         padding: ${rems[4]};
         &:focus {
+            border-color:  ${props => props.theme.primaryBtn};
             background: ${props => props.theme.hover};
             box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+        &[data-error='true']  {
+            &::placeholder{
+                color: #BF2600;
+            }
+            border-color:  #DE350B;
+            background: #FFBDAD;
+            box-shadow: 0 0 0 3px rgba(222, 53, 11, 0.5);
         }
 
 `
@@ -44,7 +37,7 @@ export const InputField = styled.input`
 export const PrimaryBtn = styled.button`
     font-size: ${rems[16]};
     height: ${rems[32]};
-    color: ${props => props.theme.text};
+    color: ${props => props.theme.primaryBtn};
     font-weight: 600;
     border: 1px solid transparent;
     border-radius: ${rems[4]};
