@@ -136,7 +136,7 @@ const AddTaskDiv = styled.div`
        font-size: ${rems[20]};
        border: none;
        background: none;
-       font-weight: 600;
+       font-weight: 400;
        padding: 0 ${rems[8]};
        border-radius: ${rems[4]};
        display: flex;
@@ -166,7 +166,7 @@ const DisplayItem = styled.div`
     h2 {
         text-transform: capitalize;
         font-size: ${rems[24]};
-        font-weight: normal;
+        font-weight: 400;
         margin: 0 ${rems[30]} ${rems[20]} 0;
     }
 `;
@@ -191,6 +191,7 @@ const ListItemDiv = styled.div`
     }
     h4 {
         font-size: ${rems[20]};
+        font-weight: 400;
         padding: 0;
         margin: 0;
         margin-left: ${rems[8]};

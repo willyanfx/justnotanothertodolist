@@ -10,13 +10,13 @@ interface InputProps {
 
 export const InputField = styled.input`
         background: transparent;
-        height: 2rem;
+        height: ${rems[32]};
         width: 100%;
-        border-radius: 0.25rem;
+        border-radius:${rems[4]};
         border: 1px solid ${props => props.theme.outline};
         color: ${props => props.theme.text};
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
+        margin-top: ${rems[8]};
+        margin-bottom: ${rems[8]};
         padding: ${rems[4]};
         &:focus {
             border-color:  ${props => props.theme.primaryBtn};

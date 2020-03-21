@@ -11,7 +11,7 @@ import { useRequiredInput } from '../hooks/useRequiredInput';
 
 const AddProject = () => {
     const [{ auth }] = useAppState();
-    const [show, setShow] = useState<boolean>(true);
+    const [show, setShow] = useState<boolean>(false);
     const [projectName, setProjectName] = useState<string>('');
     const { error, setError } = useRequiredInput()
     const handleAddProject = () => {

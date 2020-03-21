@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { rems } from '../constants/tokens';
 
@@ -17,7 +17,12 @@ type MenuState = {
 }
 type MenuAction = {
     type: string,
+    payload?: number
 }
+
+
+
+
 
 function reducer(state: MenuState, action: MenuAction) {
     switch (action.type) {
@@ -31,6 +36,11 @@ function reducer(state: MenuState, action: MenuAction) {
                 ...state,
                 isOpen: false
             };
+        case 'BTN_SIZE':
+            return {
+                ...state,
+                btnWidth: action.payload
+            };
         default:
             return state;
     }
@@ -42,10 +52,31 @@ export const Menu: React.FC = ({ children }) => {
     let [state, dispatch] = useReducer(reducer, initialState);
 
     let context = { state, dispatch };
+    const node = useRef<HTMLDivElement>(null!);
+
+    const handleClickOutside = (evt: Event): void => {
+        let element = evt.target as HTMLElement
+        if (node.current.contains(element)) {
+            return;
+        }
+        // outside click
+        dispatch({ type: 'CLOSE_MENU' });
+    }
+
+    useEffect(() => {
+        if (state.isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [state.isOpen]);
 
     return (
         <MenuContext.Provider value={context}>
-            <MenuContainer>
+            <MenuContainer ref={node}>
                 {children}
             </MenuContainer>
         </MenuContext.Provider>
@@ -68,11 +99,30 @@ export const MenuButton: React.FC = ({ children }) => {
         }
     }
 
+    function handleKeyDown(event: React.KeyboardEvent) {
+        switch (event.key) {
+            case "ArrowDown":
+            case "ArrowUp":
+            case "Enter":
+            case " ":
+                event.preventDefault(); // prevent scroll
+                dispatch({ type: 'OPEN_MENU' });
+                break;
+            case "Escape":
+                dispatch({ type: 'CLOSE_MENU' });
+                break;
+            default:
+                break;
+        }
+    }
+
+
     return (
         <Button
             aria-expanded={isOpen}
             aria-haspopup
             type="button"
+            onKeyDown={handleKeyDown}
             onClick={handleMouseDown}>
             {children}
         </Button>
@@ -160,10 +210,10 @@ const Button = styled.button`
     border-color: transparent;
     color:${props => props.theme.text};
     &:hover, &:active, &[aria-expanded='true']{
-        background:  ${props => props.theme.btnHover}
+                background:  ${props => props.theme.btnHover}
     }
     svg {
-        width: ${rems[30]};
+                width: ${rems[30]};
         height: ${rems[30]};
     }
 `
@@ -184,7 +234,7 @@ const ListUL = styled(animated.div)`
 	padding-bottom: 0.25rem;
     z-index: 2000;
     li {
-        width: 100%;
+                width: 100%;
         white-space: nowrap;
         height: ${rems[32]};
         padding-left: ${rems[8]};
