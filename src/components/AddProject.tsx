@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { rems } from '../constants/tokens';
 import { PrimaryBtn, SecondaryBtn } from '../Styles';
 import { InputField } from '../Styles';
-import { Plus } from './Icons';
+import { Plus } from './Assets/Icons';
 import { useRequiredInput } from '../hooks/useRequiredInput';
 
 

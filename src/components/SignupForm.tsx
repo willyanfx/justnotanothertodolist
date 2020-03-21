@@ -4,7 +4,7 @@ import TabsButton from './TabsButton';
 import { signup } from '../helpers';
 import styled from 'styled-components';
 import { InputField } from '../Styles';
-import { User } from './Icons';
+import { User } from './Assets/Icons';
 export type TextInputProps = {
     id: string;
     label: string;

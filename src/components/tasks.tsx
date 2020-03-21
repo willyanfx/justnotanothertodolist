@@ -11,7 +11,7 @@ import AddDialog from './AddDialog';
 import { Checkbox } from './Checkbox';
 import { DialogStateContext, DialogSetContext } from '../context/DialogContext';
 import { rems } from '../constants/tokens';
-import { Delete, Plus } from './Icons';
+import { Delete, Plus } from './Assets/Icons';
 
 
 function ListItem({ item, index }: { item: AddTaskProps; index: number }) {

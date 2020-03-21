@@ -8,7 +8,7 @@ import { MenuItem, Menu, MenuButton, MenuList } from './MenuButton';
 import { StandardProj } from '../types';
 import { InputField } from '../Styles'
 import { PrimaryBtn, SecondaryBtn } from '../Styles';
-import { Today, ProjectIcon } from './Icons';
+import { Today, ProjectIcon } from './Assets/Icons';
 import { useRequiredInput } from '../hooks/useRequiredInput';
 
 export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) }>

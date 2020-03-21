@@ -5,7 +5,7 @@ import AddProject from '../AddProject';
 import Projects from '../Projects';
 import { StandardProj } from '../../types';
 import { rems } from '../../constants/tokens';
-import { Today, Next7, Inbox, ArrowDown } from '../Icons';
+import { Today, Next7, Inbox, ArrowDown } from '../Assets/Icons';
 
 export const Sidebar = () => {
     const [showProjects, setShowProjects] = useState<boolean>(true);

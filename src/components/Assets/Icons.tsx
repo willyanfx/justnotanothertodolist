@@ -1,6 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
-import { rems } from "../constants/tokens";
+import { rems } from "../../constants/tokens";
 
 export const Today = () => (
     <SVG viewBox='0 0 32 32'>

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { AddTask } from './AddTask';
 import { useTransition, animated, config } from 'react-spring';
 import { rems } from '../constants/tokens';
-import { CloseX } from './Icons';
+import { CloseX } from './Assets/Icons';
 
 
 
@@ -28,7 +28,7 @@ function AddDialog({ isOpen = false, onDismiss }: DialogProps): JSX.Element | nu
 
     const transitions = useTransition(isOpen, null, {
         from: { opacity: 0, transform: 'translateY(-20px)' },
-        enter: { opacity: 1, transform: 'translateY(0)' },
+        enter: { opacity: 1, transform: 'translateY(10)' },
         leave: { opacity: 0, transform: 'translateY(-20px)' },
         config: { duration: 150, mass: 1, tension: 170, friction: 26 },
     })
@@ -40,7 +40,6 @@ function AddDialog({ isOpen = false, onDismiss }: DialogProps): JSX.Element | nu
                 && <DialogOverlay style={{ opacity }}
                     isOpen={item}
                     key={key}>
-                    {item && console.log(typeof transform)}
                     <DialogContent style={{ transform }}>
                         <Header>
                             <h2 className='header'>Quick Add Task</h2>

@@ -5,7 +5,7 @@ import { deleteProject } from '../helpers';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { rems } from '../constants/tokens';
-import { Delete } from './Icons';
+import { Delete } from './Assets/Icons';
 
 type Proj = {
     createdAt: number;

@@ -9,19 +9,24 @@ import {
 } from '../../context/DialogContext';
 import { Toggle } from '../Toggle';
 import { rems } from '../../constants/tokens';
-import { Plus } from '../Icons';
+import { Plus } from '../Assets/Icons';
+import { Logo } from '../Assets/logo';
 export const Navbar = () => {
     return (
         <Header>
             <NavBar>
-                <Logo />
+                <LogoSvg>
+                    <Logo />
+                    <span>
+                        Boring TODO
+                    </span>
+                </LogoSvg>
                 <Account />
             </NavBar>
         </Header>
     );
 };
 
-const Logo = () => <LogoSvg>L</LogoSvg>;
 function Account() {
     const [{ user }] = useAppState();
     const showModal = useContext(DialogStateContext);
@@ -61,9 +66,18 @@ function Account() {
 }
 
 const LogoSvg = styled.div`
-    width: ${rems[32]};
-    height: ${rems[32]};
-    background: tomato;
+    display: flex;
+    margin-left: ${rems[16]};
+    align-items:center;
+    > span {
+        font-size:  ${rems[20]};
+        font-weight: 600;
+        color: #fff;
+        margin-left: ${rems[16]};
+    }
+    svg {
+        fill: #fff;
+    }
 `;
 
 const QuickAddButton = styled.button`
