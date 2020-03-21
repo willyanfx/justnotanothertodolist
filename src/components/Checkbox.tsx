@@ -20,8 +20,6 @@ export const Checkbox: React.FC<CheckboxProps> = ({ onClick, id }) => (
 const CheckboxBtn = styled.div`
     cursor: pointer;
     display: table-cell; 
-    width: 100%;
-    height: 100%;
     vertical-align: middle; 
     text-align: center; 
        

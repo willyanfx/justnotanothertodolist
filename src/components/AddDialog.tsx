@@ -54,7 +54,7 @@ function AddDialog({ isOpen = false, onDismiss }: DialogProps): JSX.Element | nu
                             </ButtonClose>
                         </Header>
                         <ContainerAddTask>
-                            <AddTask onCancel={onDismiss} />
+                            <AddTask id='inbox' onCancel={onDismiss} />
                         </ContainerAddTask>
                     </DialogContent>
                 </DialogOverlay>)

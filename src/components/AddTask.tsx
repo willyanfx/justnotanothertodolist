@@ -10,17 +10,19 @@ import { InputField } from '../Styles'
 import { PrimaryBtn, SecondaryBtn } from '../Styles';
 import { Today, ProjectIcon } from './Assets/Icons';
 import { useRequiredInput } from '../hooks/useRequiredInput';
+import { } from 'react-router';
 
-export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) }>
-    = ({ onCancel }) => {
+export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void), id: string }>
+    = ({ onCancel, id }) => {
 
         const [{ auth }] = useAppState();
         const [{ user }] = useAppState();
         const projects = useProject(user.uid);
         const [value, setValue] = useState<string>('');
-        const [taskDate, setTaskDate] = useState('today');
+        const [taskDate, setTaskDate] = useState(id);
         const [projectName, setProjectName] = useState('');
         const { error, setError } = useRequiredInput()
+
 
         const handleChange = useCallback((newValue) => {
             const text: string = newValue.currentTarget.value

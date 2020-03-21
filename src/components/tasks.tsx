@@ -116,6 +116,7 @@ export const Tasks = () => {
                     </button>
                     {showAddTask && (
                         <AddTask
+                            id={id || ''}
                             onCancel={() => setShowAddTask(!showAddTask)}
                         />
                     )}
