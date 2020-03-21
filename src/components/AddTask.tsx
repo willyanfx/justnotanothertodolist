@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { useAppState } from '../app-state';
 import { createDoc } from '../helpers';
@@ -62,7 +62,12 @@ export const AddTask: React.FC<{ onCancel?: ((event: React.MouseEvent<HTMLButton
 
         };
 
-
+        useEffect(() => {
+            document.title = `${id}: ${value}`
+            return () => {
+                document.title = 'Boring TODO'
+            }
+        }, [value])
 
         return (
             <Newtask>

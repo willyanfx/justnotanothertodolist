@@ -186,6 +186,10 @@ const ListItemDiv = styled.div`
     padding: ${rems[16]} ${rems[16]};
     align-items: center;
     justify-content: space-between;
+    & span :last-child  {
+            cursor: pointer;
+    }
+    
     span {
         display: flex;
         flex-direction: row;
