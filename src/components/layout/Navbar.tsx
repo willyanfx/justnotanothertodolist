@@ -11,16 +11,21 @@ import { Toggle } from '../Toggle';
 import { rems } from '../../constants/tokens';
 import { Plus } from '../Assets/Icons';
 import { Logo } from '../Assets/logo';
+import { Link } from "react-router-dom";
+
+
 export const Navbar = () => {
     return (
         <Header>
             <NavBar>
-                <LogoSvg>
-                    <Logo />
-                    <span>
-                        Boring TODO
+                <Link to='/inbox'>
+                    <LogoSvg>
+                        <Logo />
+                        <span>
+                            Boring TODO
                     </span>
-                </LogoSvg>
+                    </LogoSvg>
+                </Link>
                 <Account />
             </NavBar>
         </Header>
@@ -173,4 +178,7 @@ const NavBar = styled.nav`
     align-items: center;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr;
+    a {
+        text-decoration: none;
+    }
 `;
