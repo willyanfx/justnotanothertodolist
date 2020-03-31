@@ -1,5 +1,10 @@
 # Boring ToDo List
 
-## Working in Progress
+![Boring todo animation](/todomovie.gif)
 
-In the project directory, you can run:
+## Darkmode
+![Darkmode layout](/darkmode.png)
+
+## Interaction detail
+
+![Small interaction](/todo-writing.gif)

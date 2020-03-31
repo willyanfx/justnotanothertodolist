@@ -9,7 +9,6 @@ import { Today, Next7, Inbox, ArrowDown } from '../Assets/Icons';
 
 export const Sidebar = () => {
     const [showProjects, setShowProjects] = useState<boolean>(true);
-
     return (
         <SidebarContainer>
             <SidebarUl>
@@ -93,7 +92,7 @@ const SidebarUl = styled.ul`
     padding: 0;
     li {
         margin: 0;
-        
+
         span{
             margin-left: ${rems[8]}
         }

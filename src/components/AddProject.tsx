@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { createDoc } from '../helpers';
 import { useAppState } from '../app-state';
 import styled from 'styled-components';

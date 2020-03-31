@@ -2,17 +2,13 @@ import React, { forwardRef } from 'react';
 
 import styled from 'styled-components';
 import { AddTask } from './AddTask';
-import { useTransition, animated, config } from 'react-spring';
+import { useTransition, animated } from 'react-spring';
 import { rems } from '../constants/tokens';
 import { CloseX } from './Assets/Icons';
 
 
 
-const DialogContent: React.FC<{
-    style?: {
-        transform: any;
-    }
-}> = (props) => <Dialog {...props}>{props.children}</Dialog>;
+const DialogContent: React.FC<{ style?: { transform: any; } }> = (props) => <Dialog {...props}>{props.children}</Dialog>;
 
 const DialogOverlay = forwardRef<HTMLDivElement, DialogProps>(
     function DialogOverlay({ isOpen = true, ...props }, forwardRef) {
