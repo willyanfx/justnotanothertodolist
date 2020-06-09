@@ -2,9 +2,7 @@
 
 ![Boring todo animation](/todomovie.gif)
 
-## Darkmode
-![Darkmode layout](/darkmode.png)
 
-## Interaction detail
+## Micro interaction
 
 ![Small interaction](/todo-writing.gif)
